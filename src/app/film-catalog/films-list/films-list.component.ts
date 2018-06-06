@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FilmService } from '../film.service';
+
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatCardModule} from '@angular/material/card';
 
 @Component({
   selector: 'app-films-list',
@@ -7,9 +11,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilmsListComponent implements OnInit {
 
-  constructor() { }
+  description: string = 'Middle card description';
+  filmsList = null;
+
+  constructor(public filmsService: FilmService) { }
 
   ngOnInit() {
+    this.filmsList = this.filmsService.getFilms()
   }
 
 }
