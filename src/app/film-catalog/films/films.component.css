@@ -1,0 +1,18 @@
+.main {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.example-card {
+  max-width: 300px;
+  text-align: left;
+}
+.content {
+  min-height: 100px;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.content:hover {
+  white-space: normal;
+}
+
