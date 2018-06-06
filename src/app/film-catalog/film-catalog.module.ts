@@ -9,6 +9,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTabsModule} from '@angular/material/tabs';
 import { FilmItemComponent } from './film-item/film-item.component';
+import { FilmsListComponent } from './films-list/films-list.component';
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import { FilmItemComponent } from './film-item/film-item.component';
   declarations: [
     MainComponent, 
     FilmsComponent, 
-    DetailsComponent, FilmItemComponent
+    DetailsComponent, FilmItemComponent, FilmsListComponent
   ]
 })
 export class FilmCatalogModule { }
