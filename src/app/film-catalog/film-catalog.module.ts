@@ -8,6 +8,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTabsModule} from '@angular/material/tabs';
+import { FilmItemComponent } from './film-item/film-item.component';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import {MatTabsModule} from '@angular/material/tabs';
   declarations: [
     MainComponent, 
     FilmsComponent, 
-    DetailsComponent
+    DetailsComponent, FilmItemComponent
   ]
 })
 export class FilmCatalogModule { }
