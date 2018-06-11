@@ -24,13 +24,23 @@ export class FilmsListComponent implements OnInit {
     this.counter = this.filmsList.filter(item => item.isFavorite).length;
   }
 
-  setQuantityText() {
+  /* setQuantityText() {
 		if (( this.counter % 100 > 4 && this.counter % 100 < 20 ) || this.counter % 10 === 0 || this.counter % 10 > 4 ) {
 		  return `${this.counter} фильмов. `;
 		} else if (this.counter % 10 < 5 && this.counter % 10 > 1 ) {
 		  return `${this.counter} фильма. `;
 		} else {
 		  return `${this.counter} фильм. `;
+		}
+  } */
+
+  setQuantityText() {
+		if (( this.counter % 100 > 4 && this.counter % 100 < 20 ) || this.counter % 10 === 0 || this.counter % 10 > 4 ) {
+		  return 0;
+		} else if (this.counter % 10 < 5 && this.counter % 10 > 1 ) {
+		  return 1;
+		} else {
+		  return 2;
 		}
   }
   

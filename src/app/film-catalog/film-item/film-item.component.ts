@@ -21,13 +21,6 @@ export class FilmItemComponent implements OnInit {
     this.update.emit(isFavorite);
   }
 
-  /* cutDiscription(description) {
-    let sliced = description.slice(0,150);
-    if (sliced.length <description.length) {
-      return sliced += '...';
-    }
-  } */
-
   cutDescription(description) {
     if (description.length > 200) {
       let res = description.slice(0, 200);
