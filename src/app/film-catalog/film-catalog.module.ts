@@ -8,10 +8,11 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTabsModule} from '@angular/material/tabs';
 import { FilmsListComponent } from './films-list/films-list.component';
-import { FilmItemComponent } from './films-list/film-item/film-item.component';
+
 import {MatToolbarModule} from '@angular/material/toolbar'
 import { MatIconModule } from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
+import { FilmItemComponent } from './film-item/film-item.component';
 
 
 @NgModule({

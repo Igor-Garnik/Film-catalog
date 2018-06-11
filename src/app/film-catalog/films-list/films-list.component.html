@@ -1,24 +1,33 @@
-<mat-card class="menu-card">
+<div class="wraper">
+  <mat-card class="menu-card">
     
-  <mat-toolbar class="menu-toolbar">
-      <mat-toolbar-row>
-        <span>В избранное добавлено: 5 элементов</span>
-        <span class="example-spacer"></span>
-          <div>
+    <mat-toolbar class="menu-toolbar">
+        <mat-toolbar-row>
+          <span>В избранном: {{setQuantityText()}}</span>
+        
+          <span class="example-spacer"></span>
+            <div>
               <mat-form-field>
                 <mat-select placeholder="Сортировка">
-                  <mat-option value="ASC" (click)="sortASC()"> А-Я</mat-option>
-                  <mat-option value="DESC" (click)="sortDESC()"> Я-А</mat-option>
+                  <mat-option value="ASC" (click)="filmsSort(filmsList, 1)"> А-Я</mat-option>
+                  <mat-option value="DESC" (click)="filmsSort(filmsList, -1)"> Я-А</mat-option>
                 </mat-select>
               </mat-form-field>
-          </div>
-      </mat-toolbar-row>
-  </mat-toolbar>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
 
-</mat-card>
+  </mat-card>
 
-<mat-grid-list cols="3" rowHeight="850px" class="main">
-  <mat-grid-tile *ngFor="let film of filmsList" class="card-item">
-      <film-item [item]="film"></film-item>
-  </mat-grid-tile>    
-</mat-grid-list>
+<!--   <div class="container">
+    <div *ngFor="let film of filmsList" class="card-item">
+      <film-item [item]="film" (update)="addToFavorite($event, film)" class="main"></film-item>
+    </div>
+  </div> -->
+
+  <mat-grid-list cols="3" rowHeight="880px" >
+    <mat-grid-tile *ngFor="let film of filmsList" class="card-item">
+        <film-item [item]="film" (update)="addToFavorite($event, film)" class="main"></film-item>
+    </mat-grid-tile>    
+  </mat-grid-list>
+</div>
