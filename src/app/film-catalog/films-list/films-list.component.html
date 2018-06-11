@@ -3,14 +3,15 @@
     
     <mat-toolbar class="menu-toolbar">
         <mat-toolbar-row>
-         <!--  <span>В избранном: {{setQuantityText()}}</span> -->
-
-          <span [ngPlural]="setQuantityText()">
-            <ng-template ngPluralCase="=0">{{counter}} фильмов</ng-template>
-            <ng-template ngPluralCase="=1">{{counter}} фильма</ng-template>
-            <ng-template ngPluralCase="=2">{{counter}} фильм</ng-template>
-          </span>
-        
+          <span>В избранном:</span>
+            <span [ngPlural]="counter">
+              <ng-template ngPluralCase="=0">{{counter}} фильмов</ng-template>
+              <ng-template ngPluralCase="=1">{{counter}} фильм</ng-template>
+              <ng-template ngPluralCase="=2">{{counter}} фильма</ng-template>
+              <ng-template ngPluralCase="=3">{{counter}} фильма</ng-template>
+              <ng-template ngPluralCase="=4">{{counter}} фильма</ng-template>
+              <ng-template ngPluralCase="other">{{counter}} фильмов</ng-template>
+            </span> 
           <span class="example-spacer"></span>
             <div>
               <mat-form-field>
