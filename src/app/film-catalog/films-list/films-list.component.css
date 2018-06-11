@@ -4,9 +4,6 @@ margin-bottom: 20px;
 .card-item {
   width: 300px;
 }
-.example-card {
-  max-width: 300px;
-}
 
 .menu-card {
   padding: 0px;
@@ -24,4 +21,14 @@ margin-bottom: 20px;
   justify-content:center;
   padding-left: 10%;
   padding-right: 10%;
+}
+.wraper {
+  width: 1574px;
+  margin: auto;
+}
+.example-form-field {
+  width: 200px;
+}
+.search-input {
+  width: 300px;
 }

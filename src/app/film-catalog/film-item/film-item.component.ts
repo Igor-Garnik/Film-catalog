@@ -23,8 +23,7 @@ export class FilmItemComponent implements OnInit {
 
   cutDescription(description) {
     if (description.length > 200) {
-      let res = description.slice(0, 200);
-      return description.slice(0, res.lastIndexOf(' ')) + `...`;
+      return description.slice(0, description.indexOf(' ', 200)) + `...`;
     }
     return description;
   }

@@ -1,17 +1,25 @@
-<div class="wraper">
+<div>
   <mat-card class="menu-card">
     
     <mat-toolbar class="menu-toolbar">
         <mat-toolbar-row>
-          <span>В избранном:</span>
-            <span [ngPlural]="counter">
-              <ng-template ngPluralCase="=0">{{counter}} фильмов</ng-template>
-              <ng-template ngPluralCase="=1">{{counter}} фильм</ng-template>
-              <ng-template ngPluralCase="=2">{{counter}} фильма</ng-template>
-              <ng-template ngPluralCase="=3">{{counter}} фильма</ng-template>
-              <ng-template ngPluralCase="=4">{{counter}} фильма</ng-template>
-              <ng-template ngPluralCase="other">{{counter}} фильмов</ng-template>
+          <span>{{"В избранном:"}}</span>
+            <span [ngPlural]="setFavoriteQuantity()">
+              <ng-template ngPluralCase="=0">{{setFavoriteQuantity()}} фильмов</ng-template>
+              <ng-template ngPluralCase="=1">{{setFavoriteQuantity()}} фильм</ng-template>
+              <ng-template ngPluralCase="=2">{{setFavoriteQuantity()}} фильма</ng-template>
+              <ng-template ngPluralCase="=3">{{setFavoriteQuantity()}} фильма</ng-template>
+              <ng-template ngPluralCase="=4">{{setFavoriteQuantity()}} фильма</ng-template>
+              <ng-template ngPluralCase="other">{{setFavoriteQuantity()}} фильмов</ng-template>
             </span> 
+            <span class="example-spacer"></span>
+            <div class="example-container">
+              <mat-form-field>
+                <input class="search-input" matInput [(ngModel)]="filmTitle" placeholder="Название фильма...">
+                {{filmTitle}}
+              </mat-form-field>
+              <button mat-raised-button color="primary" (click)="searchFilmByName(filmTitle)">Поиск</button>
+            </div>
           <span class="example-spacer"></span>
             <div>
               <mat-form-field>
@@ -26,15 +34,20 @@
 
   </mat-card>
 
-<!--   <div class="container">
-    <div *ngFor="let film of filmsList" class="card-item">
-      <film-item [item]="film" (update)="addToFavorite($event, film)" class="main"></film-item>
-    </div>
-  </div> -->
+  <div class="wraper" *ngIf="searchResult">
+    <mat-grid-list cols="3" rowHeight="880px" >
+      <mat-grid-tile *ngFor="let film of searchResult" class="card-item">
+          <film-item [item]="film" (update)="addToFavorite($event, film)" class="main"></film-item>
+      </mat-grid-tile>    
+    </mat-grid-list>
+  </div>
 
-  <mat-grid-list cols="3" rowHeight="880px" >
-    <mat-grid-tile *ngFor="let film of filmsList" class="card-item">
-        <film-item [item]="film" (update)="addToFavorite($event, film)" class="main"></film-item>
-    </mat-grid-tile>    
-  </mat-grid-list>
+  <div class="wraper" *ngIf="!searchResult">
+      <mat-grid-list cols="3" rowHeight="880px" >
+        <mat-grid-tile *ngFor="let film of filmsList" class="card-item">
+            <film-item [item]="film" (update)="addToFavorite($event, film)" class="main"></film-item>
+        </mat-grid-tile>    
+      </mat-grid-list>
+    </div>
+
 </div>
