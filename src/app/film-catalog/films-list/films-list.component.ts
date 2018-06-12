@@ -22,8 +22,13 @@ export class FilmsListComponent implements OnInit {
   addItems:number = 3;
   disabled:boolean = false;
   direction:number;
+  message:string;
 
   constructor(public filmsService: FilmService) { }
+
+  filmToggle() {
+    return this.searchResult ? this.searchResult : this.filmsList;
+  }
 
   addToFavorite(value, film) {
     film.isFavorite = value;
@@ -49,16 +54,17 @@ export class FilmsListComponent implements OnInit {
     this.filmsList = this.filmsService.getFilms(this.counter);
   }
 
-  /* searchFilmByName(filmName) {
-    if(filmName.length < 3) {
-      this.searchResult = false;
-    } else {
-      this.searchResult = this.filmsService.getSelectedFilm(filmName);
-    }
+/*   searchFilmByName(filmName) {
+    this.searchResult = filmName.length < 4 ? false : this.filmsService.getSelectedFilm(filmName)
   } */
 
   searchFilmByName(filmName) {
-    this.searchResult = filmName.length < 3 ? false : this.filmsService.getSelectedFilm(filmName)
+    let result = this.filmsService.getSelectedFilm(filmName)
+    result.length > 0 && filmName.length > 3 ? this.searchResult = result : this.showMessage(filmName)
+  }
+
+  showMessage(filmName) {
+    this.message = (filmName.length > 3) ? ',nf' : 'ccs';
   }
 
   addFilms(number) {

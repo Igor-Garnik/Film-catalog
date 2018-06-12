@@ -31,24 +31,16 @@
             </div>
         </mat-toolbar-row>
     </mat-toolbar>
-
   </mat-card>
 
-  <div class="wraper" *ngIf="searchResult">
+  <div class="wraper">
+    <!-- <div *ngIf="message">{{message}}</div> -->
     <mat-grid-list cols="3" rowHeight="880px" >
-      <mat-grid-tile *ngFor="let film of searchResult" class="card-item">
-          <film-item [item]="film" (update)="addToFavorite($event, film)" class="main"></film-item>
+      <mat-grid-tile *ngFor="let film of filmToggle();trackBy: trackByFn" class="card-item">
+        <film-item [item]="film" (update)="addToFavorite($event, film)" class="main"></film-item>
       </mat-grid-tile>    
     </mat-grid-list>
+    <button mat-raised-button color="primary" class="add-item" [attr.disabled]="disableBtn()" (click)="addFilms(addItems)">Добавить фильмы</button>
   </div>
-
-  <div class="wraper" *ngIf="!searchResult">
-      <mat-grid-list cols="3" rowHeight="880px" >
-        <mat-grid-tile *ngFor="let film of filmsList" class="card-item">
-            <film-item [item]="film" (update)="addToFavorite($event, film)" class="main"></film-item>
-        </mat-grid-tile>    
-      </mat-grid-list>
-      <button mat-raised-button color="primary" class="add-item" [attr.disabled]="disableBtn()" (click)="addFilms(addItems)">Добавить фильмы</button>
-    </div>
 
 </div>
