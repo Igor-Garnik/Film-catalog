@@ -15,15 +15,18 @@ export class FilmsListComponent implements OnInit {
 
   description: string = 'Middle card description';
   filmsList = null;
-  counter:number = 0;
   filmTitle:string = '';
   searchResult;
+  counter:number = 3
+  filmsQuantity:number;
+  addItems:number = 3;
+  disabled:boolean = false;
+  direction:number;
 
   constructor(public filmsService: FilmService) { }
 
   addToFavorite(value, film) {
     film.isFavorite = value;
-    //this.counter = this.filmsList.filter(item => item.isFavorite).length;
     this.setFavoriteQuantity()
   }
 
@@ -31,18 +34,8 @@ export class FilmsListComponent implements OnInit {
     return this.filmsList.filter(item => item.isFavorite).length;
   }
 
-  /* setQuantityText() {
-		if (( this.counter % 100 > 4 && this.counter % 100 < 20 ) || this.counter % 10 === 0 || this.counter % 10 > 4 ) {
-		  return `${this.counter} фильмов. `;
-		} else if (this.counter % 10 < 5 && this.counter % 10 > 1 ) {
-		  return `${this.counter} фильма. `;
-		} else {
-		  return `${this.counter} фильм. `;
-		}
-  } */
-
-  
   filmsSort(arr, direct) {
+    this.direction = direct;
     return arr.sort((a,b) => {
       let x = a.name.toLowerCase();
       let y = b.name.toLowerCase();
@@ -51,18 +44,36 @@ export class FilmsListComponent implements OnInit {
       return 0;
     })
   }
+  
+  getInitialList() {
+    this.filmsList = this.filmsService.getFilms(this.counter);
+  }
 
-  searchFilmByName(filmName) {
+  /* searchFilmByName(filmName) {
     if(filmName.length < 3) {
       this.searchResult = false;
     } else {
-      //this.filmsService.getFilm(filmName);
       this.searchResult = this.filmsService.getSelectedFilm(filmName);
     }
+  } */
+
+  searchFilmByName(filmName) {
+    this.searchResult = filmName.length < 3 ? false : this.filmsService.getSelectedFilm(filmName)
+  }
+
+  addFilms(number) {
+    this.counter += number; 
+    this.filmsList = this.filmsService.getFilms(this.counter); 
+    this.filmsSort(this.filmsList, this.direction);
+  }
+
+  disableBtn() {
+    return this.counter === this.filmsQuantity ? true : false;
   }
 
   ngOnInit() {
-    this.filmsList = this.filmsService.getFilms();
+    this.filmsList = this.filmsService.getFilms(this.counter);
+    this.filmsQuantity = this.filmsService.getFilmsQuantity();
   }
 
 }

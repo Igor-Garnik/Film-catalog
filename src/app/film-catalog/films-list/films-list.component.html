@@ -16,7 +16,6 @@
             <div class="example-container">
               <mat-form-field>
                 <input class="search-input" matInput [(ngModel)]="filmTitle" placeholder="Название фильма...">
-                {{filmTitle}}
               </mat-form-field>
               <button mat-raised-button color="primary" (click)="searchFilmByName(filmTitle)">Поиск</button>
             </div>
@@ -26,6 +25,7 @@
                 <mat-select placeholder="Сортировка">
                   <mat-option value="ASC" (click)="filmsSort(filmsList, 1)"> А-Я</mat-option>
                   <mat-option value="DESC" (click)="filmsSort(filmsList, -1)"> Я-А</mat-option>
+                  <mat-option value="DESC" (click)="getInitialList()"> По умолчанию</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -48,6 +48,7 @@
             <film-item [item]="film" (update)="addToFavorite($event, film)" class="main"></film-item>
         </mat-grid-tile>    
       </mat-grid-list>
+      <button mat-raised-button color="primary" class="add-item" [attr.disabled]="disableBtn()" (click)="addFilms(addItems)">Добавить фильмы</button>
     </div>
 
 </div>

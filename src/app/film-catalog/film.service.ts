@@ -7,11 +7,10 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class FilmService {
-  /* constructor(public filmsListComponent : FilmsListComponent) {} */
+
   constructor() {}
-  serch
-  searchResult;
-  
+
+  list;
   films = [
     {id: 1, name: "Тор: Рагнарёк", year: "2017", imgUrl: "https://image.tmdb.org/t/p/w300_and_h450_bestv2/2NEzIdBAgm4kSYXF4OH86qs3a0u.jpg", description: "Вернувшись в Асгард в поисках таинственного врага, ведущего охоту на Камни Бесконечности, Тор обнаруживает, что действия его брата Локи, захватившего трон Асгарда, привели к приближению наиболее страшного события — Рагнарёка.", isFavorite: true},
     {id: 2, name: "Чудо-женщина ", year: "2017", imgUrl: "https://image.tmdb.org/t/p/w300_and_h450_bestv2/fMnMonAyK3nzp1P1odIFzYoSvYe.jpg", description: "Перед тем как стать Чудо-Женщиной, она была Дианой — принцессой амазонок, обученной быть непобедимой воительницей. И когда на берегах огражденного ото внешнего мира райского острова, который служил ей родиной, терпит крушение американский пилот и рассказывает о серьезном конфликте, бушующем во внешнем мире, Диана покидает свой дом, чтобы справиться с этой угрозой", isFavorite: false},
@@ -25,18 +24,20 @@ export class FilmService {
     {id: 10, name: "Стражи Галактики", year: "2014", imgUrl: "https://image.tmdb.org/t/p/w300_and_h450_bestv2/L6U6zH3N39toWXIjvfPjxgRXuG.jpg", description: "Отважному путешественнику Питеру Квиллу попадает в руки таинственный артефакт, принадлежащий могущественному и безжалостному злодею Ронану, строящему коварные планы по захвату Вселенной. Питер оказывается в центре межгалактической охоты, где жертва — он сам.", isFavorite: false},
     {id: 11, name: "Тихоокеанский рубеж 2", year: "2018", imgUrl: "https://image.tmdb.org/t/p/w300_and_h450_bestv2/hAR6AdEKMVQXrcTt1hnaEU7YvSX.jpg", description: "Команда пилотируемых роботов-защитников остановила вторжение гигантских инопланетных монстров. Великая битва за Тихоокеанский рубеж ознаменовала новую главу в истории человечества. Однако война только начинается… Пришло время нового поколения отстаивать своё право на Землю.", isFavorite: false},
     {id: 12, name: "Интерстеллар", year: "2014", imgUrl: "https://image.tmdb.org/t/p/w300_and_h450_bestv2/5IGqQ86P8dfpNShocqz8rx38mv0.jpg", description: "Наше время на Земле подошло к концу, команда исследователей берет на себя самую важную миссию в истории человечества; путешествуя за пределами нашей галактики, чтобы узнать есть ли у человечества будущее среди звезд.", isFavorite: false},
-
   ];
-  
-  getFilms() {
-    return this.films;
+
+  getFilmsQuantity() {
+    return this.films.length;
   }
 
-  getFilm(film) {
-    this.searchResult = film;
-  } 
+  getFilms(param) {
+    this.list = [...this.films];
+    return this.list.splice(0,param);
+  }
 
   getSelectedFilm(filmName) {
     return this.films.filter(item => (item.name.toLowerCase().indexOf(filmName)) === 0);
   }
+
+
 }
