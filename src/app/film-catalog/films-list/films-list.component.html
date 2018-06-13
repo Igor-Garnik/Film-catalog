@@ -14,10 +14,13 @@
             </span> 
             <span class="example-spacer"></span>
             <div class="example-container">
-              <mat-form-field>
-                <input class="search-input" matInput [(ngModel)]="filmTitle" placeholder="Название фильма...">
+              <mat-form-field class="search-input">
+                <mat-hint *ngIf="pwInput.hasError('required')">Укажите минимум 3 символа</mat-hint>
+                <input class="search-input" matInput [(ngModel)]="filmTitle" placeholder="Введите название фильма..." required minlength="3" #pwInput="ngModel">
+                <mat-hint align="end" *ngIf="!pwInput.hasError('required')">{{ pwInput.value?.length}} / 3</mat-hint>
+                <mat-error *ngIf="!pwInput.hasError('required')">Укажите минимум 3 символа</mat-error>
               </mat-form-field>
-              <button mat-raised-button color="primary" (click)="searchFilmByName(filmTitle)">Поиск</button>
+              <button class="search-btn" mat-raised-button (click)="searchFilmByName(filmTitle)">Поиск</button>
             </div>
           <span class="example-spacer"></span>
             <div>
@@ -40,7 +43,7 @@
         <film-item [item]="film" (update)="addToFavorite($event, film)" class="main"></film-item>
       </mat-grid-tile>    
     </mat-grid-list>
-    <button mat-raised-button color="primary" class="add-item" [attr.disabled]="disableBtn()" (click)="addFilms(addItems)">Добавить фильмы</button>
+    <button mat-button class="add-item" [attr.disabled]="disableBtn()" (click)="addFilms(addItems)">Добавить фильмы</button>
   </div>
 
 </div>

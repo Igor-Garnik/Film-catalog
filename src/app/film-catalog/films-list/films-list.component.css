@@ -12,6 +12,7 @@ margin-bottom: 20px;
 .menu-toolbar {
   background-color: white;
   font-size: 18px;
+  height: 70px;
 }
 
 .example-spacer {
@@ -38,4 +39,12 @@ margin-bottom: 20px;
     left: 45%;
     width: 175px;
     text-align: center;
+}
+.search-input {
+  width: 250px;
+}
+
+.search-btn {
+  position: absolute;
+  top: 10px;
 }

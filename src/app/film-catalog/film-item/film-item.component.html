@@ -9,7 +9,7 @@
             {{cutDescription(film.description)}}
         </p>
         <div class="container">
-            <button mat-raised-button color="primary" (click)="setFavorite(film.isFavorite)">{{film.isFavorite ? unCheck : check}}</button>
+            <button mat-button (click)="setFavorite(film.isFavorite)">{{film.isFavorite ? unCheck : check}}</button>
         </div>
     </mat-card-content>
 </mat-card>
