@@ -3,32 +3,23 @@
     
     <mat-toolbar class="menu-toolbar">
         <mat-toolbar-row>
-          <span>{{"В избранном:"}}</span>
-            <span [ngPlural]="setFavoriteQuantity()">
-              <ng-template ngPluralCase="=0">{{setFavoriteQuantity()}} фильмов</ng-template>
-              <ng-template ngPluralCase="=1">{{setFavoriteQuantity()}} фильм</ng-template>
-              <ng-template ngPluralCase="=2">{{setFavoriteQuantity()}} фильма</ng-template>
-              <ng-template ngPluralCase="=3">{{setFavoriteQuantity()}} фильма</ng-template>
-              <ng-template ngPluralCase="=4">{{setFavoriteQuantity()}} фильма</ng-template>
-              <ng-template ngPluralCase="other">{{setFavoriteQuantity()}} фильмов</ng-template>
-            </span> 
-            <span class="example-spacer"></span>
+          <span class="quantity-text">{{setQuantityText(setFavoriteQuantity())}}</span>
+        
             <div class="example-container">
               <mat-form-field class="search-input">
-                <mat-hint *ngIf="pwInput.hasError('required')">Укажите минимум 3 символа</mat-hint>
-                <input class="search-input" matInput [(ngModel)]="filmTitle" placeholder="Введите название фильма..." required minlength="3" #pwInput="ngModel">
+                <!-- <mat-hint *ngIf="pwInput.hasError('required')">Укажите минимум 3 символа</mat-hint> -->
+                <input matInput [(ngModel)]="query" placeholder="Введите название фильма..." required minlength="3" #pwInput="ngModel">
                 <mat-hint align="end" *ngIf="!pwInput.hasError('required')">{{ pwInput.value?.length}} / 3</mat-hint>
-                <mat-error *ngIf="!pwInput.hasError('required')">Укажите минимум 3 символа</mat-error>
+                <!-- <mat-error *ngIf="!pwInput.hasError('required')">Укажите минимум 3 символа</mat-error> -->
               </mat-form-field>
-              <button class="search-btn" mat-raised-button (click)="searchFilmByName(filmTitle)">Поиск</button>
+              <button class="search-btn" mat-raised-button (click)="searchFilmByName(query)">Поиск</button>
             </div>
-          <span class="example-spacer"></span>
             <div>
-              <mat-form-field>
-                <mat-select placeholder="Сортировка">
-                  <mat-option value="ASC" (click)="filmsSort(filmsList, 1)"> А-Я</mat-option>
-                  <mat-option value="DESC" (click)="filmsSort(filmsList, -1)"> Я-А</mat-option>
-                  <mat-option value="DESC" (click)="getInitialList()"> По умолчанию</mat-option>
+              <mat-form-field >
+                <mat-select [(value)]="selected" (selectionChange)="sortFilm(selected)" placeholder="Сортировка">
+                  <mat-option *ngFor ="let sort of sorting" [value]="sort.value">
+                    {{sort.viewValue}}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -37,13 +28,28 @@
   </mat-card>
 
   <div class="wraper">
-    <!-- <div *ngIf="message">{{message}}</div> -->
-    <mat-grid-list cols="3" rowHeight="880px" >
-      <mat-grid-tile *ngFor="let film of filmToggle();trackBy: trackByFn" class="card-item">
+    <div *ngIf="filmsList.length === 0">
+      <h4>По запросу <span>"{{qwery}}" </span> ничего не найдено... Извените :( </h4>
+      <h3>Пожалуйста, попробуйте снова ;)</h3>
+      <img src="../assets/img/404_page.jpg" alt="">
+    </div>
+    
+    <mat-grid-list cols="3" rowHeight="880px" *ngIf="filmsList.length > 0">
+      <mat-grid-tile *ngFor="let film of filmsList" class="card-item">
         <film-item [item]="film" (update)="addToFavorite($event, film)" class="main"></film-item>
       </mat-grid-tile>    
     </mat-grid-list>
-    <button mat-button class="add-item" [attr.disabled]="disableBtn()" (click)="addFilms(addItems)">Добавить фильмы</button>
+    <div class="wraper-btn">
+      <button mat-button class="add-item" (click)="addPage()" [attr.disabled]="disableBtn()">Добавить еще</button>
+      <mat-form-field class="selector">
+        <mat-select [(value)]="quantity">
+          <mat-option *ngFor ="let film of filmsQuantity" [value]="film.value">
+            {{film.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    
   </div>
 
 </div>

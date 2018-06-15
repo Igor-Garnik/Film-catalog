@@ -11,75 +11,84 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './films-list.component.html',
   styleUrls: ['./films-list.component.css']
 })
-export class FilmsListComponent implements OnInit {
 
-  description: string = 'Middle card description';
-  filmsList = null;
-  filmTitle:string = '';
+export class FilmsListComponent implements OnInit {
+  basicListQuantity:number;
+  query:string = '';
+  filmsList;
+  selected = '';
   searchResult;
-  counter:number = 3
-  filmsQuantity:number;
-  addItems:number = 3;
+  counter:number;
+  quantity:number = 3;
   disabled:boolean = false;
-  direction:number;
-  message:string;
+  page:number = 1;
+  filmsQuantity = [
+    {value: 2, viewValue: '2 элемента'},
+    {value: 3, viewValue: '3 элемента'},
+    {value: 4, viewValue: '4 элемента'}
+  ];
+
+  sorting = [
+    {value: 'default', viewValue: 'По умолчанию'},
+    {value: 'ASC', viewValue: 'По алфавиту: А-Я'},
+    {value: 'DESC', viewValue: 'По алфавиту: Я-А'}
+  ];
 
   constructor(public filmsService: FilmService) { }
 
-  filmToggle() {
-    return this.searchResult ? this.searchResult : this.filmsList;
+  //Вычисление окончания слова ' Фильм'
+  setQuantityText(counter) {
+		if (( counter % 100 > 4 && counter % 100 < 20 ) || counter % 10 === 0 || counter % 10 > 4 ) {
+		  return `В избранном: ${counter} фильмов. `;
+		} else if ( counter % 10 < 5 && counter % 10 > 1 ) {
+		  return `В избранном: ${counter} фильма. `;
+		} else {
+		  return `В избранном: ${counter} фильм. `;
+		}
+  }
+  
+  //Сортировка списка фильмов
+  sortFilm(selected) {
+    this.filmsService.createNewFilmsList(selected);
+    this.filmsList = this.filmsService.getPage(this.page, this.quantity);
   }
 
+  //Добавление в избранное
   addToFavorite(value, film) {
     film.isFavorite = value;
     this.setFavoriteQuantity()
   }
 
+  //Вычисление количества избранных фильмов
   setFavoriteQuantity() {
-    return this.filmsList.filter(item => item.isFavorite).length;
-  }
-
-  filmsSort(arr, direct) {
-    this.direction = direct;
-    return arr.sort((a,b) => {
-      let x = a.name.toLowerCase();
-      let y = b.name.toLowerCase();
-      if (x < y) {return -1*direct;}
-      if (x > y) {return 1*direct;}
-      return 0;
-    })
+    let list = this.filmsService.getFilmsList();
+    return list.filter(item => item.isFavorite).length;
   }
   
-  getInitialList() {
-    this.filmsList = this.filmsService.getFilms(this.counter);
+  //Поиск фильма по названию
+  searchFilmByName(query) {
+    let result = this.filmsService.getSelectedFilm(query.trim());
+
+    if(result.length > 0 && query.length > 3) {
+      this.filmsList = result;
+    }
   }
 
-/*   searchFilmByName(filmName) {
-    this.searchResult = filmName.length < 4 ? false : this.filmsService.getSelectedFilm(filmName)
-  } */
-
-  searchFilmByName(filmName) {
-    let result = this.filmsService.getSelectedFilm(filmName)
-    result.length > 0 && filmName.length > 3 ? this.searchResult = result : this.showMessage(filmName)
+  //Добавление порции данных
+  addPage() {
+    this.page ++;
+    this.filmsList = this.filmsList.concat(this.filmsService.getPage(this.page, this.quantity));
+    console.log(this.page);
   }
 
-  showMessage(filmName) {
-    this.message = (filmName.length > 3) ? ',nf' : 'ccs';
-  }
-
-  addFilms(number) {
-    this.counter += number; 
-    this.filmsList = this.filmsService.getFilms(this.counter); 
-    this.filmsSort(this.filmsList, this.direction);
-  }
-
+  //Блокировка кнопки 
   disableBtn() {
-    return this.counter === this.filmsQuantity ? true : false;
+    return this.basicListQuantity == this.filmsList.length ? true : false;
   }
 
   ngOnInit() {
-    this.filmsList = this.filmsService.getFilms(this.counter);
-    this.filmsQuantity = this.filmsService.getFilmsQuantity();
+    this.filmsService.createNewFilmsList('')
+    this.filmsList = this.filmsService.getPage(this.page, this.quantity);
+    this.basicListQuantity = this.filmsService.getFilmsList().length;
   }
-
 }

@@ -15,9 +15,16 @@ margin-bottom: 20px;
   height: 70px;
 }
 
-.example-spacer {
-  flex: 1 1 auto;
+/* .grid {
+  display: flex;
+  justify-content: space-between;
+} */
+
+mat-toolbar-row {
+  display: flex;  
+  justify-content: space-between;
 }
+
 .container {
   display: flex;
   justify-content:center;
@@ -27,19 +34,22 @@ margin-bottom: 20px;
 .wraper {
   width: 1574px;
   margin: auto;
+
 }
 .example-form-field {
   width: 200px;
 }
 .search-input {
   width: 300px;
+  margin-left: -100px;
 }
-.add-item {
-    position: absolute;
-    left: 45%;
-    width: 175px;
-    text-align: center;
+
+.wraper-btn {
+  display: flex;
+  justify-content: center;
+  padding: 50px 50px;
 }
+
 .search-input {
   width: 250px;
 }
@@ -48,3 +58,11 @@ margin-bottom: 20px;
   position: absolute;
   top: 10px;
 }
+
+.selector {
+  width: auto;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+

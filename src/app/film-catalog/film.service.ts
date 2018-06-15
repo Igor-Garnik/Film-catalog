@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'; 
 import { Observable, Subject } from 'rxjs';
+import { Identifiers } from '@angular/compiler';
 //import { FilmsListComponent } from './films-list/films-list.component';
 
 
@@ -10,7 +11,8 @@ export class FilmService {
 
   constructor() {}
 
-  list;
+  newList;
+  sortedList;
   films = [
     {id: 1, name: "Тор: Рагнарёк", year: "2017", imgUrl: "https://image.tmdb.org/t/p/w300_and_h450_bestv2/2NEzIdBAgm4kSYXF4OH86qs3a0u.jpg", description: "Вернувшись в Асгард в поисках таинственного врага, ведущего охоту на Камни Бесконечности, Тор обнаруживает, что действия его брата Локи, захватившего трон Асгарда, привели к приближению наиболее страшного события — Рагнарёка.", isFavorite: true},
     {id: 2, name: "Чудо-женщина ", year: "2017", imgUrl: "https://image.tmdb.org/t/p/w300_and_h450_bestv2/fMnMonAyK3nzp1P1odIFzYoSvYe.jpg", description: "Перед тем как стать Чудо-Женщиной, она была Дианой — принцессой амазонок, обученной быть непобедимой воительницей. И когда на берегах огражденного ото внешнего мира райского острова, который служил ей родиной, терпит крушение американский пилот и рассказывает о серьезном конфликте, бушующем во внешнем мире, Диана покидает свой дом, чтобы справиться с этой угрозой", isFavorite: false},
@@ -26,18 +28,60 @@ export class FilmService {
     {id: 12, name: "Интерстеллар", year: "2014", imgUrl: "https://image.tmdb.org/t/p/w300_and_h450_bestv2/5IGqQ86P8dfpNShocqz8rx38mv0.jpg", description: "Наше время на Земле подошло к концу, команда исследователей берет на себя самую важную миссию в истории человечества; путешествуя за пределами нашей галактики, чтобы узнать есть ли у человечества будущее среди звезд.", isFavorite: false},
   ];
 
-  getFilmsQuantity() {
-    return this.films.length;
+  //Создание копии списка фильмов
+  createNewFilmsList(param) {
+    this.doSort(param)
+    this.newList = [...this.sortedList];
   }
 
-  getFilms(param) {
-    this.list = [...this.films];
-    return this.list.splice(0,param);
+  //Определение метода сортировки
+  doSort(selected) {
+    if(selected == 'default' || selected == '') {
+      this.sortedList = this.filmsSort('id', 1);
+    } else {
+      let number = selected === 'ASC' ? 1 : -1;
+      this.sortedList = this.filmsSort('name', number);
+    }
   }
 
+  //Сортировка списка фильмов
+  filmsSort(param, direct) {
+    let x;
+    let y;
+    let value = param == 'id' ? "id" : "name"
+    return this.films.sort((a,b) => {
+      if(value == 'id') {
+        x = a.id;
+        y = b.id;
+        if (x < y) {return -1*direct;}
+        if (x > y) {return 1*direct;}
+        return 0;
+      } else {
+        x = a.name.toLowerCase();
+        y = b.name.toLowerCase();
+        if (x < y) {return -1*direct;}
+        if (x > y) {return 1*direct;}
+        return 0;
+      }
+    })
+  }
+
+  //Получение масива фильмов для компонента
+  getFilmsList() {
+    return this.films;
+  }
+
+  //Получение порции данных
+  getPage(page, param) {
+    return this.newList.splice(0,param);
+  }
+
+  //Поиск искомого фильма в списке
   getSelectedFilm(filmName) {
     return this.films.filter(item => (item.name.toLowerCase().indexOf(filmName)) === 0);
   }
+
+  
 
 
 }
