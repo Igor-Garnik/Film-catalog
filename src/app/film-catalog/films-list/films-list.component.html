@@ -28,10 +28,9 @@
   </mat-card>
 
   <div class="wraper">
-    <div *ngIf="filmsList.length === 0">
-      <h4>По запросу <span>"{{qwery}}" </span> ничего не найдено... Извените :( </h4>
+    <div *ngIf="filmsList.length === 0" class="message">
+      <h2>По запросу <span>"{{query}}" </span> ничего не найдено... Извените :( </h2>
       <h3>Пожалуйста, попробуйте снова ;)</h3>
-      <img src="../assets/img/404_page.jpg" alt="">
     </div>
     
     <mat-grid-list cols="3" rowHeight="880px" *ngIf="filmsList.length > 0">
@@ -39,8 +38,8 @@
         <film-item [item]="film" (update)="addToFavorite($event, film)" class="main"></film-item>
       </mat-grid-tile>    
     </mat-grid-list>
-    <div class="wraper-btn">
-      <button mat-button class="add-item" (click)="addPage()" [attr.disabled]="disableBtn()">Добавить еще</button>
+    <div class="wraper-btn" *ngIf="filmsList.length > 0">
+      <button mat-button class="add-item" (click)="addPage()" [disabled]="basicListQuantity === filmsList.length">Добавить еще</button>
       <mat-form-field class="selector">
         <mat-select [(value)]="quantity">
           <mat-option *ngFor ="let film of filmsQuantity" [value]="film.value">

@@ -68,10 +68,7 @@ export class FilmsListComponent implements OnInit {
   //Поиск фильма по названию
   searchFilmByName(query) {
     let result = this.filmsService.getSelectedFilm(query.trim());
-
-    if(result.length > 0 && query.length > 3) {
-      this.filmsList = result;
-    }
+    this.filmsList = result.length > 0 && query.length > 3 ? result : [];
   }
 
   //Добавление порции данных
@@ -79,11 +76,6 @@ export class FilmsListComponent implements OnInit {
     this.page ++;
     this.filmsList = this.filmsList.concat(this.filmsService.getPage(this.page, this.quantity));
     console.log(this.page);
-  }
-
-  //Блокировка кнопки 
-  disableBtn() {
-    return this.basicListQuantity == this.filmsList.length ? true : false;
   }
 
   ngOnInit() {
