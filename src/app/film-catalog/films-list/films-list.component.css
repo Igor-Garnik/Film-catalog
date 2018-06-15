@@ -34,12 +34,10 @@ mat-toolbar-row {
 .wraper {
   width: 1574px;
   margin: auto;
-
 }
 
 .message {
   text-align: center;
-  padding-top: 200px;
 }
 .example-form-field {
   width: 200px;
