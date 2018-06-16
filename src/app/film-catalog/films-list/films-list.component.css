@@ -15,11 +15,6 @@ margin-bottom: 20px;
   height: 70px;
 }
 
-/* .grid {
-  display: flex;
-  justify-content: space-between;
-} */
-
 mat-toolbar-row {
   display: flex;  
   justify-content: space-between;
