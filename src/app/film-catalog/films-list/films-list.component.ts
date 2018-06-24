@@ -1,10 +1,16 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FilmService } from '../film.service';
+import { DataService } from 'src/app/service/data.service';
+import { FilmService} from 'src/app/service/film.service';
+import { ActorService } from 'src/app/service/actor.service';
 
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatCardModule} from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Film } from 'src/app/models/film';
+import { Actor } from 'src/app/models/actor';
+import { SearchPipe } from 'src/app/shared/search.pipe';
+
 
 @Component({
   selector: 'app-films-list',
@@ -13,74 +19,85 @@ import { MatInputModule } from '@angular/material/input';
 })
 
 export class FilmsListComponent implements OnInit {
-  basicListQuantity:number;
+
   query:string = '';
-  filmsList;
-  selected = '';
-  searchResult;
-  counter:number;
-  quantity:number = 3;
-  disabled:boolean = false;
+  selected = 'default';
   page:number = 1;
-  filmsQuantity = [
-    {value: 2, viewValue: '2 элемента'},
-    {value: 3, viewValue: '3 элемента'},
-    {value: 4, viewValue: '4 элемента'}
-  ];
+  filmList:Film[] = [];
+  actorList:Actor[] = [];
+  viewList:string = 'film'
+  isUploaded:boolean = true;
 
   sorting = [
-    {value: 'default', viewValue: 'По умолчанию'},
-    {value: 'ASC', viewValue: 'По алфавиту: А-Я'},
-    {value: 'DESC', viewValue: 'По алфавиту: Я-А'}
-  ];
+    {value: 'films', viewValue: 'Показать фильмы'},
+    {value: 'actors', viewValue: 'Показать актеров'}
+  ]
 
-  constructor(public filmsService: FilmService) { }
+  constructor(
+    public actorService: ActorService,
+    public filmService: FilmService,
+    public dataService: DataService
+  ) { }
 
-  //Вычисление окончания слова ' Фильм'
-  setQuantityText(counter) {
-		if (( counter % 100 > 4 && counter % 100 < 20 ) || counter % 10 === 0 || counter % 10 > 4 ) {
-		  return `В избранном: ${counter} фильмов. `;
-		} else if ( counter % 10 < 5 && counter % 10 > 1 ) {
-		  return `В избранном: ${counter} фильма. `;
-		} else {
-		  return `В избранном: ${counter} фильм. `;
-		}
-  }
-  
-  //Сортировка списка фильмов
-  sortFilm(selected) {
-    this.filmsService.createNewFilmsList(selected);
-    this.filmsList = this.filmsService.getPage(this.page, this.quantity);
+  updateParent(data:string): void {
+    this.query = data;
   }
 
-  //Добавление в избранное
-  addToFavorite(value, film) {
-    film.isFavorite = value;
-    this.setFavoriteQuantity()
+  //Сортировка по фильмам или актерам
+  toggleList(selected:string):void {
+    (selected === "films") ? this.viewList = 'film' : this.viewList = 'actor';
   }
 
-  //Вычисление количества избранных фильмов
-  setFavoriteQuantity() {
-    let list = this.filmsService.getFilmsList();
-    return list.filter(item => item.isFavorite).length;
-  }
-  
-  //Поиск фильма по названию
-  searchFilmByName(query) {
-    let result = this.filmsService.getSelectedFilm(query.trim());
-    this.filmsList = result.length > 0 && query.length > 3 ? result : [];
-  }
-
-  //Добавление порции данных
-  addPage() {
+  //Добавление страницы
+  addPage():void {
     this.page ++;
-    this.filmsList = this.filmsList.concat(this.filmsService.getPage(this.page, this.quantity));
-    console.log(this.page);
+    this.viewList === 'film' ? 
+    this.viewFilms(this.page) : this.viewActors(this.page);
+  }
+
+  viewActors(page: number):void {
+    this.actorService.getActor(page).subscribe(
+      (actorsList: any) => {
+        this.isUploaded = false;
+        actorsList.results.forEach(actor => {
+          this.actorList.push({
+            title: actor.name,
+            voteAverage: actor.popularity,
+            posterPath: `${this.dataService.midImgPath}${actor['profile_path']}`
+          });
+        });
+      },
+      err => {
+        console.log("error");
+      }
+    )
+  }
+
+  viewFilms(page: number):void {
+    this.filmService.getFilm(page).subscribe(
+      (filmsList: any) => {
+        this.isUploaded = false;
+        filmsList.results.forEach(film => {
+          this.filmList.push({
+            title: film.title,
+            releaseDate: film.release_date,
+            overview: film.overview,
+            voteAverage: film.vote_average,
+            posterPath: `${this.dataService.midImgPath}${film['poster_path']}`
+          });
+        });
+      },
+      err => {
+      }
+    )
+  }
+
+  getViewList() {
+    return this.viewList ==='film' ? this.filmList : this.actorList;
   }
 
   ngOnInit() {
-    this.filmsService.createNewFilmsList('')
-    this.filmsList = this.filmsService.getPage(this.page, this.quantity);
-    this.basicListQuantity = this.filmsService.getFilmsList().length;
+    this.viewFilms(this.page);
+    this.viewActors(this.page);
   }
 }

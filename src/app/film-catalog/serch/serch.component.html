@@ -1,0 +1,8 @@
+<div class="example-container">
+  <mat-form-field  class="search-input">
+    <input matInput [(ngModel)]="query" placeholder="Поиск по {{item === 'film' ? 'фильмам' : 'актерам'}}" (keyup)="sendQuery()"  >
+    <button mat-button *ngIf="query" matSuffix mat-icon-button aria-label="Clear" (click)="query=''" (click)="sendQuery()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div> 

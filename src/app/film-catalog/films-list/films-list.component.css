@@ -48,19 +48,14 @@ mat-toolbar-row {
   padding: 50px 50px;
 }
 
-.search-input {
-  width: 250px;
-}
-
-.search-btn {
-  position: absolute;
-  top: 10px;
-}
-
 .selector {
   width: auto;
   font-size: 14px;
   font-weight: 500;
+}
+
+mat-spinner {
+  margin: auto;
 }
 
 

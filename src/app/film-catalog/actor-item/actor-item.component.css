@@ -1,0 +1,11 @@
+.example-card {
+    max-width: 350px;
+    text-align: left;
+  }
+  .content {
+    min-height: 100px;
+
+  }
+  .content:hover {
+    white-space: normal;
+  }

@@ -2,51 +2,42 @@
   <mat-card class="menu-card">
     <mat-toolbar class="menu-toolbar">
         <mat-toolbar-row>
-          <span class="quantity-text">{{setQuantityText(setFavoriteQuantity())}}</span>
-        
-            <div class="example-container">
-              <mat-form-field class="search-input">
-                <!-- <mat-hint *ngIf="pwInput.hasError('required')">Укажите минимум 3 символа</mat-hint> -->
-                <input matInput [(ngModel)]="query" placeholder="Введите название фильма..." required minlength="3" #pwInput="ngModel">
-                <mat-hint align="end" *ngIf="!pwInput.hasError('required')">{{ pwInput.value?.length}} / 3</mat-hint>
-                <!-- <mat-error *ngIf="!pwInput.hasError('required')">Укажите минимум 3 символа</mat-error> -->
-              </mat-form-field>
-              <button class="search-btn" mat-raised-button (click)="searchFilmByName(query)">Поиск</button>
-            </div>
-            <div>
-              <mat-form-field >
-                <mat-select [(value)]="selected" (selectionChange)="sortFilm(selected)" placeholder="Сортировка">
-                  <mat-option *ngFor ="let sort of sorting" [value]="sort.value">
-                    {{sort.viewValue}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
+          <span class="quantity-text">{{empty}}</span>
+
+          <app-serch class="example-container" [item]="viewList" (update)="updateParent($event)"></app-serch>
+
+          <div>
+            <mat-form-field >
+              <mat-select [(value)]="selected" (selectionChange)="toggleList(selected)" placeholder="Сортировка">
+                <mat-option *ngFor ="let sort of sorting" [value]="sort.value">
+                  {{sort.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </mat-toolbar-row>
     </mat-toolbar>
   </mat-card>
 
-  <div class="wraper">
-    <div *ngIf="filmsList.length === 0" class="message">
+  <mat-spinner *ngIf="isUploaded"></mat-spinner>
+
+  <mat-grid-list cols="3" rowHeight="880px" *ngIf="(getViewList() | search:query).length > 0; else elseBlock">
+    <mat-grid-tile *ngFor="let item of getViewList() | search:query" class="card-item">
+      <film-item *ngIf="viewList === 'film'"  [film]="item" class="main"></film-item>
+      <app-actor-item *ngIf="viewList === 'actor'" [actor]="item" class="main"></app-actor-item>
+    </mat-grid-tile>  
+  </mat-grid-list>
+
+  <ng-template #elseBlock class="wraper">
+    <div *ngIf="!isUploaded" class="message">
       <h2>По запросу <span>"{{query}}" </span> ничего не найдено... Извените :( </h2>
       <h3>Пожалуйста, попробуйте снова ;)</h3>
       <img src="../assets/img/404 page.png" alt="">
     </div>
+  </ng-template>
     
-    <mat-grid-list cols="3" rowHeight="880px" *ngIf="filmsList.length > 0">
-      <mat-grid-tile *ngFor="let film of filmsList" class="card-item">
-        <film-item [item]="film" (update)="addToFavorite($event, film)" class="main"></film-item>
-      </mat-grid-tile>    
-    </mat-grid-list>
-    <div class="wraper-btn" *ngIf="filmsList.length > 0">
-      <button mat-button class="add-item" (click)="addPage()" [disabled]="basicListQuantity === filmsList.length">Добавить еще</button>
-      <mat-form-field class="selector">
-        <mat-select [(value)]="quantity">
-          <mat-option *ngFor ="let film of filmsQuantity" [value]="film.value">
-            {{film.viewValue}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div> 
-  </div>
+  <div class="wraper-btn" *ngIf="filmList.length > 0">
+    <button mat-button class="add-item" (click)="addPage()">Добавить еще</button> 
+  </div> 
 </div>
+

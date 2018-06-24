@@ -14,16 +14,12 @@ import {MatGridListModule} from '@angular/material/grid-list';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
-//import {MatInputModule} from '@angular/material/input';
-
-
-
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +30,8 @@ import { MatInputModule } from '@angular/material/input';
     MatIconModule,
     MatButtonModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
