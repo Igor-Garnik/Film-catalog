@@ -9,7 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Film } from 'src/app/models/film';
 import { Actor } from 'src/app/models/actor';
-import { SearchPipe } from 'src/app/shared/search.pipe';
+import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
 
 
 @Component({
@@ -60,10 +60,12 @@ export class FilmsListComponent implements OnInit {
       (actorsList: any) => {
         this.isUploaded = false;
         actorsList.results.forEach(actor => {
+          console.log(actorsList.results)
           this.actorList.push({
             title: actor.name,
             voteAverage: actor.popularity,
-            posterPath: `${this.dataService.midImgPath}${actor['profile_path']}`
+            /* posterPath: `${this.dataService.midImgPath}${actor['profile_path']}` */
+            posterPath: this.checkImage(actor.profile_path)
           });
         });
       },
@@ -83,17 +85,24 @@ export class FilmsListComponent implements OnInit {
             releaseDate: film.release_date,
             overview: film.overview,
             voteAverage: film.vote_average,
-            posterPath: `${this.dataService.midImgPath}${film['poster_path']}`
+            /* posterPath: `${this.dataService.midImgPath}${film['poster_path']}` */
+            posterPath: this.checkImage(film.poster_path)
           });
         });
       },
       err => {
+        console.log("error");
       }
     )
   }
 
   getViewList() {
     return this.viewList ==='film' ? this.filmList : this.actorList;
+  }
+
+  checkImage(data): string {
+    return (data !== null) ?
+    `${this.dataService.midImgPath}${data}`  : "../assets/img/img_not_found.png";
   }
 
   ngOnInit() {

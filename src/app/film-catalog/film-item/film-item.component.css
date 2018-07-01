@@ -1,25 +1,32 @@
-.example-card {
-    max-width: 350px;
-    text-align: left;
-  }
-  .content {
-    min-height: 100px;
 
+.example-card {
+  max-height: 708px;
+  margin-top: 16px;
+  margin-bottom: 10px;
+}
+  .card-description {
+    min-height: 100px;
+    height: 109px;
+    text-align: justify;
   }
   .content:hover {
     white-space: normal;
   }
   buttom {
-
     position: absolute;
     left: 50%;
   }
-  .yellow-color {
-    background-color:white;
-    color:black;
-  }
-  .container {
-    display: flex;
-    justify-content:center;
-  }
-  
+.header {
+  text-align: left;
+}
+.card-img {
+  max-height: 460px;
+}
+.card-title{
+  height:30px;
+}
+.card-button-group {
+  display: flex;
+  justify-content:center;
+}
+

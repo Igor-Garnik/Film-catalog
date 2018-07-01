@@ -1,34 +1,24 @@
-.main {
-margin-bottom: 20px;
-}
-.card-item {
-  width: 300px;
+.menu-card-wraper {
+  widows: 100%;
+  display: flex;
+
 }
 
 .menu-card {
-  padding: 0px;
+  width: 76%;
+  display: flex;
+  justify-content : center;
+  padding: 0;
 }
 
 .menu-toolbar {
   background-color: white;
   font-size: 18px;
-  height: 70px;
 }
 
 mat-toolbar-row {
   display: flex;  
   justify-content: space-between;
-}
-
-.container {
-  display: flex;
-  justify-content:center;
-  padding-left: 10%;
-  padding-right: 10%;
-}
-.wraper {
-  width: 1574px;
-  margin: auto;
 }
 
 .message {
@@ -48,14 +38,25 @@ mat-toolbar-row {
   padding: 50px 50px;
 }
 
-.selector {
-  width: auto;
-  font-size: 14px;
-  font-weight: 500;
-}
-
 mat-spinner {
   margin: auto;
 }
+
+.card-wraper {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content : center;
+  margin: auto;
+
+}
+
+.nested-card-wraper {
+  width: 23%;
+}
+
+
+
+
 
 

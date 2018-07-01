@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
-import { CutDescriptionPipe } from 'src/app/shared/cut-description.pipe';
+import { CutDescriptionPipe } from 'src/app/shared/pipes/cut-description.pipe';
 
 
 

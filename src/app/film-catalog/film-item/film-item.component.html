@@ -1,15 +1,16 @@
 <mat-card class="example-card">
-    <mat-card-header>
-        <mat-card-title>{{film.title}}</mat-card-title>
-        <mat-card-subtitle>Релиз: {{film.releaseDate}}</mat-card-subtitle>
-        <mat-card-subtitle>Руйтинг: {{film.voteAverage}}</mat-card-subtitle>
+<!--     <img class="card-img" mat-card-image src={{film.posterPath | checkImg}} alt={{film.title}}> -->
+    <img class="card-img" mat-card-image src={{film.posterPath}} alt={{film.title}}>
+    <mat-card-header class="header">
+        <mat-card-title class="card-title"><strong>{{film.title}}</strong></mat-card-title>
+        <mat-card-subtitle>Релиз: {{film.releaseDate | date: 'd MMMM y'}}</mat-card-subtitle>
+        <mat-card-subtitle>Рeйтинг: {{film.voteAverage}}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src={{film.posterPath}} alt={{film.title}}>
     <mat-card-content>
-        <p class="content">
-            {{film.overview | cutDescription}}
+        <p class="card-description">
+            {{film.overview | cutDescription: 200}}
         </p>
-        <div class="container">
+        <div class="card-button-group">
             <button mat-button>Подробнее</button>
             <button mat-button>{{isFavorite ? unCheck : check}}</button>
         </div>
