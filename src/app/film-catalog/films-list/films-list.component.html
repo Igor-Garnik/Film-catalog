@@ -29,15 +29,15 @@
     </div>  
   </section>
 
-  <ng-template #elseBlock class="wraper">
+  <ng-template #elseBlock>
     <div *ngIf="!isUploaded" class="message">
-      <h2>По запросу <span>"{{query}}" </span> ничего не найдено... Извените :( </h2>
+      <h2>По запросу <span>"{{query}}" </span> ничего не найдено... Извините :( </h2>
       <h3>Пожалуйста, попробуйте снова ;)</h3>
       <img src="../assets/img/404 page.png" alt="">
     </div>
   </ng-template>
     
-  <div class="wraper-btn" *ngIf="">
+  <div class="wraper-btn" *ngIf="!query">
     <button mat-button class="add-item" (click)="addPage()">Добавить еще</button> 
   </div> 
 

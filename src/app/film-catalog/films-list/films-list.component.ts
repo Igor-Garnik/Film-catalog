@@ -60,7 +60,6 @@ export class FilmsListComponent implements OnInit {
       (actorsList: any) => {
         this.isUploaded = false;
         actorsList.results.forEach(actor => {
-          console.log(actorsList.results)
           this.actorList.push({
             title: actor.name,
             voteAverage: actor.popularity,

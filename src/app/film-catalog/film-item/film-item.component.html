@@ -11,8 +11,12 @@
             {{film.overview | cutDescription: 200}}
         </p>
         <div class="card-button-group">
-            <button mat-button>Подробнее</button>
-            <button mat-button>{{isFavorite ? unCheck : check}}</button>
+            <button mat-button (click)="setToFolder()">
+                <mat-icon>{{isBookmark ? 'turned_in' : 'turned_in_not'}}</mat-icon>
+            </button>
+            <button mat-button (click)=setToFavorite()>
+                <mat-icon>{{isFavorite ? 'star' : 'star_border'}}</mat-icon>
+            </button>
         </div>
     </mat-card-content>
 </mat-card>

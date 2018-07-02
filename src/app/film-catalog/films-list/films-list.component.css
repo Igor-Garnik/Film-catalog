@@ -1,7 +1,6 @@
 .menu-card-wraper {
   widows: 100%;
   display: flex;
-
 }
 
 .menu-card {
@@ -53,6 +52,11 @@ mat-spinner {
 
 .nested-card-wraper {
   width: 23%;
+}
+
+.wraper {
+  display: flex;
+  justify-content: left;
 }
 
 
