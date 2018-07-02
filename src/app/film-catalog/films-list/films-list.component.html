@@ -1,5 +1,5 @@
-<div>
-  <mat-card class="menu-card">
+<section class="menu-card-wraper">
+  <mat-card class="menu-card" fxLayout fxLayoutAlign="end">
     <mat-toolbar class="menu-toolbar">
         <mat-toolbar-row>
           <span class="quantity-text">{{empty}}</span>
@@ -18,26 +18,26 @@
         </mat-toolbar-row>
     </mat-toolbar>
   </mat-card>
+</section>
 
   <mat-spinner *ngIf="isUploaded"></mat-spinner>
 
-  <mat-grid-list cols="3" rowHeight="880px" *ngIf="(getViewList() | search:query).length > 0; else elseBlock">
-    <mat-grid-tile *ngFor="let item of getViewList() | search:query" class="card-item">
-      <film-item *ngIf="viewList === 'film'"  [film]="item" class="main"></film-item>
-      <app-actor-item *ngIf="viewList === 'actor'" [actor]="item" class="main"></app-actor-item>
-    </mat-grid-tile>  
-  </mat-grid-list>
+  <section class="card-wraper" *ngIf="(getViewList() | search:query).length > 0; else elseBlock">
+    <div class = "nested-card-wraper"*ngFor="let item of getViewList() | search:query">
+      <film-item *ngIf="viewList === 'film'"  [film]="item"></film-item>
+      <app-actor-item *ngIf="viewList === 'actor'" [actor]="item"></app-actor-item>
+    </div>  
+  </section>
 
-  <ng-template #elseBlock class="wraper">
+  <ng-template #elseBlock>
     <div *ngIf="!isUploaded" class="message">
-      <h2>По запросу <span>"{{query}}" </span> ничего не найдено... Извените :( </h2>
+      <h2>По запросу <span>"{{query}}" </span> ничего не найдено... Извините :( </h2>
       <h3>Пожалуйста, попробуйте снова ;)</h3>
       <img src="../assets/img/404 page.png" alt="">
     </div>
   </ng-template>
     
-  <div class="wraper-btn" *ngIf="filmList.length > 0">
+  <div class="wraper-btn" *ngIf="!query">
     <button mat-button class="add-item" (click)="addPage()">Добавить еще</button> 
   </div> 
-</div>
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
-import { CutDescriptionPipe } from 'src/app/shared/cut-description.pipe';
+import { CutDescriptionPipe } from 'src/app/shared/pipes/cut-description.pipe';
 
 
 
@@ -12,16 +12,21 @@ export class FilmItemComponent implements OnInit {
   @Input() film;
   @Output() update = new EventEmitter();
 
+  isBookmark:boolean = false;
   isFavorite:boolean = false;
-  check:string = 'Добавить в избранное';
-  unCheck:string = 'Удалить из избранного';
+  status:boolean = false;
 
   constructor() { }
 
-  /* setFavorite(isFavorite) {
-    isFavorite = !isFavorite;
-    this.update.emit(isFavorite);
-  } */
+  setToFavorite() {
+    this.isFavorite = !this.isFavorite;
+    this.update.emit(this.isFavorite);
+  }
+
+  setToFolder(e){
+    this.isBookmark = !this.isBookmark;
+    this.update.emit(this.isBookmark);
+  }
   
   ngOnInit() {
   }

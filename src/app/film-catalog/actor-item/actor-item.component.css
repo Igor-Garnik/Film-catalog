@@ -1,6 +1,8 @@
 .example-card {
-    max-width: 350px;
     text-align: left;
+    max-height: 685px;
+    margin-top: 16px;
+    margin-bottom: 10px;
   }
   .content {
     min-height: 100px;
@@ -8,4 +10,8 @@
   }
   .content:hover {
     white-space: normal;
+  }
+
+  .card-img {
+    min-height: 460px;
   }
