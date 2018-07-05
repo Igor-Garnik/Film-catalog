@@ -1,6 +1,6 @@
 <mat-card class="example-card">
 <!--     <img class="card-img" mat-card-image src={{film.posterPath | checkImg}} alt={{film.title}}> -->
-    <img class="card-img" mat-card-image src={{film.posterPath}} alt={{film.title}}>
+    <img class="card-img" mat-card-image src="{{film.posterPath | transformPath: 500}}" alt={{film.title}}>
     <mat-card-header class="header">
         <mat-card-title class="card-title"><strong>{{film.title}}</strong></mat-card-title>
         <mat-card-subtitle>Релиз: {{film.releaseDate | date: 'd MMMM y'}}</mat-card-subtitle>
@@ -11,10 +11,10 @@
             {{film.overview | cutDescription: 200}}
         </p>
         <div class="card-button-group">
-            <button mat-button (click)="setToFolder()">
+            <button mat-button (click)="addBookmark()">
                 <mat-icon>{{isBookmark ? 'turned_in' : 'turned_in_not'}}</mat-icon>
             </button>
-            <button mat-button (click)=setToFavorite()>
+            <button mat-button (click)=addFavorite()>
                 <mat-icon>{{isFavorite ? 'star' : 'star_border'}}</mat-icon>
             </button>
         </div>

@@ -1,5 +1,5 @@
 <mat-card class="example-card">
-    <img class="card-img" mat-card-image src={{actor.posterPath}} alt={{actor.name}}>
+    <img class="card-img" mat-card-image src="{{actor.posterPath | transformPath: 500}}" alt="{{actor.title}}">
   <mat-card-header>
       <mat-card-title>{{actor.title}}</mat-card-title>
       <mat-card-title>Рейтинг: {{actor.voteAverage | cutRating}}</mat-card-title>

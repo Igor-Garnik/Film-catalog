@@ -15,7 +15,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from './shared/shared.module';
 
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';

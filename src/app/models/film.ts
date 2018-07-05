@@ -4,4 +4,7 @@ export class Film {
     overview:string;
     voteAverage:number;
     posterPath:string;
+    id:number;
+    isFavorite?: boolean;
+    isBookMarked?: boolean;
 }

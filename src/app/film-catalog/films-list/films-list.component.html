@@ -24,7 +24,7 @@
 
   <section class="card-wraper" *ngIf="(getViewList() | search:query).length > 0; else elseBlock">
     <div class = "nested-card-wraper"*ngFor="let item of getViewList() | search:query">
-      <film-item *ngIf="viewList === 'film'"  [film]="item"></film-item>
+      <film-item *ngIf="viewList === 'film'"  [film]="item" (makeBookmark)="bookmarkFilm($event)" (makeFavorite)="starFilm($event)"></film-item>
       <app-actor-item *ngIf="viewList === 'actor'" [actor]="item"></app-actor-item>
     </div>  
   </section>

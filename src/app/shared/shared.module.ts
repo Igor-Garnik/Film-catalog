@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CutDescriptionPipe } from './pipes/cut-description.pipe';
 import { SearchPipe } from './pipes/search.pipe';
-import { CheckImgPipe } from './pipes/check-img.pipe';
+import { TransformPathPipe } from './pipes/transform-path.pipe';
 import { CutRatingPipe } from './pipes/cut-rating.pipe';
 
 
@@ -10,7 +10,7 @@ import { CutRatingPipe } from './pipes/cut-rating.pipe';
     declarations: [
         CutDescriptionPipe,
         SearchPipe,
-        CheckImgPipe,
+        TransformPathPipe,
         CutRatingPipe],
     imports: [
         CommonModule,
@@ -18,7 +18,8 @@ import { CutRatingPipe } from './pipes/cut-rating.pipe';
     exports: [
         CutDescriptionPipe,
         SearchPipe,
-        CutRatingPipe
+        CutRatingPipe,
+        TransformPathPipe
     ]
 })
 export class SharedModule { }

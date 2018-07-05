@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
-import { CutDescriptionPipe } from 'src/app/shared/pipes/cut-description.pipe';
-
+import { CutDescriptionPipe } from './../../shared/pipes/cut-description.pipe';
+import { TransformPathPipe} from './../../shared/pipes/transform-path.pipe'
 
 
 @Component({
@@ -10,7 +10,8 @@ import { CutDescriptionPipe } from 'src/app/shared/pipes/cut-description.pipe';
 })
 export class FilmItemComponent implements OnInit {
   @Input() film;
-  @Output() update = new EventEmitter();
+  @Output() makeFavorite = new EventEmitter<number>();
+  @Output() makeBookmark = new EventEmitter<number>()
 
   isBookmark:boolean = false;
   isFavorite:boolean = false;
@@ -18,14 +19,14 @@ export class FilmItemComponent implements OnInit {
 
   constructor() { }
 
-  setToFavorite() {
+  addFavorite() {
     this.isFavorite = !this.isFavorite;
-    this.update.emit(this.isFavorite);
+    this.makeFavorite.emit(this.film.id);
   }
 
-  setToFolder(e){
+  addBookmars(){
     this.isBookmark = !this.isBookmark;
-    this.update.emit(this.isBookmark);
+    this.makeBookmark.emit(this.film.id);
   }
   
   ngOnInit() {
