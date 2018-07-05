@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
-import { Film } from 'src/app/models/film'
-import { CutRatingPipe } from 'src/app/shared/pipes/cut-rating.pipe';
+import { Film } from './../../models/film'
+import { CutRatingPipe } from './../../shared/pipes/cut-rating.pipe';
 
 @Component({
   selector: 'app-actor-item',

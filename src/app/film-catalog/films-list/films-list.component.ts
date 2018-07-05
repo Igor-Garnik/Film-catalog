@@ -1,16 +1,20 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { DataService } from 'src/app/service/data.service';
-import { FilmService} from 'src/app/service/film.service';
-import { ActorService } from 'src/app/service/actor.service';
+import { DataService } from './../../service/data.service';
+import { FilmService} from './../../service/film.service';
+import { ActorService } from './../../service/actor.service';
+import { FavoriteService } from '../../service/favorite.service';
 
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Film } from 'src/app/models/film';
-import { Actor } from 'src/app/models/actor';
-import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
 
+import { Film } from './../../models/film';
+import { Actor } from './../../models/actor';
+
+import { SearchPipe } from './../../shared/pipes/search.pipe';
+
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-films-list',
@@ -23,10 +27,11 @@ export class FilmsListComponent implements OnInit {
   query:string = '';
   selected = 'default';
   page:number = 1;
-  filmList:Film[] = [];
-  actorList:Actor[] = [];
+  filmList:Array<Film> = [];
+  actorList:Array<Actor> = [];
   viewList:string = 'film'
   isUploaded:boolean = true;
+  obj:Object;
 
   sorting = [
     {value: 'films', viewValue: 'Показать фильмы'},
@@ -36,7 +41,8 @@ export class FilmsListComponent implements OnInit {
   constructor(
     public actorService: ActorService,
     public filmService: FilmService,
-    public dataService: DataService
+    public dataService: DataService,
+    public favoriteService : FavoriteService
   ) { }
 
   updateParent(data:string): void {
@@ -50,62 +56,54 @@ export class FilmsListComponent implements OnInit {
 
   //Добавление страницы
   addPage():void {
-    this.page ++;
     this.viewList === 'film' ? 
-    this.viewFilms(this.page) : this.viewActors(this.page);
+    this.viewFilms() : this.viewActors();
   }
 
-  viewActors(page: number):void {
-    this.actorService.getActor(page).subscribe(
-      (actorsList: any) => {
+  //Загрузить список актеров
+  viewActors():void {
+    this.actorService.getPopularActors()
+      .subscribe(actors => {
         this.isUploaded = false;
-        actorsList.results.forEach(actor => {
-          this.actorList.push({
-            title: actor.name,
-            voteAverage: actor.popularity,
-            /* posterPath: `${this.dataService.midImgPath}${actor['profile_path']}` */
-            posterPath: this.checkImage(actor.profile_path)
-          });
-        });
-      },
-      err => {
-        console.log("error");
-      }
-    )
+        this.actorList = [...this.actorList, ...actors]
+      })
   }
 
-  viewFilms(page: number):void {
-    this.filmService.getFilm(page).subscribe(
-      (filmsList: any) => {
-        this.isUploaded = false;
-        filmsList.results.forEach(film => {
-          this.filmList.push({
-            title: film.title,
-            releaseDate: film.release_date,
-            overview: film.overview,
-            voteAverage: film.vote_average,
-            /* posterPath: `${this.dataService.midImgPath}${film['poster_path']}` */
-            posterPath: this.checkImage(film.poster_path)
-          });
-        });
-      },
-      err => {
-        console.log("error");
-      }
-    )
+  //Загрузить список фильмов
+  viewFilms():void {
+    this.filmService.getPopularFilms()
+    .subscribe(films => {
+      this.isUploaded = false;
+      this.filmList = [...this.filmList, ...films];
+    })
   }
 
+  //Отобразить список актеров или фильмов
   getViewList() {
     return this.viewList ==='film' ? this.filmList : this.actorList;
   }
 
-  checkImage(data): string {
-    return (data !== null) ?
-    `${this.dataService.midImgPath}${data}`  : "../assets/img/img_not_found.png";
+  /* buildFavorites() {
+    this.favoriteService.getFavorite(this.filmList.map(film => film.id)).subscribe((favorites: Array<Favorite>))
+      const favoriteList = favorites.map(favorite => favorite._id);
+      this.filmList.map(film => {
+        film.isFavorite = favoriteList.indexOf(film.id) > -1;
+      });
   }
 
+  starFilm(id: number) {
+    const foundFilm = this.filmList.find((film: Film) => {
+      return film.id === id;
+    });
+    if(foundFilm.isFavorite) {
+      this.favoriteService.removeFromFavorites(id).subscribe( () => this.buildFavorites())
+    } else {
+      this.favoriteService.addToFavorite(id).subscribe( () => this.buildFavorites());
+    }
+  } */
+
   ngOnInit() {
-    this.viewFilms(this.page);
-    this.viewActors(this.page);
+    this.viewFilms()
+    this.viewActors()
   }
 }
