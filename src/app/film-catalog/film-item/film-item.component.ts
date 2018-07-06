@@ -10,8 +10,8 @@ import { TransformPathPipe} from './../../shared/pipes/transform-path.pipe'
 })
 export class FilmItemComponent implements OnInit {
   @Input() film;
-  @Output() makeFavorite = new EventEmitter<number>();
-  @Output() makeBookmark = new EventEmitter<number>()
+  @Output() favorite = new EventEmitter<number>();
+  @Output() bookmark = new EventEmitter<number>()
 
   isBookmark:boolean = false;
   isFavorite:boolean = false;
@@ -21,12 +21,12 @@ export class FilmItemComponent implements OnInit {
 
   addFavorite() {
     this.isFavorite = !this.isFavorite;
-    this.makeFavorite.emit(this.film.id);
+    this.favorite.emit(this.film.id);
   }
 
   addBookmars(){
     this.isBookmark = !this.isBookmark;
-    this.makeBookmark.emit(this.film.id);
+    this.bookmark.emit(this.film.id);
   }
   
   ngOnInit() {

@@ -4,7 +4,7 @@
         <mat-toolbar-row>
           <span class="quantity-text">{{empty}}</span>
 
-          <app-serch class="example-container" [item]="viewList" (update)="updateParent($event)"></app-serch>
+          <app-search class="example-container" [item]="viewList" (update)="searchQuery($event)"></app-search>
 
           <div>
             <mat-form-field >
@@ -22,19 +22,28 @@
 
   <mat-spinner *ngIf="isUploaded"></mat-spinner>
 
-  <section class="card-wraper" *ngIf="(getViewList() | search:query).length > 0; else elseBlock">
-    <div class = "nested-card-wraper"*ngFor="let item of getViewList() | search:query">
-      <film-item *ngIf="viewList === 'film'"  [film]="item" (makeBookmark)="bookmarkFilm($event)" (makeFavorite)="starFilm($event)"></film-item>
+  <div class="card-wraper" *ngIf="!query  || query.length < 3; else queryBlock">
+    <div class = "nested-card-wraper" *ngFor="let item of getViewList()">
+      <film-item *ngIf="viewList === 'film'" [film]="item" (makeBookmark)="bookmarkFilm($event)" (makeFavorite)="starFilm($event)"></film-item>
       <app-actor-item *ngIf="viewList === 'actor'" [actor]="item"></app-actor-item>
-    </div>  
-  </section>
+    </div> 
+  </div>
 
-  <ng-template #elseBlock>
-    <div *ngIf="!isUploaded" class="message">
-      <h2>По запросу <span>"{{query}}" </span> ничего не найдено... Извините :( </h2>
-      <h3>Пожалуйста, попробуйте снова ;)</h3>
-      <img src="../assets/img/404 page.png" alt="">
+  <ng-template #queryBlock>
+    <div class="card-wraper" *ngIf="queryResponse.length > 3 || query.length > 3; else elseBlock">
+      <div class = "nested-card-wraper"*ngFor="let item of queryResponse">
+        <film-item *ngIf="viewQueryResults === 'film'" [film]="item" (bookmark)="setBookmark($event)" (favorite)="setStar($event)"></film-item>
+        <app-actor-item *ngIf="viewQueryResults === 'actor'" [actor]="item"></app-actor-item>
+      </div> 
     </div>
+  
+    <ng-template #elseBlock>
+      <div *ngIf="!isUploaded" class="message">
+        <h2>По запросу <span>"{{query}}" </span> ничего не найдено... Извините :( </h2>
+        <h3>Пожалуйста, попробуйте снова ;)</h3>
+        <img src="../assets/img/404 page.png" alt="">
+      </div>
+    </ng-template>
   </ng-template>
     
   <div class="wraper-btn" *ngIf="!query">

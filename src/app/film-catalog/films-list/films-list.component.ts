@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { DataService } from './../../service/data.service';
+import { SearchService } from './../../service/search.searvice';
 import { FilmService} from './../../service/film.service';
 import { ActorService } from './../../service/actor.service';
 import { FavoriteService } from '../../service/favorite.service';
@@ -11,8 +11,6 @@ import { MatInputModule } from '@angular/material/input';
 
 import { Film } from './../../models/film';
 import { Actor } from './../../models/actor';
-
-import { SearchPipe } from './../../shared/pipes/search.pipe';
 
 import { Observable, Subject } from 'rxjs';
 
@@ -31,7 +29,8 @@ export class FilmsListComponent implements OnInit {
   actorList:Array<Actor> = [];
   viewList:string = 'film'
   isUploaded:boolean = true;
-  obj:Object;
+  queryResponse:Array<{}> = [];
+  viewQueryResults:string;
 
   sorting = [
     {value: 'films', viewValue: 'Показать фильмы'},
@@ -41,12 +40,36 @@ export class FilmsListComponent implements OnInit {
   constructor(
     public actorService: ActorService,
     public filmService: FilmService,
-    public dataService: DataService,
+    public searchService: SearchService,
     public favoriteService : FavoriteService
   ) { }
 
-  updateParent(data:string): void {
+  //Поиск по названию фильма и имени актера
+  searchQuery(data:string): void {
     this.query = data;
+    if(this.query.length < 3) return;
+    if(this.selected === 'films'|| this.selected === 'default') {
+      this.searchService.getQueryFilm(this.query)
+      .subscribe(data => {
+        this.queryResponse = data;
+        this.viewQueryResults = 'film'
+      })
+    } else {
+      this.searchService.getQueryActor(this.query)
+      .subscribe(data => {
+        this.isUploaded = false;
+        this.queryResponse = data;
+        this.viewQueryResults = 'actor'
+      })
+    } 
+  }
+
+  setBookmark(data) {
+
+  }
+
+  setStar(data) {
+
   }
 
   //Сортировка по фильмам или актерам
