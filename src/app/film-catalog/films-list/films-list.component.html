@@ -1,52 +1,52 @@
 <section class="menu-card-wraper">
   <mat-card class="menu-card" fxLayout fxLayoutAlign="end">
     <mat-toolbar class="menu-toolbar">
-        <mat-toolbar-row>
-          <span class="quantity-text">{{empty}}</span>
+      <mat-toolbar-row>
+        <span class="quantity-text">{{empty}}</span>
 
-          <app-search class="example-container" [item]="viewList" (update)="searchQuery($event)"></app-search>
+        <app-search class="example-container" [item]="viewList" (update)="searchQuery($event)"></app-search>
 
-          <div>
-            <mat-form-field >
-              <mat-select [(value)]="selected" (selectionChange)="toggleList(selected)" placeholder="Сортировка">
-                <mat-option *ngFor ="let sort of sorting" [value]="sort.value">
-                  {{sort.viewValue}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </mat-toolbar-row>
+        <div>
+          <mat-form-field>
+            <mat-select [(value)]="selected" (selectionChange)="toggleList(selected)" placeholder="Сортировка">
+              <mat-option *ngFor="let sort of sorting" [value]="sort.value">
+                {{sort.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-toolbar-row>
     </mat-toolbar>
   </mat-card>
 </section>
 
-  <mat-spinner *ngIf="isUploaded"></mat-spinner>
+<mat-spinner *ngIf="isUploaded"></mat-spinner>
 
-  <div class="card-wraper" *ngIf="!query  || query.length < 3; else queryBlock">
-    <div class = "nested-card-wraper" *ngFor="let item of getViewList()">
-      <film-item *ngIf="viewList === 'film'" [film]="item" (makeBookmark)="bookmarkFilm($event)" (makeFavorite)="starFilm($event)"></film-item>
-      <app-actor-item *ngIf="viewList === 'actor'" [actor]="item"></app-actor-item>
-    </div> 
+<div class="card-wraper" *ngIf="!query  || query.length < 3; else queryBlock">
+  <div class="nested-card-wraper" *ngFor="let item of getViewList()">
+    <film-item *ngIf="viewList === 'film'" [film]="item" (bookmark)="setBookmark($event)" (favorite)="setStar($event)"></film-item>
+    <app-actor-item *ngIf="viewList === 'actor'" [actor]="item"></app-actor-item>
+  </div>
+</div>
+
+<ng-template #queryBlock>
+  <div class="card-wraper" *ngIf="queryResponse.length > 3 || query.length > 3; else elseBlock">
+    <div class="nested-card-wraper" *ngFor="let item of queryResponse">
+      <film-item *ngIf="viewQueryResults === 'film'" [film]="item" (bookmark)="setBookmark($event)" (favorite)="setStar($event)"></film-item>
+      <app-actor-item *ngIf="viewQueryResults === 'actor'" [actor]="item"></app-actor-item>
+    </div>
   </div>
 
-  <ng-template #queryBlock>
-    <div class="card-wraper" *ngIf="queryResponse.length > 3 || query.length > 3; else elseBlock">
-      <div class = "nested-card-wraper"*ngFor="let item of queryResponse">
-        <film-item *ngIf="viewQueryResults === 'film'" [film]="item" (bookmark)="setBookmark($event)" (favorite)="setStar($event)"></film-item>
-        <app-actor-item *ngIf="viewQueryResults === 'actor'" [actor]="item"></app-actor-item>
-      </div> 
+  <ng-template #elseBlock>
+    <div *ngIf="!isUploaded" class="message">
+      <h2>По запросу
+        <span>"{{query}}" </span> ничего не найдено... Извините :( </h2>
+      <h3>Пожалуйста, попробуйте снова ;)</h3>
+      <img src="../assets/img/404 page.png" alt="">
     </div>
-  
-    <ng-template #elseBlock>
-      <div *ngIf="!isUploaded" class="message">
-        <h2>По запросу <span>"{{query}}" </span> ничего не найдено... Извините :( </h2>
-        <h3>Пожалуйста, попробуйте снова ;)</h3>
-        <img src="../assets/img/404 page.png" alt="">
-      </div>
-    </ng-template>
   </ng-template>
-    
-  <div class="wraper-btn" *ngIf="!query">
-    <button mat-button class="add-item" (click)="addPage()">Добавить еще</button> 
-  </div> 
+</ng-template>
 
+<div class="wraper-btn" *ngIf="!query">
+  <button mat-button class="add-item" (click)="addPage()">Добавить еще</button>
+</div>

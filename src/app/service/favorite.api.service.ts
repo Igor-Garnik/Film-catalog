@@ -5,18 +5,18 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class FavoriteService {
-  localApiUrl:string = 'http://localhost:3000';
+export class FavoriteApiService {
+  localApiUrl: string = 'http://localhost:3000';
   favoriteApiUrl: string = `${this.localApiUrl}/films/favorites`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getFavorite(filmIds: Array<number>) {
     return this.http.get(`${this.favoriteApiUrl}?filmIds=${filmIds.join(',')}`);
   }
 
   addToFavorite(id: number) {
-    return this.http.post(this.favoriteApiUrl,{filmId: id});
+    return this.http.post(this.favoriteApiUrl, { filmId: id });
   }
 
   removeFromFavorites(id: number) {
