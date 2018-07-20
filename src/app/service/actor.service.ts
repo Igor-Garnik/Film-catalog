@@ -20,8 +20,8 @@ export class ActorService {
       return actors.map(actor => {
         return {
           title: actor.name,
-            voteAverage: actor.popularity,
-            posterPath: actor.profile_path
+          voteAverage: actor.popularity,
+          posterPath: actor.profile_path
         }
       })
     }))

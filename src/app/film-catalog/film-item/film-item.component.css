@@ -4,23 +4,24 @@
   margin-top: 16px;
   margin-bottom: 10px;
 }
-  .card-description {
-    min-height: 100px;
-    height: 109px;
-    text-align: justify;
-  }
-  .content:hover {
-    white-space: normal;
-  }
-  buttom {
-    position: absolute;
-    left: 50%;
-  }
+.card-description {
+  min-height: 100px;
+  height: 109px;
+  text-align: justify;
+}
+.content:hover {
+  white-space: normal;
+}
+buttom {
+  position: absolute;
+  left: 50%;
+}
 .header {
   text-align: left;
 }
 .card-img {
   max-height: 460px;
+  min-height: 460px;
 }
 .card-title{
   height:30px;

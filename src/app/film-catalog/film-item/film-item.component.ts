@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { CutDescriptionPipe } from './../../shared/pipes/cut-description.pipe';
-import { TransformPathPipe} from './../../shared/pipes/transform-path.pipe'
+import { TransformPathPipe } from './../../shared/pipes/transform-path.pipe'
 
 
 @Component({
@@ -10,25 +10,21 @@ import { TransformPathPipe} from './../../shared/pipes/transform-path.pipe'
 })
 export class FilmItemComponent implements OnInit {
   @Input() film;
-  @Output() makeFavorite = new EventEmitter<number>();
-  @Output() makeBookmark = new EventEmitter<number>()
-
-  isBookmark:boolean = false;
-  isFavorite:boolean = false;
-  status:boolean = false;
+  @Output() favorite = new EventEmitter<number>();
+  @Output() bookmark = new EventEmitter<number>()
 
   constructor() { }
 
   addFavorite() {
-    this.isFavorite = !this.isFavorite;
-    this.makeFavorite.emit(this.film.id);
+    this.film.isFavorite = !this.film.isFavorite;
+    this.favorite.emit(this.film.id);
   }
 
-  addBookmars(){
-    this.isBookmark = !this.isBookmark;
-    this.makeBookmark.emit(this.film.id);
+  addBookmark() {
+    this.film.isBookmark = !this.film.isBookmark;
+    this.bookmark.emit(this.film.id);
   }
-  
+
   ngOnInit() {
   }
 
