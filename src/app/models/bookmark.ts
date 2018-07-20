@@ -1,4 +1,4 @@
 export class Bookmark {
-  id: number;
-  isCheked: boolean;
+  _id: number;
+  isBookmark: boolean;
 }

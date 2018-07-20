@@ -1,4 +1,4 @@
 export class Favorite {
-  id: number;
+  _id: number;
   isFavorite: boolean;
 }

@@ -14,10 +14,10 @@
         </p>
         <div class="card-button-group">
             <button mat-button (click)="addBookmark()">
-                <mat-icon>{{isBookmark ? 'turned_in' : 'turned_in_not'}}</mat-icon>
+                <mat-icon>{{film.isBookmark ? 'turned_in' : 'turned_in_not'}}</mat-icon>
             </button>
             <button mat-button (click)="addFavorite()">
-                <mat-icon>{{isFavorite ? 'star' : 'star_border'}}</mat-icon>
+                <mat-icon>{{film.isFavorite ? 'star' : 'star_border'}}</mat-icon>
             </button>
         </div>
     </mat-card-content>

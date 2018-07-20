@@ -92,12 +92,13 @@ export class FilmsListComponent implements OnInit {
     });
   }
 
-
   //Загрузить список фильмов
   viewFilms(): void {
     this.filmService.getPopularFilms().subscribe(films => {
       this.isUploaded = false;
       this.filmList = [...this.filmList, ...films];
+      this.favoriteApiService.buildFavorites(this.filmList);
+      this.bookmarkApiService.buildBookmarks(this.filmList);
     });
   }
 
@@ -105,63 +106,14 @@ export class FilmsListComponent implements OnInit {
   getViewList() {
     return this.viewList === 'film' ? this.filmList : this.actorList;
   }
-
-  buildFavorites() {
-    this.favoriteApiService.getFavorite(this.filmList.map(film => film.id))
-      .subscribe((favorites: Array<Favorite>) => {
-        const favoriteList = favorites.map(favorite => favorite.id);
-        this.filmList.map(film => {
-          film.isFavorite = favoriteList.indexOf(film.id) > -1;
-        });
-      },
-        err => {
-          console.log('favorite request error');
-        }
-      );
+  //Добавить в избранное
+  addToFavorite(id: number) {
+    this.favoriteApiService.setStar(id, this.filmList);
   }
 
-  buildBookmarks() {
-    this.bookmarkApiService.getBookmarks(this.filmList.map(film => film.id))
-      .subscribe((bookmarks: Array<Bookmark>) => {
-        const bookmarkList = bookmarks.map(bookmark => bookmark.id);
-        this.filmList.map(film => {
-          film.isCheked = bookmarkList.indexOf(film.id) > -1;
-        });
-      },
-        err => {
-          console.log('favorite request error');
-        }
-      );
-  }
-
-  setStar(id: number) {
-    const foundFilm = this.filmList.find((film: Film) => {
-      return film.id === id;
-    });
-    if (foundFilm.isFavorite) {
-      this.favoriteApiService
-        .removeFromFavorites(id)
-        .subscribe(() => this.buildFavorites());
-    } else {
-      this.favoriteApiService
-        .addToFavorite(id)
-        .subscribe(() => this.buildFavorites());
-    }
-  }
-
-  setBookmark(id: number) {
-    const foundFilm = this.filmList.find((film: Film) => {
-      return film.id === id;
-    });
-    if (foundFilm.isCheked) {
-      this.bookmarkApiService
-        .removeFromBookmarks(id)
-        .subscribe(() => this.buildFavorites());
-    } else {
-      this.bookmarkApiService
-        .addToBookmarks(id)
-        .subscribe(() => this.buildFavorites());
-    }
+  //Добавить в закладки
+  addToBookmark(id: number) {
+    this.bookmarkApiService.setBookmark(id, this.filmList);
   }
 
   ngOnInit() {

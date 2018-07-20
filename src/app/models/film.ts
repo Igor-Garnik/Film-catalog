@@ -6,5 +6,5 @@ export class Film {
   posterPath: string;
   id: number;
   isFavorite: boolean;
-  isCheked: boolean;
+  isBookmark: boolean;
 }

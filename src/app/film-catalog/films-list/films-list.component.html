@@ -24,7 +24,7 @@
 
 <div class="card-wraper" *ngIf="!query  || query.length < 3; else queryBlock">
   <div class="nested-card-wraper" *ngFor="let item of getViewList()">
-    <film-item *ngIf="viewList === 'film'" [film]="item" (bookmark)="setBookmark($event)" (favorite)="setStar($event)"></film-item>
+    <film-item *ngIf="viewList === 'film'" [film]="item" (bookmark)="addToBookmark($event)" (favorite)="addToFavorite($event)"></film-item>
     <app-actor-item *ngIf="viewList === 'actor'" [actor]="item"></app-actor-item>
   </div>
 </div>
@@ -32,7 +32,7 @@
 <ng-template #queryBlock>
   <div class="card-wraper" *ngIf="queryResponse.length > 3 || query.length > 3; else elseBlock">
     <div class="nested-card-wraper" *ngFor="let item of queryResponse">
-      <film-item *ngIf="viewQueryResults === 'film'" [film]="item" (bookmark)="setBookmark($event)" (favorite)="setStar($event)"></film-item>
+      <film-item *ngIf="viewQueryResults === 'film'" [film]="item" (bookmark)="addToBookmark($event)" (favorite)="addToFavorite($event)"></film-item>
       <app-actor-item *ngIf="viewQueryResults === 'actor'" [actor]="item"></app-actor-item>
     </div>
   </div>

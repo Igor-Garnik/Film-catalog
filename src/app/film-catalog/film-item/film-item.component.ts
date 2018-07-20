@@ -13,18 +13,15 @@ export class FilmItemComponent implements OnInit {
   @Output() favorite = new EventEmitter<number>();
   @Output() bookmark = new EventEmitter<number>()
 
-  isBookmark: boolean = false;
-  isFavorite: boolean = false;
-
   constructor() { }
 
   addFavorite() {
-    this.isFavorite = !this.isFavorite;
+    this.film.isFavorite = !this.film.isFavorite;
     this.favorite.emit(this.film.id);
   }
 
   addBookmark() {
-    this.isBookmark = !this.isBookmark;
+    this.film.isBookmark = !this.film.isBookmark;
     this.bookmark.emit(this.film.id);
   }
 

@@ -28,7 +28,7 @@ export class FilmService {
             posterPath: film.poster_path,
             id: film.id,
             isFavorite: false,
-            isChecked: false
+            isBookmark: false
           }
         })
       }))
