@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Injectable, Inject } from '@angular/core';
+=======
+import { Injectable } from '@angular/core';
+>>>>>>> d6714bd911b996e21fc7df85a7a442e4ae31a362
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Film } from './../models/film';
@@ -13,11 +17,19 @@ import { Config } from '../shared/config';
 export class FilmService {
   page = 1;
 
+<<<<<<< HEAD
   constructor(private http: HttpClient, @Inject(API_CONFIG) public apiConfig: Config) {
   }
 
   getPopularFilms(page: number = this.page) {
     return this.http.get(`${this.apiConfig.movieUrl}/popular?${this.apiConfig.params}page=${page}`)
+=======
+  constructor(private http: HttpClient, public dataService: DataService) {
+  }
+
+  getPopularFilms(page: number = this.page) {
+    return this.http.get(`${this.dataService.movieUrl}/popular?${this.dataService.params}page=${page}`)
+>>>>>>> d6714bd911b996e21fc7df85a7a442e4ae31a362
       .pipe(map(data => {
         let films = data['results'];
         this.page += 1;
