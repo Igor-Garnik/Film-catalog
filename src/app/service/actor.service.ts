@@ -15,7 +15,7 @@ export class ActorService {
   constructor(private http: HttpClient, @Inject(API_CONFIG) public apiConfig: Config) { }
 
   getPopularActors(page: number = this.page) {
-    return this.http.get(`${this.dataService.personUrl}/popular?${this.dataService.params}page=${page}`)
+    return this.http.get(`${this.apiConfig.personUrl}/popular?${this.apiConfig.params}page=${page}`)
       .pipe(map(data => {
         let actors = data['results'];
         this.page += 1;

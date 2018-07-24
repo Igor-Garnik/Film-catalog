@@ -4,15 +4,15 @@
 <mat-spinner *ngIf="isUploaded"></mat-spinner>
 
 <div class="card-wraper" *ngIf="!query  || query.length < 3; else queryBlock">
-  <div class="nested-card-wraper" *ngFor="let film of filmList">
-    <film-item [film]="film" (bookmark)="addToBookmark($event)" (favorite)="addToFavorite($event)"></film-item>
+  <div class="nested-card-wraper" *ngFor="let actor of actorList">
+    <app-actor-item [actor]="actor"></app-actor-item>
   </div>
 </div>
 
 <ng-template #queryBlock>
   <div class="card-wraper" *ngIf="queryResponse.length >= 3 || query.length > 3; else elseBlock">
-    <div class="nested-card-wraper" *ngFor="let film of queryResponse">
-      <film-item [film]="film" (bookmark)="addToBookmark($event)" (favorite)="addToFavorite($event)"></film-item>
+    <div class="nested-card-wraper" *ngFor="let actor of queryResponse">
+      <app-actor-item [actor]="actor"></app-actor-item>
     </div>
   </div>
 

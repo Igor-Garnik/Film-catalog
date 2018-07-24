@@ -20,6 +20,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { SharedModule } from '../shared/shared.module';
 import { ActorItemComponent } from './actor-item/actor-item.component';
 import { SearchComponent } from './search/search.component';
+import { ActorsListComponent } from './actors-list/actors-list.component';
 
 @NgModule({
   imports: [
@@ -43,7 +44,7 @@ import { SearchComponent } from './search/search.component';
     FilmItemComponent, 
     FilmsListComponent, 
     ActorItemComponent, 
-    SearchComponent
+    SearchComponent, ActorsListComponent
   ]
 })
 export class FilmCatalogModule { }

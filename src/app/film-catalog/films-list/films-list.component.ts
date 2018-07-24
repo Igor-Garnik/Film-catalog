@@ -4,10 +4,8 @@ import { Observable, Subject } from 'rxjs';
 
 import { SearchService } from './../../service/search.searvice';
 import { FilmService } from './../../service/film.service';
-import { ActorService } from './../../service/actor.service';
 import { FavoriteApiService } from '../../service/favorite.api.service';
 import { BookmarkApiService } from '../../service/bookmark.api.service';
-import { MessageService } from './../../service/message.service';
 
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
@@ -15,7 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import { Film } from './../../models/film';
-import { Actor } from './../../models/actor';
+
 import { Bookmark } from './../../models/bookmark';
 import { Favorite } from './../../models/favorite';
 
@@ -26,71 +24,18 @@ import { Favorite } from './../../models/favorite';
 })
 export class FilmsListComponent implements OnInit {
   query: string = '';
-  selected = 'default';
   page: number = 1;
   filmList: Film[] = [];
-  actorList: Actor[] = [];
-  viewList: string = 'film';
   isUploaded: boolean = true;
-  queryResponse: Array<{}> = [];
-  viewQueryResults: string;
+  queryResponse: Film[] = [];
   subscription: Subscription;
 
-  sorting = [
-    { value: 'films', viewValue: 'Показать фильмы' },
-    { value: 'actors', viewValue: 'Показать актеров' }
-  ];
-
   constructor(
-    public actorService: ActorService,
     public filmService: FilmService,
     public searchService: SearchService,
     public favoriteApiService: FavoriteApiService,
-    public bookmarkApiService: BookmarkApiService,
-    public messageService: MessageService
+    public bookmarkApiService: BookmarkApiService
   ) { }
-
-  //Поиск по названию фильма и имени актера
-  searchQuery(data: string): void {
-    this.query = data;
-    if (this.query.length < 3) return;
-    if (this.selected === 'films' || this.selected === 'default') {
-      this.searchService.getQueryFilm(this.query).subscribe(data => {
-        this.queryResponse = data;
-        this.viewQueryResults = 'film';
-      });
-    } else {
-      this.searchService.getQueryActor(this.query).subscribe(data => {
-        this.isUploaded = false;
-        this.queryResponse = data;
-        this.viewQueryResults = 'actor';
-      });
-    }
-  }
-
-  clearRequest() {
-    this.query = '';
-    this.queryResponse = [];
-  }
-
-  //Сортировка по фильмам или актерам
-  toggleList(selected: string): void {
-    this.clearRequest();
-    selected === 'films' ? (this.viewList = 'film') : (this.viewList = 'actor');
-  }
-
-  //Добавление страницы
-  addPage(): void {
-    this.viewList === 'film' ? this.viewFilms() : this.viewActors();
-  }
-
-  //Загрузить список актеров
-  viewActors(): void {
-    this.actorService.getPopularActors().subscribe(actors => {
-      this.isUploaded = false;
-      this.actorList = [...this.actorList, ...actors];
-    });
-  }
 
   //Загрузить список фильмов
   viewFilms(): void {
@@ -102,10 +47,6 @@ export class FilmsListComponent implements OnInit {
     });
   }
 
-  //Отобразить список актеров или фильмов
-  getViewList() {
-    return this.viewList === 'film' ? this.filmList : this.actorList;
-  }
   //Добавить в избранное
   addToFavorite(id: number) {
     this.favoriteApiService.setStar(id, this.filmList);
@@ -116,8 +57,28 @@ export class FilmsListComponent implements OnInit {
     this.bookmarkApiService.setBookmark(id, this.filmList);
   }
 
+  //Добавление страницы
+  addPage(): void {
+    this.viewFilms();
+  }
+
+  //Поиск по названию фильма и имени актера
+  searchQuery(data: string): void {
+    this.query = data;
+    if (this.query.length < 3) return;
+    this.searchService.getQueryFilm(this.query).subscribe(data => {
+      this.queryResponse = data;
+      this.favoriteApiService.buildFavorites(this.queryResponse);
+      this.bookmarkApiService.buildBookmarks(this.queryResponse);
+    });
+  }
+
+  clearRequest() {
+    this.query = '';
+    this.queryResponse = [];
+  }
+
   ngOnInit() {
     this.viewFilms();
-    this.viewActors();
   }
 }

@@ -1,0 +1,60 @@
+.menu-card-wraper {
+    widows: 100%;
+    display: flex;
+  }
+  
+  .menu-card {
+    width: 76%;
+    display: flex;
+    justify-content : center;
+    padding: 0;
+  }
+  
+  .menu-toolbar {
+    background-color: white;
+    font-size: 18px;
+  }
+  
+  mat-toolbar-row {
+    display: flex;  
+    justify-content: space-between;
+  }
+  
+  .message {
+    text-align: center;
+  }
+  .example-form-field {
+    width: 200px;
+  }
+  .search-input {
+    width: 300px;
+    margin-left: -100px;
+  }
+  
+  .wraper-btn {
+    display: flex;
+    justify-content: center;
+    padding: 50px 50px;
+  }
+  
+  mat-spinner {
+    margin: auto;
+  }
+  
+  .card-wraper {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content : center;
+    margin: auto;
+  
+  }
+  
+  .nested-card-wraper {
+    width: 23%;
+  }
+  
+  .wraper {
+    display: flex;
+    justify-content: left;
+  }

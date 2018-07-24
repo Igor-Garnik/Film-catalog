@@ -27,6 +27,7 @@ registerLocaleData(lcoaleRuUA);
 @NgModule({
   declarations: [
     AppComponent,
+
   ],
   imports: [
     BrowserModule,
