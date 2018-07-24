@@ -17,7 +17,7 @@ export class ActorsListComponent implements OnInit {
   isUploaded: boolean = true;
   queryResponse: Actor[];
 
-  //Загрузить список актеров
+  //Загрузить список актеров.
   viewActors(): void {
     this.actorService.getPopularActors().subscribe(actors => {
       this.isUploaded = false;
