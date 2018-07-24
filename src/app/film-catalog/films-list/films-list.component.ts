@@ -7,7 +7,6 @@ import { FilmService } from './../../service/film.service';
 import { ActorService } from './../../service/actor.service';
 import { FavoriteApiService } from '../../service/favorite.api.service';
 import { BookmarkApiService } from '../../service/bookmark.api.service';
-import { MessageService } from './../../service/message.service';
 
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
@@ -46,8 +45,7 @@ export class FilmsListComponent implements OnInit {
     public filmService: FilmService,
     public searchService: SearchService,
     public favoriteApiService: FavoriteApiService,
-    public bookmarkApiService: BookmarkApiService,
-    public messageService: MessageService
+    public bookmarkApiService: BookmarkApiService
   ) { }
 
   //Поиск по названию фильма и имени актера

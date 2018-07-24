@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
-import { MessageService } from  './../../service/message.service'
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-search',
@@ -7,22 +7,15 @@ import { MessageService } from  './../../service/message.service'
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  query:string = '';
+  query: string = '';
   @Input() item;
   @Output() update = new EventEmitter();
-  constructor(public messageService : MessageService) { }
+  constructor() { }
 
   sendQuery(query) {
     this.update.emit(this.query)
   }
 
-/*   sendQuery(query) {
-    this.messageService.sendMessage(query);
-  } */
-
-  clearMessage(): void {
-    this.messageService.clearMessage();
-  }
   ngOnInit() {
   }
 
