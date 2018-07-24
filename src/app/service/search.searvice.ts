@@ -14,6 +14,7 @@ export class SearchService {
   constructor(private http: HttpClient, @Inject(API_CONFIG) public apiConfig: Config) { }
 
   getQueryFilm(query: string): any {
+    console.log(query);
     return this.http.get(`${this.apiConfig.searchUrl}/movie?${this.apiConfig.params}&query=${query}&page=1`)
       .pipe(map(data => {
         let film = this.findExactOccurrence(data['results'], query, 'title');
@@ -46,7 +47,7 @@ export class SearchService {
 
   findExactOccurrence(list, query: string, title): any {
     return list.filter(item => {
-      return item[title].toLowerCase().substring(0, 3).includes(query.toLowerCase().trim())
+      return item[title].toLowerCase().substring(0, query.length).includes(query.toLowerCase().trim())
     })
   }
 

@@ -22,11 +22,13 @@ import { registerLocaleData } from '@angular/common';
 import lcoaleRuUA from '@angular/common/locales/ru-UA';
 import { apiConfig, API_CONFIG } from './shared/api.config';
 
+
 registerLocaleData(lcoaleRuUA);
 
 @NgModule({
   declarations: [
     AppComponent,
+
   ],
   imports: [
     BrowserModule,
