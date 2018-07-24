@@ -19,7 +19,8 @@ import { SharedModule } from './shared/shared.module';
 
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
-import  lcoaleRuUA  from '@angular/common/locales/ru-UA';
+import lcoaleRuUA from '@angular/common/locales/ru-UA';
+import { apiConfig, API_CONFIG } from './shared/api.config';
 
 registerLocaleData(lcoaleRuUA);
 
@@ -40,7 +41,10 @@ registerLocaleData(lcoaleRuUA);
     SharedModule,
     FlexLayoutModule
   ],
-  providers: [{ provide: LOCALE_ID, useValue: "ru-UA" }],
+  providers: [
+    { provide: LOCALE_ID, useValue: "ru-UA" },
+    { provide: API_CONFIG, useValue: apiConfig }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

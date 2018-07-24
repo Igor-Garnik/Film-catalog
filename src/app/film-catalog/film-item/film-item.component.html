@@ -1,8 +1,10 @@
 <mat-card class="example-card">
-<!--     <img class="card-img" mat-card-image src={{film.posterPath | checkImg}} alt={{film.title}}> -->
+    <!--     <img class="card-img" mat-card-image src={{film.posterPath | checkImg}} alt={{film.title}}> -->
     <img class="card-img" mat-card-image src="{{film.posterPath | transformPath: 500}}" alt={{film.title}}>
     <mat-card-header class="header">
-        <mat-card-title class="card-title"><strong>{{film.title}}</strong></mat-card-title>
+        <mat-card-title class="card-title">
+            <strong>{{film.title}}</strong>
+        </mat-card-title>
         <mat-card-subtitle>Релиз: {{film.releaseDate | date: 'd MMMM y'}}</mat-card-subtitle>
         <mat-card-subtitle>Рeйтинг: {{film.voteAverage}}</mat-card-subtitle>
     </mat-card-header>
@@ -12,10 +14,10 @@
         </p>
         <div class="card-button-group">
             <button mat-button (click)="addBookmark()">
-                <mat-icon>{{isBookmark ? 'turned_in' : 'turned_in_not'}}</mat-icon>
+                <mat-icon>{{film.isBookmark ? 'turned_in' : 'turned_in_not'}}</mat-icon>
             </button>
-            <button mat-button (click)=addFavorite()>
-                <mat-icon>{{isFavorite ? 'star' : 'star_border'}}</mat-icon>
+            <button mat-button (click)="addFavorite()">
+                <mat-icon>{{film.isFavorite ? 'star' : 'star_border'}}</mat-icon>
             </button>
         </div>
     </mat-card-content>
