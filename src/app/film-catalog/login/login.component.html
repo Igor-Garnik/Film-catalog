@@ -1,0 +1,18 @@
+<div class="login-wrapper">
+  <form class="login" (ngSubmit)="login()">
+    <section class="title">
+      <h2>Добро пожаловать в Film catalog</h2>
+      Для дальнейшей работы необходимо авторизироваться
+    </section>
+    <section class="login-group">
+      <mat-form-field>
+        <input matInput placeholder="Логин" [(ngModel)]="credentials.username" name="username">
+      </mat-form-field>
+      <mat-form-field>
+        <input type="password" matInput placeholder="Пароль" [type]="hide ? 'password' : 'text'" [(ngModel)]="credentials.password"
+          name="password">
+      </mat-form-field>
+      <button mat-stroked-button type="submit">Войти</button>
+    </section>
+  </form>
+</div>

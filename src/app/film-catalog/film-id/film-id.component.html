@@ -1,0 +1,16 @@
+<div class="wrapper">
+  <img class="background" [src]="film.backdropPath | transformPath: 1280" alt={{film.title}}>
+  <section class="film">
+    <div class="poster">
+      <img class="poster-img" [src]="film.posterPath | transformPath: 500" alt={{film.title}}>
+    </div>
+    <div class="content">
+      <h2>{{film.title}}</h2>
+      <p>Релиз: {{film.releaseDate | date: 'd MMMM y'}}</p>
+      <p>Рeйтинг: {{film.voteAverage}}</p>
+      <div class="card-description">
+        {{film.overview }}
+      </div>
+    </div>
+  </section>
+</div>

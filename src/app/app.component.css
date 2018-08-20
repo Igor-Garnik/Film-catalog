@@ -10,3 +10,10 @@
     background-color: #424242;
     color:white;
 }
+
+.nav, .exit {
+    width: 100%;
+    display: flex;
+    justify-content:flex-end;
+    align-items: center;
+}

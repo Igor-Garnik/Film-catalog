@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Actor } from './../../models/actor';
 import { ActorService } from './../../service/actor.service';
-import { SearchService } from './../../service/search.searvice';
+import { Query } from '../../models/query';
+import { SearchService } from '../../service/search.service';
+import { UtilsService } from '../../service/utils.service';
+
 
 @Component({
   selector: 'app-actors-list',
@@ -10,19 +13,23 @@ import { SearchService } from './../../service/search.searvice';
 })
 export class ActorsListComponent implements OnInit {
 
-  constructor(public actorService: ActorService, public searchService: SearchService) { }
+  constructor(
+    private actorService: ActorService,
+    private searchService: SearchService,
+    private utilsService: UtilsService
+  ) { }
 
-  query: string = '';
+  query: Query;
   actorList: Actor[] = [];
   isUploaded: boolean = true;
   queryResponse: Actor[];
+  isErrorMessage: boolean = false;
 
   //Загрузить список актеров
   viewActors(): void {
     this.actorService.getPopularActors().subscribe(actors => {
       this.isUploaded = false;
       this.actorList = [...this.actorList, ...actors];
-      console.log(this.actorList)
     });
   }
 
@@ -31,17 +38,15 @@ export class ActorsListComponent implements OnInit {
     this.viewActors();
   }
 
-  //Поиск по названию фильма и имени актера
-  searchQuery(data: string): void {
-    this.query = data;
-    if (this.query.length < 3) return;
-    this.searchService.getQueryActor(this.query).subscribe(data => {
-      this.queryResponse = data;
-    });
-  }
-
   ngOnInit() {
     this.viewActors();
+    this.searchService.getQuery().subscribe((query: Query) => {
+      this.query = query;
+      this.actorService.getQueryActor(query).subscribe(data => {
+        this.queryResponse = data;
+        this.isErrorMessage = this.utilsService.checkErrroMessage(this.queryResponse)
+      });
+    })
   }
 
 }

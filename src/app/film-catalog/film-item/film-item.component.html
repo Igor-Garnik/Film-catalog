@@ -1,6 +1,8 @@
 <mat-card class="example-card">
-    <!--     <img class="card-img" mat-card-image src={{film.posterPath | checkImg}} alt={{film.title}}> -->
-    <img class="card-img" mat-card-image src="{{film.posterPath | transformPath: 500}}" alt={{film.title}}>
+    <a [routerLink]="[film.id]">
+        <img class="card-img" mat-card-image src="{{film.posterPath | transformPath: 500}}" alt={{film.title}}>
+    </a>
+
     <mat-card-header class="header">
         <mat-card-title class="card-title">
             <strong>{{film.title}}</strong>
@@ -9,10 +11,13 @@
         <mat-card-subtitle>Рeйтинг: {{film.voteAverage}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <p class="card-description">
+        <div class="card-description">
             {{film.overview | cutDescription: 200}}
-        </p>
+        </div>
         <div class="card-button-group">
+            <a mat-button [routerLink]="[film.id]">
+                <mat-icon>info</mat-icon>
+            </a>
             <button mat-button (click)="addBookmark()">
                 <mat-icon>{{film.isBookmark ? 'turned_in' : 'turned_in_not'}}</mat-icon>
             </button>

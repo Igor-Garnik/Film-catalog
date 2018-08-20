@@ -4,6 +4,7 @@ export class Film {
   overview: string;
   voteAverage: number;
   posterPath: string;
+  backdropPath: string;
   id: number;
   isFavorite: boolean;
   isBookmark: boolean;

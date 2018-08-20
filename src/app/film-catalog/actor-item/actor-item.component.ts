@@ -1,6 +1,4 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
-import { Film } from './../../models/film'
-import { CutRatingPipe } from './../../shared/pipes/cut-rating.pipe';
 
 @Component({
   selector: 'app-actor-item',
@@ -9,8 +7,8 @@ import { CutRatingPipe } from './../../shared/pipes/cut-rating.pipe';
 })
 export class ActorItemComponent implements OnInit {
 
-  list:any;
-  query:string = '';
+  list: any;
+  query: string = '';
 
   constructor() { }
   @Input() actor;

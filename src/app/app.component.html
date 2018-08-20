@@ -1,22 +1,18 @@
 <mat-toolbar class="toolbar-color">
-    <mat-toolbar-row>
-      <span>Film Catalog</span>
-      <span class="example-spacer"></span>
-      <a mat-button 
-        *ngFor="let link of links" 
-        [routerLink]="link.path" 
-        [routerLinkActive]="link.active"> 
+  <mat-toolbar-row>
+    <span>Film Catalog</span>
+    <span class="example-spacer"></span>
+    <div class="nav" *ngIf="loggedIn">
+      <app-search class="example-container"></app-search>
+      <a mat-button *ngFor="let link of links" [routerLink]="link.path" [routerLinkActive]="link.active">
         <mat-icon class="example-icon">{{link.icon}}</mat-icon>{{link.label}}
-    </a>
-    </mat-toolbar-row>
-  </mat-toolbar>
-
-  
-  <router-outlet></router-outlet>
-     
-
-
+      </a>
+      <a mat-button routerLink="/login" routerLinkActive="active" (click)="logOut()">
+        <mat-icon class="example-icon">power_settings_new</mat-icon>Выйти
+      </a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
 
 
-    
-  
+<router-outlet></router-outlet>

@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
-import { CutDescriptionPipe } from './../../shared/pipes/cut-description.pipe';
-import { TransformPathPipe } from './../../shared/pipes/transform-path.pipe'
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'film-item',
@@ -13,7 +11,7 @@ export class FilmItemComponent implements OnInit {
   @Output() favorite = new EventEmitter<number>();
   @Output() bookmark = new EventEmitter<number>()
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   addFavorite() {
     this.film.isFavorite = !this.film.isFavorite;

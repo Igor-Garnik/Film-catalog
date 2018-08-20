@@ -1,12 +1,33 @@
 <div class="wrapper">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <nav>
+        <div class="title">
+            <a mat-button routerLink="/movie">News of film distribution</a>
+        </div>
+        <div class="title">
+            <a mat-button routerLink="/actors">Actors</a>
+        </div>
+    </nav>
 
-    <h2>Вас приветсвует приложение о фильмах</h2><br> 
+    <div class="main-container ">
+        <div class="container ">
+            <div class="films ">
+                <div *ngFor="let film of filmList " class="items ">
+                    <div class="item ">
+                        <img src="{{film.posterPath | transformPath: 185}} " alt="film.title ">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container ">
+            <div class="actors ">
+                <div class="items " *ngFor="let actor of actorList ">
+                    <div class="item ">
+                        <img src="{{actor.posterPath | transformPath: 185}} " alt="film.title ">
+                    </div>
+                </div>
+            </div>
 
-    <mat-tab-group>
-        <mat-tab label="Tab 1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam quisquam, consequatur in libero corporis officia enim dolorem dolor, odio mollitia iusto atque unde? Est, possimus delectus eius distinctio eos quia.</mat-tab>
-        <mat-tab label="Tab 2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis laudantium labore a doloremque enim blanditiis! Fuga nisi aut labore fugiat aliquid suscipit provident, voluptas placeat totam itaque magni ab reprehenderit.</mat-tab>
-    </mat-tab-group>
-
+        </div>
+    </div>
 </div>
-
-

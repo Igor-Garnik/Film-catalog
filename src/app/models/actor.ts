@@ -1,5 +1,5 @@
 export class Actor {
-    title:string;
-    voteAverage:string;
-    posterPath:string;
+    title: string;
+    voteAverage?: string;
+    posterPath: string;
 }

@@ -6,7 +6,7 @@
 }
 .card-description {
   min-height: 100px;
-  height: 109px;
+  height: 140px;
   text-align: justify;
 }
 .content:hover {
@@ -27,7 +27,9 @@ buttom {
   height:30px;
 }
 .card-button-group {
+  margin-top: 1%;
   display: flex;
   justify-content: space-around;
 }
+
 

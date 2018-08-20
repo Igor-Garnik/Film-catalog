@@ -1,4 +1,56 @@
 .wrapper{
     margin: 50px auto;
-    width: 500px;
+    width: 1190px;
 }
+
+.main-container {
+    display: flex;
+}
+
+
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+.container {
+    display: flex;
+    width: 50%;
+}
+.films, .actors {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.item {
+    overflow: hidden;
+}
+
+.items {
+    margin: 0.1% 0.2%;
+}
+
+nav {
+    display:flex;
+    padding: 1%;
+}
+
+nav .title{
+    width: 50%
+}
+
+mat-spinner {
+    margin: auto;
+    position: absolute;
+    top: 30%;
+    left: 47%;
+
+  }
+
+
+
+
+
+
+

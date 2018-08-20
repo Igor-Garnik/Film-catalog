@@ -38,7 +38,9 @@
   }
   
   mat-spinner {
-    margin: auto;
+    position: absolute;
+    top: 30%;
+    left: 47%;
   }
   
   .card-wraper {

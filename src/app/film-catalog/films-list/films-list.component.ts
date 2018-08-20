@@ -1,21 +1,12 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Observable, Subject } from 'rxjs';
-
-import { SearchService } from './../../service/search.searvice';
 import { FilmService } from './../../service/film.service';
 import { FavoriteApiService } from '../../service/favorite.api.service';
 import { BookmarkApiService } from '../../service/bookmark.api.service';
-
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-
 import { Film } from './../../models/film';
-
-import { Bookmark } from './../../models/bookmark';
-import { Favorite } from './../../models/favorite';
+import { SearchService } from '../../service/search.service';
+import { Query } from '../../models/query'
+import { UtilsService } from '../../service/utils.service';
 
 @Component({
   selector: 'app-films-list',
@@ -23,24 +14,26 @@ import { Favorite } from './../../models/favorite';
   styleUrls: ['./films-list.component.css']
 })
 export class FilmsListComponent implements OnInit {
-  query: string = '';
+  query: Query;
   page: number = 1;
   filmList: Film[] = [];
-  isUploaded: boolean = true;
+  isLoading: boolean = true;
   queryResponse: Film[] = [];
   subscription: Subscription;
+  isErrorMessage: boolean = false;
 
   constructor(
-    public filmService: FilmService,
-    public searchService: SearchService,
-    public favoriteApiService: FavoriteApiService,
-    public bookmarkApiService: BookmarkApiService
+    private filmService: FilmService,
+    private searchService: SearchService,
+    private utilsService: UtilsService,
+    private favoriteApiService: FavoriteApiService,
+    private bookmarkApiService: BookmarkApiService
   ) { }
 
   //Загрузить список фильмов
   viewFilms(): void {
     this.filmService.getPopularFilms().subscribe(films => {
-      this.isUploaded = false;
+      this.isLoading = false;
       this.filmList = [...this.filmList, ...films];
       this.favoriteApiService.buildFavorites(this.filmList);
       this.bookmarkApiService.buildBookmarks(this.filmList);
@@ -62,23 +55,31 @@ export class FilmsListComponent implements OnInit {
     this.viewFilms();
   }
 
-  //Поиск по названию фильма и имени актера
-  searchQuery(data: string): void {
-    this.query = data;
-    if (this.query.length < 3) return;
-    this.searchService.getQueryFilm(this.query).subscribe(data => {
-      this.queryResponse = data;
+  //
+  updateMarks() {
+    if (this.isErrorMessage == false) {
       this.favoriteApiService.buildFavorites(this.queryResponse);
       this.bookmarkApiService.buildBookmarks(this.queryResponse);
-    });
+    }
   }
 
-  clearRequest() {
-    this.query = '';
-    this.queryResponse = [];
+  //Отображает закладки и избранное если поиск дал позитивный результат
+  setMarks() {
+    if (!this.isErrorMessage) {
+      this.favoriteApiService.buildFavorites(this.queryResponse);
+      this.bookmarkApiService.buildBookmarks(this.queryResponse);
+    }
   }
 
   ngOnInit() {
     this.viewFilms();
+    this.searchService.getQuery().subscribe((query: Query) => {
+      this.query = query;
+      this.filmService.getQueryFilm(query).subscribe((data) => {
+        this.queryResponse = data;
+        this.isErrorMessage = this.utilsService.checkErrroMessage(this.queryResponse)
+        this.updateMarks();
+      });
+    })
   }
 }

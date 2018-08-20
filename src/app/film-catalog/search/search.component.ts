@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SearchService } from '../../service/search.service';
+import { Query } from '../../models/query';
 
 
 @Component({
@@ -7,13 +9,21 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  query: string = '';
-  @Input() item;
-  @Output() update = new EventEmitter();
-  constructor() { }
+  query: Query;
+  url;
 
-  sendQuery(query) {
-    this.update.emit(this.query)
+  constructor(
+    private searchService: SearchService,
+  ) { }
+
+  setQuery(query): void {
+    if (query.length < 3) return;
+    this.searchService.setQuery(query);
+  }
+
+  clearQuery() {
+    this.query = null;
+    this.searchService.setQuery(this.query);
   }
 
   ngOnInit() {
