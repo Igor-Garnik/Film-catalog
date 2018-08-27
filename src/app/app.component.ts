@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './service/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,18 +12,31 @@ export class AppComponent {
   constructor(private authService: AuthService) { }
 
   links: object[] = [
-    { path: '/main', label: 'Главная', active: 'button-active', icon: 'home' },
-    { path: '/movie', label: 'Фильмы', active: 'button-active', icon: 'list_alt' },
-    { path: '/actors', label: 'Актеры', active: 'button-active', icon: 'person_outline' }
+    { path: '/main', label: 'Main', active: 'button-active', icon: 'home' },
+    { path: '/movie', label: 'Movie', active: 'button-active', icon: 'list_alt' },
+    { path: '/actors', label: 'Actors', active: 'button-active', icon: 'person_outline' }
   ];
 
+  isShow;
+  subscription: Subscription;
 
-  get loggedIn() {
-    return this.authService.isLoggedIn()
+  loggedIn() {
+    this.subscription = this.authService.isLoggedIn()
+      .subscribe(loggedIn => this.isShow = loggedIn ? true : false)
   }
 
   logOut() {
     this.authService.logout();
+  }
+
+  ngOnInit() {
+    this.loggedIn()
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

@@ -1,0 +1,27 @@
+.wrapper {
+    height: 700px;
+    overflow: hidden;
+}
+
+.actor {
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    box-sizing: border-box;
+    padding-top: 2%;
+}
+
+.poster {
+    width: 30%;
+    overflow: hidden;
+}
+
+.content {
+    width: 60%;
+    padding-left: 2%;
+    line-height: 1.2em;
+}
+
+h2 {
+    margin-top: 0;
+}

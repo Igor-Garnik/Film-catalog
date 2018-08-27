@@ -1,29 +1,33 @@
-<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div class="main-wrapper">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-<div class="card-wraper" *ngIf="!query  || query.length < 3; else queryBlock">
-  <div class="nested-card-wraper" *ngFor="let film of filmList">
-    <film-item [film]="film" (bookmark)="addToBookmark($event)" (favorite)="addToFavorite($event)"></film-item>
-  </div>
-</div>
+  <h1>Popular movies</h1>
 
-<ng-template #queryBlock>
-  <div class="card-wraper" *ngIf="isErrorMessage == false ; else errorBlock">
-    <div class="nested-card-wraper" *ngFor="let film of queryResponse">
+  <div class="card-wraper" *ngIf="!query  || query.length < 3; else queryBlock">
+    <div class="nested-card-wraper" *ngFor="let film of filmList">
       <film-item [film]="film" (bookmark)="addToBookmark($event)" (favorite)="addToFavorite($event)"></film-item>
     </div>
   </div>
 
-  <ng-template #errorBlock>
-    <div class="message">
-      <h2>По запросу
-        <span>"{{query}}" </span> ничего не найдено... Извините :( </h2>
-      <h3>Пожалуйста, попробуйте снова ;)</h3>
-      <img src="../assets/img/404 page.png" alt="">
+  <ng-template #queryBlock>
+    <div class="card-wraper" *ngIf="isErrorMessage == false ; else errorBlock">
+      <div class="nested-card-wraper" *ngFor="let film of queryResponse">
+        <film-item [film]="film" (bookmark)="addToBookmark($event)" (favorite)="addToFavorite($event)"></film-item>
+      </div>
     </div>
+
+    <ng-template #errorBlock>
+      <div class="message">
+        <h2>По запросу
+          <span>"{{query}}" </span> ничего не найдено... Извините :( </h2>
+        <h3>Пожалуйста, попробуйте снова ;)</h3>
+        <img src="../assets/img/404 page.png" alt="">
+      </div>
+    </ng-template>
+
   </ng-template>
 
-</ng-template>
-
-<div class="wraper-btn" *ngIf="!query">
-  <button mat-button class="add-item" (click)="addPage()">Добавить еще</button>
+  <div class="wraper-btn" *ngIf="!query">
+    <button mat-button class="add-item" (click)="addPage()">Добавить еще</button>
+  </div>
 </div>

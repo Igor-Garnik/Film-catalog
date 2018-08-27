@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FilmService } from './../../service/film.service';
 import { FavoriteApiService } from '../../service/favorite.api.service';
 import { BookmarkApiService } from '../../service/bookmark.api.service';
 import { Film } from './../../models/film';
 import { SearchService } from '../../service/search.service';
-import { Query } from '../../models/query'
 import { UtilsService } from '../../service/utils.service';
 
 @Component({
@@ -13,14 +12,16 @@ import { UtilsService } from '../../service/utils.service';
   templateUrl: './films-list.component.html',
   styleUrls: ['./films-list.component.css']
 })
-export class FilmsListComponent implements OnInit {
-  query: Query;
+export class FilmsListComponent implements OnInit, OnDestroy {
+  query: string;
   page: number = 1;
   filmList: Film[] = [];
   isLoading: boolean = true;
   queryResponse: Film[] = [];
   subscription: Subscription;
   isErrorMessage: boolean = false;
+  state: string = 'films';
+
 
   constructor(
     private filmService: FilmService,
@@ -71,15 +72,24 @@ export class FilmsListComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.viewFilms();
-    this.searchService.getQuery().subscribe((query: Query) => {
+  viewQuery() {
+    this.searchService.getQuery().subscribe((query: string) => {
       this.query = query;
-      this.filmService.getQueryFilm(query).subscribe((data) => {
+      this.subscription = this.filmService.getQueryFilm(query).subscribe((data) => {
         this.queryResponse = data;
         this.isErrorMessage = this.utilsService.checkErrroMessage(this.queryResponse)
         this.updateMarks();
       });
     })
+  }
+
+  ngOnInit() {
+    this.viewFilms();
+    this.searchService.setState(this.state);
+    this.viewQuery();
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) { this.subscription.unsubscribe() };
   }
 }

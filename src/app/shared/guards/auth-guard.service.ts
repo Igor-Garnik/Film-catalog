@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,7 @@ export class AuthGuard {
     private router: Router
   ) { }
 
-  canActivate() {
-    const isLogin = this.authService.isLoggedIn();
-    if (isLogin) {
-      return true;
-    } else {
-      this.router.navigate(["/login"]);
-      return false;
-    }
+  canActivate(): Observable<boolean> {
+    return this.authService.isLoggedIn()
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { retry, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -8,14 +8,15 @@ import { retry, tap } from 'rxjs/operators';
 })
 export class AuthService {
   private authUrl = 'https://reqres.in/api';
-  private loggedIn: boolean = false;
+  //private loggedIn: boolean = false;
+  loggedIn$ = new BehaviorSubject(false);
 
   constructor(private http: HttpClient) {
-    this.loggedIn = !!localStorage.getItem('auth_token')
+    this.loggedIn$.next(!!localStorage.getItem('auth_token'))
   }
 
-  isLoggedIn(): boolean {
-    return this.loggedIn;
+  isLoggedIn() {
+    return this.loggedIn$.asObservable();
   }
 
   logIn(username: string, password: string): Observable<any> {
@@ -25,7 +26,7 @@ export class AuthService {
         tap(res => {
           if (res.token) {
             localStorage.setItem('auth_token', res.token);
-            this.loggedIn = true;
+            this.loggedIn$.next(true);
           }
         }),
       );
@@ -33,7 +34,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('auth_token');
-    this.loggedIn = false;
+    this.loggedIn$.next(false);
   }
 
 }

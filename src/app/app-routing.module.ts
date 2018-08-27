@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: "movie", component: FilmsListComponent, canActivate: [AuthGuard] },
   { path: "movie/:id", component: FilmIdComponent, canActivate: [AuthGuard] },
   { path: "actors", component: ActorsListComponent, canActivate: [AuthGuard] },
+  { path: "actors/:id", component: ActorIdComponent, canActivate: [AuthGuard] },
   { path: "**", component: NotFoundComponent }
 ];
 

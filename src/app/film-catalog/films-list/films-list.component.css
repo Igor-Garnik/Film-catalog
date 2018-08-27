@@ -1,3 +1,8 @@
+.main-wrapper {
+  max-width: 1190px;
+  margin: 0 auto;
+}
+
 .menu-card-wraper {
   widows: 100%;
   display: flex;
@@ -44,16 +49,14 @@ mat-spinner {
 }
 
 .card-wraper {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content : center;
-  margin: auto;
 
 }
 
 .nested-card-wraper {
-  width: 23%;
+  width: 25%;
 }
 
 .wraper {

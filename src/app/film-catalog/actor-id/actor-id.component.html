@@ -1,3 +1,13 @@
-<p>
-  actor-id works!
-</p>
+<div class="wrapper">
+  <section class="actor">
+    <div class="poster">
+      <img class="poster-img" [src]="actor.posterPath | transformPath: 300" alt={{actor.title}}>
+    </div>
+    <div class="content">
+      <h2>{{actor.title}}</h2>
+      <p>birthday: {{actor.birthday}}</p>
+      <p>birthday: {{actor.placeOfBirth}}</p>
+      <p>Рейтинг: {{actor.voteAverage | cutRating}}</p>
+    </div>
+  </section>
+</div>

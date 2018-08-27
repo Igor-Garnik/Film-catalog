@@ -11,5 +11,10 @@
 .login-group button{
     display: block;
     width: 100%;
-    margin: 6% auto;
+    margin: 20% auto;
+}
+
+.title span {
+    display: inline-block;
+    padding-bottom: 4%;
 }

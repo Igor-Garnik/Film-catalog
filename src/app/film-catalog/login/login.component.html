@@ -1,18 +1,26 @@
 <div class="login-wrapper">
-  <form class="login" (ngSubmit)="login()">
+  <form class="login" [formGroup]="userForm" (ngSubmit)="submit()">
     <section class="title">
-      <h2>Добро пожаловать в Film catalog</h2>
-      Для дальнейшей работы необходимо авторизироваться
+      <h2>Welcome to Film catalog.</h2>
+      <span>For further work you need to log in.</span>
     </section>
     <section class="login-group">
       <mat-form-field>
-        <input matInput placeholder="Логин" [(ngModel)]="credentials.username" name="username">
+        <mat-label>Login</mat-label>
+        <input matInput formControlName="login">
+        <mat-hint><i>The login field must match the e-mail mask.</i></mat-hint>
+        <mat-error *ngIf="formErrors.login" class="error">
+          {{formErrors.login}}
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input type="password" matInput placeholder="Пароль" [type]="hide ? 'password' : 'text'" [(ngModel)]="credentials.password"
-          name="password">
+        <input matInput type="password" placeholder="Password" formControlName="password">
+        <mat-hint><i>The password must include at least one number and one large letter.</i></mat-hint>
+        <mat-error *ngIf="formErrors.password" class="error">
+          {{formErrors.password}}
+        </mat-error>
       </mat-form-field>
-      <button mat-stroked-button type="submit">Войти</button>
+      <button mat-stroked-button type="submit" [disabled]="!userForm.valid">Log in</button>
     </section>
   </form>
 </div>

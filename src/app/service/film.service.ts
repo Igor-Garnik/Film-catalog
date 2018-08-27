@@ -41,19 +41,10 @@ export class FilmService {
       }))
   }
 
-  /* getFilmById(id): Film {
-    let film: Film;
-    this.filmsList.forEach(data => {
-      if (data['id'] == id) { film = data };
-    })
-    return film;
-  } */
-
   getFilmById(id): Observable<Film> {
     return this.http.get(`${this.apiConfig.movieUrl}/${id}?${this.apiConfig.params}`)
       .pipe(map(film => {
         return this.setFilm(film);
-
       }))
   }
 

@@ -17,3 +17,8 @@
     justify-content:flex-end;
     align-items: center;
 }
+
+.search {
+    max-width: 1190px;
+    margin: 0 auto;
+}

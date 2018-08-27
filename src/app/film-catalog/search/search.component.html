@@ -1,8 +1,12 @@
-<div class="example-container">
-  <mat-form-field class="search-input">
-    <input matInput [(ngModel)]="query" placeholder="Search movies... " (keyup)="setQuery(query)">
-    <button mat-button *ngIf="query" matSuffix mat-icon-button aria-label="Clear" (click)="query=''" (click)="clearQuery(query)">
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
+<div class="wrapper" *ngIf="isLoggedIn">
+  <div class="example-container">
+    <mat-form-field class="search-input">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput [(ngModel)]="query" placeholder="Search for a {{url}}... " (keyup)="setQuery(query)">
+      <mat-hint><i>The field must contain at least 3 characters.</i></mat-hint>
+      <button mat-button *ngIf="query" matSuffix mat-icon-button aria-label="Clear" (click)="query=''" (click)="clearQuery(query)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
 </div>

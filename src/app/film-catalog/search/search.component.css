@@ -1,4 +1,19 @@
 .search-input {
-    width: 200px;
-    font-size: 0.7em;
+    width: 250px;
+    font-size: 0.9em;
+
   }
+
+  mat-icon {
+    font-size: 100%;
+    display: inline-block;
+    
+  }
+
+  input {
+    display: inline-block;
+    padding-bottom: 4px;
+  }
+
+
+

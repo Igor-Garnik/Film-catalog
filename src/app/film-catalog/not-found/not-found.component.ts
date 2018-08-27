@@ -13,14 +13,18 @@ export class NotFoundComponent implements OnInit {
   sec: number = 5;
 
   setCounter() {
-    setInterval(() => {
+    let interval = setInterval(() => {
       this.sec -= 1;
-      if (this.sec == 0) { this.router.navigate(["/login"]) };
+      console.log(this.sec);
+      if (this.sec == 0) {
+        this.router.navigate(["/login"]);
+        clearInterval(interval);
+      };
     }, 1000);
   }
 
   ngOnInit() {
-    this.setCounter()
+    this.setCounter();
   }
 
 }

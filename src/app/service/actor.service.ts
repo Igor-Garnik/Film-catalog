@@ -26,7 +26,7 @@ export class ActorService {
       .pipe(map(data => {
         let actors = data['results'];
         this.page += 1;
-        return this.setActor(actors);
+        return this.setActors(actors);
       }))
   }
 
@@ -34,7 +34,14 @@ export class ActorService {
     return this.http.get(`${this.apiConfig.searchUrl}/person?${this.apiConfig.params}&query=${query}&page=1&include_adult=false`)
       .pipe(map(data => {
         let actors = this.utilsService.findExactOccurrence(data['results'], query, 'name');
-        return this.setActor(actors);
+        return this.setActors(actors);
+      }))
+  }
+
+  getActorById(id): Observable<Actor> {
+    return this.http.get(`${this.apiConfig.personUrl}/${id}?${this.apiConfig.params}&page=1&include_adult=false`)
+      .pipe(map(actor => {
+        return this.setActor(actor);
       }))
   }
 
@@ -53,14 +60,26 @@ export class ActorService {
       }))
   }
 
-  setActor(actors): Actor[] {
+  setActors(actors): Actor[] {
     return actors.map(property => {
       return {
+        id: property.id,
         title: property.name,
         voteAverage: property.popularity,
         posterPath: property.profile_path
       }
     })
+  }
+
+  setActor(actor) {
+    return {
+      id: actor.id,
+      title: actor.name,
+      voteAverage: actor.popularity,
+      posterPath: actor.profile_path,
+      birthday: actor.birthday,
+      placeOfBirth: actor.place_of_birth
+    }
   }
 
 }

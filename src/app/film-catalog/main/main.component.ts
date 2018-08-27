@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FilmService } from '../../service/film.service';
 import { ActorService } from '../../service/actor.service';
 import { SearchService } from '../../service/search.service';
 import { Film } from './../../models/film';
 import { Actor } from './../../models/actor';
 import { Router } from '@angular/router';
-import { Query } from '../../models/query'
+import { Subscriber, Subscription } from 'rxjs';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { Query } from '../../models/query'
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
 
   constructor(
     private filmService: FilmService,
@@ -25,6 +25,8 @@ export class MainComponent implements OnInit {
   filmList: Film[];
   actorList: Actor[];
   isLoading: boolean = true;
+  state: string = 'main';
+  subscription: Subscription;
 
   getFilms(): void {
     this.filmService.getDashboardFilms().subscribe(films => {
@@ -39,12 +41,21 @@ export class MainComponent implements OnInit {
     })
   }
 
+  redirect() {
+    this.subscription = this.searchService.getQuery().subscribe(() => {
+      this.router.navigate(["/movie"]);
+    })
+  }
+
   ngOnInit() {
     this.getFilms();
     this.getActors();
-    this.searchService.getQuery().subscribe((query: Query) => {
-      this.router.navigate(["/movie"]);
-    })
+    this.searchService.setState(this.state);
+    this.redirect();
+  }
+
+  ngOnDestroy() {
+    this.subscription ? this.subscription.unsubscribe() : null;
   }
 
 }

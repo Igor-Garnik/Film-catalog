@@ -1,3 +1,9 @@
+.main-wrapper {
+  max-width: 1190px;
+  margin: 0 auto;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+}
+
 .menu-card-wraper {
     widows: 100%;
     display: flex;
@@ -44,7 +50,7 @@
   }
   
   .card-wraper {
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content : center;
@@ -53,7 +59,7 @@
   }
   
   .nested-card-wraper {
-    width: 23%;
+    width: 25%;
   }
   
   .wraper {
