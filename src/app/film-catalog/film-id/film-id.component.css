@@ -1,4 +1,4 @@
-.wrapper {
+/* .wrapper {
     height: 700px;
     overflow: hidden;
 }
@@ -32,4 +32,35 @@
 
 h2 {
     margin-top: 0;
+} */
+
+.main-wrapper {
+    margin-top: 125px;
+    width: 100%;
+    padding: 3% 0;
 }
+
+.wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+}
+
+.image {
+    width: 30%;
+    max-height: 450px;
+}
+
+ img {
+    width: 100%;
+    height: auto;
+}
+
+.wrapper .content {
+    width: 70%;
+    padding: 0 2% ;
+}
+
+header span{
+    display: block;
+  }

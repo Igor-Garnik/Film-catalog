@@ -1,55 +1,61 @@
 .main-wrapper {
-    background-color: f5f5f5;
-}
+    background-color: #f4f4f4;
+    margin-top: 7.8%;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+  }
 
-.wrapper{
-    margin: 0 auto;
-    max-width: 1190px;
-}
+  .wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      box-sizing: border-box;
+  }
 
-.main-container {
-    display: flex;
-}
+  .wrapper section {
+      width: 50%;
+      margin: 0;
+  }
 
+  .wrapper title {
+      padding: 0;
+  }
 
-.link {
-    text-decoration: none;
-    color: black;
-}
+  .movie .second-line {
+      display:flex; 
+      flex-wrap: wrap;
+  }
 
-.container {
-    display: flex;
-    width: 50%;
-}
-.films, .actors {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
+  .first-line{
+    margin-bottom: -4px;
+  }
 
-.item {
-    overflow: hidden;
-}
+  .second-line div img {
+      width: 250px;
+      height: 100%;
+  }
 
-.items {
-    margin: 0.1% 0.2%;
-}
+  .person .content {
+      display: flex;
+      flex-wrap:wrap;
+  }
 
-nav {
-    display:flex;
-    padding: 1%;
-}
+  .person .content div {
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+      width: 33%;
+      max-height: 212px;
+      flex-wrap: wrap;
+  }
 
-nav .title{
-    width: 50%
-}
+  .person img {
+      max-height: 250px;
+  }
 
-mat-spinner {
-    margin: auto;
-    position: absolute;
-    top: 30%;
-    left: 47%;
-
+  .wrapper a {
+      padding: 0;
+      text-decoration: none;
+      color: black;
   }
 
 

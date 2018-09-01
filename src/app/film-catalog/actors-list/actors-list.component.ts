@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Actor } from './../../models/actor';
-import { ActorService } from './../../service/actor.service';
-import { SearchService } from '../../service/search.service';
-import { UtilsService } from '../../service/utils.service';
+import { Actor } from './../../shared/models/actor';
+import { ActorService } from './../../shared/services/actor.service';
+import { SearchService } from '../../shared/services/search.service';
+import { UtilsService } from '../../shared/services/utils.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 

@@ -14,7 +14,6 @@ export class UtilsService {
   }
 
   checkErrroMessage(message) {
-    console.log(message);
     return message.length == 0 ? true : false;
   }
 }

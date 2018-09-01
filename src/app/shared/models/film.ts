@@ -7,5 +7,5 @@ export class Film {
   backdropPath: string;
   id: number;
   isFavorite: boolean;
-  isBookmark: boolean;
+  isWatchList: boolean;
 }

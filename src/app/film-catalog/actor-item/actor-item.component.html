@@ -1,12 +1,12 @@
 <mat-card class="example-card">
     <div class="card-img">
-        <a [routerLink]="[actor.id]">
+        <a [routerLink]="[actor.id + '/view']">
             <img mat-card-image src="{{actor.posterPath | transformPath: 500}}" alt="{{actor.title}}">
         </a>
     </div>
     <mat-card-header>
         <mat-card-title>
-            <a [routerLink]="[actor.id]">
+            <a [routerLink]="[actor.id + '/view']">
                 <h3>{{actor.title}}</h3>
             </a>
         </mat-card-title>

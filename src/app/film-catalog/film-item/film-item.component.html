@@ -1,5 +1,5 @@
-<mat-card class="example-card">
-    <a [routerLink]="[film.id]">
+<!-- <mat-card class="example-card">
+    <a [routerLink]="[film.id + '/view']">
         <img class="card-img" mat-card-image src="{{film.posterPath | transformPath: 500}}" alt={{film.title}}>
     </a>
 
@@ -15,7 +15,7 @@
             {{film.overview | cutDescription: 200}}
         </div>
         <div class="card-button-group">
-            <a mat-button [routerLink]="[film.id]">
+            <a mat-button [routerLink]="[film.id + '/view']">
                 <mat-icon>info</mat-icon>
             </a>
             <button mat-button (click)="addBookmark()">
@@ -26,4 +26,40 @@
             </button>
         </div>
     </mat-card-content>
-</mat-card>
+</mat-card> -->
+
+<div class="wrapper">
+    <div class="img">
+        <a [routerLink]="[film.id + '/view']">
+            <img src="{{film.posterPath | transformPath: 500}}" alt={{film.title}}>
+        </a>
+    </div>
+    <div class="content">
+        <header>
+            <a [routerLink]="[film.id + '/view']">
+                <strong>{{film.title}}</strong>
+            </a>
+            <span><b>Релиз: </b>{{film.releaseDate | date: 'd MMMM y'}}</span>
+            <span><b>Рейтинг: </b>{{film.voteAverage}}</span>
+        </header>
+        <section>
+            {{film.overview | cutDescription: 200}}
+        </section>
+        <footer>
+            <div class="link">
+                <a [routerLink]="[film.id + '/view']">
+                    More info
+                </a>
+            </div>
+            <div class="button-group">
+                <button mat-icon-button (click)="addToWatchList()" matTooltip={{watchListConf.message}} aria-label="Button that displays a tooltip when focused or hovered over">
+                    <mat-icon>{{film.isWatchList ? 'view_list' : 'list'}}</mat-icon>
+                </button>
+                <button mat-icon-button (click)="addToFavorite()" matTooltip={{favoriteConf.message}} aria-label="Button that displays a tooltip when focused or hovered over">
+                    <mat-icon>{{film.isFavorite ? 'favorite' : 'favorite_border'}}</mat-icon>
+                </button>
+            </div>
+        </footer>
+
+    </div>
+</div>

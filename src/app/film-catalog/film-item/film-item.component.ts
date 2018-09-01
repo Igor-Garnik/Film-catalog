@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { Tooltip } from '../../shared/models/tooltip'
 
 @Component({
   selector: 'film-item',
@@ -9,21 +10,43 @@ import { Router } from '@angular/router';
 export class FilmItemComponent implements OnInit {
   @Input() film;
   @Output() favorite = new EventEmitter<number>();
-  @Output() bookmark = new EventEmitter<number>()
+  @Output() list = new EventEmitter<any>()
 
   constructor(private router: Router) { }
 
-  addFavorite() {
-    this.film.isFavorite = !this.film.isFavorite;
-    this.favorite.emit(this.film.id);
+  favoriteTooltip: string;
+  watchListTooltip: string;
+  favoriteConf = {
+    message: '',
+    add: 'Add to favotites',
+    remove: 'Remove from favorites'
+  }
+  watchListConf = {
+    message: '',
+    add: 'Add to watchlist',
+    remove: 'Remove from watchlist'
   }
 
-  addBookmark() {
-    this.film.isBookmark = !this.film.isBookmark;
-    this.bookmark.emit(this.film.id);
+
+  addToFavorite() {
+    this.film.isFavorite = !this.film.isFavorite;
+    this.setTooltip(this.favoriteConf, this.film.isFavorite);
+    this.favorite.emit(this.film);
+  }
+
+  addToWatchList() {
+    this.film.isWatchList = !this.film.isWatchList;
+    this.setTooltip(this.watchListConf, this.film.isFavorite);
+    this.list.emit(this.film);
+  }
+
+  setTooltip(config: Tooltip, isChecked: boolean) {
+    config.message = isChecked ? config.remove : config.add;
   }
 
   ngOnInit() {
+    this.setTooltip(this.favoriteConf, this.film.isFavorite);
+    this.setTooltip(this.watchListConf, this.film.isWatchList);
   }
 
 }

@@ -1,7 +1,12 @@
+
+
 .search-input {
     width: 250px;
     font-size: 0.9em;
+  }
 
+  .search-input span {
+    color: #969090
   }
 
   mat-icon {
@@ -14,6 +19,8 @@
     display: inline-block;
     padding-bottom: 4px;
   }
+
+
 
 
 

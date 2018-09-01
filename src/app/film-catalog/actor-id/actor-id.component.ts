@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { ActorService } from '../../service/actor.service';
-import { Actor } from '../../models/actor';
+import { ActorService } from '../../shared/services/actor.service';
+import { Actor } from '../../shared/models/actor';
 
 @Component({
   selector: 'app-actor-id',

@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FilmService } from './../../service/film.service';
-import { FavoriteApiService } from '../../service/favorite.api.service';
-import { BookmarkApiService } from '../../service/bookmark.api.service';
-import { Film } from './../../models/film';
-import { SearchService } from '../../service/search.service';
-import { UtilsService } from '../../service/utils.service';
+import { FilmService } from './../../shared/services/film.service';
+import { Film } from './../../shared/models/film';
+import { SearchService } from '../../shared/services/search.service';
+import { UtilsService } from '../../shared/services/utils.service';
+import { mergeMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-films-list',
@@ -22,33 +21,46 @@ export class FilmsListComponent implements OnInit, OnDestroy {
   isErrorMessage: boolean = false;
   state: string = 'films';
 
-
   constructor(
     private filmService: FilmService,
     private searchService: SearchService,
-    private utilsService: UtilsService,
-    private favoriteApiService: FavoriteApiService,
-    private bookmarkApiService: BookmarkApiService
+    private utilsService: UtilsService
   ) { }
 
-  //Загрузить список фильмов
+  //Получить список фильмов
   viewFilms(): void {
-    this.filmService.getPopularFilms().subscribe(films => {
-      this.isLoading = false;
-      this.filmList = [...this.filmList, ...films];
-      this.favoriteApiService.buildFavorites(this.filmList);
-      this.bookmarkApiService.buildBookmarks(this.filmList);
-    });
+    this.filmService.getPopularFilms()
+      .subscribe((films: Film[]) => {
+        this.isLoading = false;
+        this.filmList = [...this.filmList, ...films]
+      });
+  }
+
+  //Получить список фильмов согласно поиска
+  viewQuery(): void {
+    this.subscription = this.searchService.getQuery()
+      .pipe(
+        mergeMap((query: string) => {
+          return this.filmService.getQueryFilm(query)
+            .pipe(
+              map((films: Film[]) => {
+                this.query = query;
+                this.isLoading = false;
+                this.queryResponse = [...films];
+                this.isErrorMessage = this.utilsService.checkErrroMessage(this.queryResponse);
+              }))
+        }))
+      .subscribe();
   }
 
   //Добавить в избранное
-  addToFavorite(id: number) {
-    this.favoriteApiService.setStar(id, this.filmList);
+  addToFavorite(film: Film): void {
+    this.filmService.setFavoritesOrWatchlist(film.id, film.isFavorite).subscribe();
   }
 
   //Добавить в закладки
-  addToBookmark(id: number) {
-    this.bookmarkApiService.setBookmark(id, this.filmList);
+  addToWatchlist(film: Film): void {
+    this.filmService.setFavoritesOrWatchlist(film.id, film.isWatchList).subscribe();
   }
 
   //Добавление страницы
@@ -56,34 +68,8 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     this.viewFilms();
   }
 
-  //
-  updateMarks() {
-    if (this.isErrorMessage == false) {
-      this.favoriteApiService.buildFavorites(this.queryResponse);
-      this.bookmarkApiService.buildBookmarks(this.queryResponse);
-    }
-  }
-
-  //Отображает закладки и избранное если поиск дал позитивный результат
-  setMarks() {
-    if (!this.isErrorMessage) {
-      this.favoriteApiService.buildFavorites(this.queryResponse);
-      this.bookmarkApiService.buildBookmarks(this.queryResponse);
-    }
-  }
-
-  viewQuery() {
-    this.searchService.getQuery().subscribe((query: string) => {
-      this.query = query;
-      this.subscription = this.filmService.getQueryFilm(query).subscribe((data) => {
-        this.queryResponse = data;
-        this.isErrorMessage = this.utilsService.checkErrroMessage(this.queryResponse)
-        this.updateMarks();
-      });
-    })
-  }
-
   ngOnInit() {
+    this.filmService.getLocalStorage();
     this.viewFilms();
     this.searchService.setState(this.state);
     this.viewQuery();

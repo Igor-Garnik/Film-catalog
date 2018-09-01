@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../../service/auth.service';
+import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { mergeMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Request } from '../../shared/models/request';
 
 
 @Component({
@@ -43,7 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   submit(): void {
     let credentials = this.userForm.value;
     this.authService.logIn(credentials.login, credentials.password)
-      .subscribe(() => {
+      .subscribe((res: Response) => {
         this.subscription = this.authService.isLoggedIn()
           .subscribe(res => {
             res ? this.router.navigate(['/main']) : null;
@@ -69,7 +70,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(25),
-        Validators.pattern(/\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6}/)]
+        //Validators.pattern(/\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6}/)]
+      ]
       ], password: ['', [
         Validators.required,
         Validators.minLength(5),

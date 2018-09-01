@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from './service/auth.service';
+import { AuthService } from './shared/services/auth.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,7 +17,7 @@ export class AppComponent {
     { path: '/actors', label: 'Actors', active: 'button-active', icon: 'person_outline' }
   ];
 
-  isShow;
+  isShow: boolean = false;
   subscription: Subscription;
 
   loggedIn() {

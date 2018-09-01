@@ -7,7 +7,7 @@ import { SharedModule } from './shared/shared.module';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import lcoaleRuUA from '@angular/common/locales/ru-UA';
-import { apiConfig, API_CONFIG } from './shared/api.config';
+import { apiConfig, API_CONFIG } from './shared/configs/api.config';
 import { SearchComponent } from './/film-catalog/search/search.component'
 import { MaterialModule } from './material.module';
 

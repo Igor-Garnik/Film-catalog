@@ -1,6 +1,6 @@
 .example-card {
     text-align: left;
-    max-height: 685px;
+    max-height: 500px;
     margin-top: 16px;
     margin-bottom: 10px;
     padding: 0;
@@ -17,6 +17,7 @@
   .card-img {
     height: 350px;
     overflow: hidden;
+    padding: 0;
   }
 
   a{

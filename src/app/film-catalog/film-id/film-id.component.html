@@ -1,4 +1,4 @@
-<div class="wrapper">
+<!-- <div class="wrapper">
   <img class="background" [src]="film.backdropPath | transformPath: 1280" alt={{film.title}}>
   <section class="film">
     <div class="poster">
@@ -13,4 +13,35 @@
       </div>
     </div>
   </section>
+</div> -->
+
+<div class="main-wrapper" [ngStyle]="{'background-image' : 'url(film.backdropPath | transformPath: 1280)'}">
+  <div class="wrapper">
+    <div class="image">
+      <img [src]="film.posterPath | transformPath: 500" [alt]=film.title>
+    </div>
+    <div class="content">
+      <header>
+        <h1>{{film.title}}</h1>
+        <span>{{film.releaseDate | date: 'd MMMM y'}}</span>
+        <span>{{film.voteAverage}}</span>
+      </header>
+      <section>
+        <h3>Описание</h3>
+        {{film.overview }}
+      </section>
+      <footer>
+        <div class="button-group">
+          <button mat-button (click)="addToWatchList()">
+            <mat-icon>{{film.isWatchList ? 'view_list' : 'list'}}</mat-icon>
+          </button>
+          <button mat-button (click)="addToFavorites()">
+            <mat-icon>{{film.isFavorite ? 'favorite' : 'favorite_border'}}</mat-icon>
+          </button>
+        </div>
+      </footer>
+
+
+    </div>
+  </div>
 </div>

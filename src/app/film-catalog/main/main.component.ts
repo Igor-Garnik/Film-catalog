@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FilmService } from '../../service/film.service';
-import { ActorService } from '../../service/actor.service';
-import { SearchService } from '../../service/search.service';
-import { Film } from './../../models/film';
-import { Actor } from './../../models/actor';
+import { FilmService } from '../../shared/services/film.service';
+import { ActorService } from '../../shared/services/actor.service';
+import { SearchService } from '../../shared/services/search.service';
+import { Film } from './../../shared/models/film';
+import { Actor } from './../../shared/models/actor';
 import { Router } from '@angular/router';
 import { Subscriber, Subscription } from 'rxjs';
 
@@ -22,7 +22,9 @@ export class MainComponent implements OnInit, OnDestroy {
     private router: Router,
   ) { }
 
-  filmList: Film[];
+  firstFilm: Film;
+  secondFilm: Film;
+  thirdFilm: Film;
   actorList: Actor[];
   isLoading: boolean = true;
   state: string = 'main';
@@ -31,7 +33,7 @@ export class MainComponent implements OnInit, OnDestroy {
   getFilms(): void {
     this.filmService.getDashboardFilms().subscribe(films => {
       this.isLoading = false;
-      this.filmList = films;
+      [this.firstFilm, this.secondFilm, this.thirdFilm] = films;
     })
   }
 

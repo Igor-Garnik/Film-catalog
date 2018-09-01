@@ -1,40 +1,24 @@
 .main-wrapper {
-  max-width: 1190px;
+  background-color: #f4f4f4;
+  margin-top: 7.8%;
+}
+
+.wrapper {
+  max-width: 1000px;
   margin: 0 auto;
   font-family: 'Source Sans Pro', Arial, sans-serif;
 }
 
-.menu-card-wraper {
-    widows: 100%;
-    display: flex;
-  }
+h1{
+  margin-top: 0px;
+  padding-top: 21.4px;
+}
   
-  .menu-card {
-    width: 76%;
-    display: flex;
-    justify-content : center;
-    padding: 0;
-  }
   
-  .menu-toolbar {
-    background-color: white;
-    font-size: 18px;
-  }
   
-  mat-toolbar-row {
-    display: flex;  
-    justify-content: space-between;
-  }
   
   .message {
     text-align: center;
-  }
-  .example-form-field {
-    width: 200px;
-  }
-  .search-input {
-    width: 300px;
-    margin-left: -100px;
   }
   
   .wraper-btn {
@@ -62,7 +46,3 @@
     width: 25%;
   }
   
-  .wraper {
-    display: flex;
-    justify-content: left;
-  }

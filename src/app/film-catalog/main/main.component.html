@@ -1,4 +1,4 @@
-<div class="main-wrapper">
+<!-- <div class="main-wrapper">
     <div class="wrapper">
         <mat-spinner *ngIf="isLoading"></mat-spinner>
         <nav>
@@ -31,5 +31,38 @@
 
             </div>
         </div>
+    </div>
+</div> -->
+
+<div class="main-wrapper">
+    <div class="wrapper">
+        <section class="movie">
+            <div class="title">
+                <a mat-button routerLink="/movie"><h2>Popular Movies</h2></a>
+            </div>
+            <div class="content">
+                <div class="first-line">
+                    <img src="{{firstFilm.backdropPath | transformPath: 500}}" alt="{{firstFilm.title}}">
+                </div>
+                <div class="second-line">
+                    <div>
+                        <img src="{{secondFilm.backdropPath | transformPath: 300}}" alt="{{secondFilm.title}}">
+                    </div>
+                    <div>
+                        <img src="{{thirdFilm.backdropPath | transformPath: 300}}" alt="{{thirdFilm.title}}">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="person">
+            <div class="title">
+                <a mat-button routerLink="/actors"><h2>Actors</h2></a>
+            </div>
+            <div class="content">
+                <div *ngFor="let actor of actorList">
+                    <img src="{{actor.posterPath | transformPath: 300}}" alt="film.title">
+                </div>
+            </div>
+        </section>
     </div>
 </div>

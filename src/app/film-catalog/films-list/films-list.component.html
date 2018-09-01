@@ -1,33 +1,40 @@
 <div class="main-wrapper">
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <div class="wrapper">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-  <h1>Popular movies</h1>
-
-  <div class="card-wraper" *ngIf="!query  || query.length < 3; else queryBlock">
-    <div class="nested-card-wraper" *ngFor="let film of filmList">
-      <film-item [film]="film" (bookmark)="addToBookmark($event)" (favorite)="addToFavorite($event)"></film-item>
-    </div>
-  </div>
-
-  <ng-template #queryBlock>
-    <div class="card-wraper" *ngIf="isErrorMessage == false ; else errorBlock">
-      <div class="nested-card-wraper" *ngFor="let film of queryResponse">
-        <film-item [film]="film" (bookmark)="addToBookmark($event)" (favorite)="addToFavorite($event)"></film-item>
-      </div>
+    <div class="header">
+      <h1>Popular movies</h1>
     </div>
 
-    <ng-template #errorBlock>
-      <div class="message">
-        <h2>По запросу
-          <span>"{{query}}" </span> ничего не найдено... Извините :( </h2>
-        <h3>Пожалуйста, попробуйте снова ;)</h3>
-        <img src="../assets/img/404 page.png" alt="">
+    <div>
+
+      <div class="card-wrapper" *ngIf="!query  || query.length < 3; else queryBlock">
+        <div class="card" *ngFor="let film of filmList">
+          <film-item [film]="film" (favorite)="addToFavorite($event)" (list)="addToWatchlist($event)"></film-item>
+        </div>
       </div>
-    </ng-template>
 
-  </ng-template>
+      <ng-template #queryBlock>
+        <div class="card-wrapper" *ngIf="isErrorMessage == false ; else errorBlock">
+          <div class="card" *ngFor="let film of queryResponse">
+            <film-item [film]="film" (favorite)="addToFavorite($event)" (list)="addToWatchlist($event)"></film-item>
+          </div>
+        </div>
 
-  <div class="wraper-btn" *ngIf="!query">
-    <button mat-button class="add-item" (click)="addPage()">Добавить еще</button>
+        <ng-template #errorBlock>
+          <div class="message">
+            <h2>По запросу
+              <span>"{{query}}" </span> ничего не найдено... Извините :( </h2>
+            <h3>Пожалуйста, попробуйте снова ;)</h3>
+            <img src="../assets/img/404 page.png" alt="">
+          </div>
+        </ng-template>
+
+      </ng-template>
+    </div>
+
+    <div class="wrapper-btn" *ngIf="!query">
+      <button mat-button class="add-item" (click)="addPage()">Добавить еще</button>
+    </div>
   </div>
 </div>

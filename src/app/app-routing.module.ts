@@ -14,9 +14,9 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "main", component: MainComponent, canActivate: [AuthGuard] },
   { path: "movie", component: FilmsListComponent, canActivate: [AuthGuard] },
-  { path: "movie/:id", component: FilmIdComponent, canActivate: [AuthGuard] },
+  { path: "movie/:id/view", component: FilmIdComponent, canActivate: [AuthGuard] },
   { path: "actors", component: ActorsListComponent, canActivate: [AuthGuard] },
-  { path: "actors/:id", component: ActorIdComponent, canActivate: [AuthGuard] },
+  { path: "actors/:id/view", component: ActorIdComponent, canActivate: [AuthGuard] },
   { path: "**", component: NotFoundComponent }
 ];
 

@@ -2,9 +2,9 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from "rxjs/operators"
-import { API_CONFIG } from '../shared/api.config';
-import { Config } from '../shared/config';
-import { UtilsService } from './../service/utils.service';
+import { API_CONFIG } from '../configs/api.config';
+import { Config } from '../models/config';
+import { UtilsService } from './../services/utils.service';
 import { Actor } from '../models/actor';
 
 
@@ -16,7 +16,7 @@ export class ActorService {
   constructor(
     private http: HttpClient,
     private utilsService: UtilsService,
-    @Inject(API_CONFIG) public apiConfig: Config,
+    @Inject(API_CONFIG) public apiConfig: Config
   ) { }
 
   page = 1;

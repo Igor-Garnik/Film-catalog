@@ -1,35 +1,102 @@
+.wrapper {
+  display: flex;
+}
 
-.example-card {
-  max-height: 708px;
-  margin-top: 16px;
-  margin-bottom: 10px;
+.wrapper .img {
+  width: 194px;
+  max-height: 291px;
+  min-height: 291px;
 }
-.card-description {
-  min-height: 100px;
-  height: 140px;
-  text-align: justify;
+
+.wrapper .img img {
+  width: 100%;
+  height: auto;
 }
-.content:hover {
-  white-space: normal;
+
+.wrapper .content {
+  background-color: #fff;
+  width: 60%;
+  padding: 0;
 }
-buttom {
-  position: absolute;
-  left: 50%;
+
+header {
+  height: 35%;
+  padding: 5% 5%;
 }
-.header {
+
+header a {
+  padding-bottom: 3%;
+}
+
+header span {
+  display: inline-block;
+}
+
+section {
+  height: 50%;
+  padding: 0 5%;
+}
+
+footer {
+  height: 15%;
+  padding: 0 5%;
+  display: flex;
+}
+
+header, section, footer {
+  box-sizing: border-box;
+}
+
+header span{
+  display: block;
+}
+
+header span, section, footer a {
+  font-size: 0.8em;
+  color: rgb(141, 137, 137)
+}
+
+/* header {
+  padding-bottom: 10%;
+}
+
+section {
+  padding-bottom: 20%;
+} */
+
+footer {
+  border-top: 1px solid rgb(184, 182, 182);
+  display: flex;
+  align-items: center
+}
+
+footer a {
+  color: rgb(99, 96, 96);
+}
+
+a {
+  color: black;
+  text-decoration: none;
+  display: block;
+}
+
+.content {
+  padding: 5% 0;
+}
+
+.link {
+  width: 50%;
   text-align: left;
 }
-.card-img {
-  max-height: 460px;
-  min-height: 460px;
-}
-.card-title{
-  height:30px;
-}
-.card-button-group {
-  margin-top: 1%;
+
+.button-group {
+  width: 50%;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-end;
+}
+
+.mat-button{
+  width: 40px;
 }
 
 
