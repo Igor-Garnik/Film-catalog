@@ -15,6 +15,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { YoutubePlayerModule } from 'ng2-youtube-player';
+
 
 @NgModule({
   imports: [
@@ -27,14 +31,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatToolbarModule,
     MatIconModule,
     MatSelectModule,
-    MatSelectModule,
     MatFormFieldModule,
     MatInputModule,
     HttpClientModule,
     MatProgressSpinnerModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule,
+    MatMenuModule,
+    YoutubePlayerModule
   ],
   exports: [
     FormsModule,
@@ -45,14 +51,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatToolbarModule,
     MatIconModule,
     MatSelectModule,
-    MatSelectModule,
     MatFormFieldModule,
     MatInputModule,
     HttpClientModule,
     MatProgressSpinnerModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule,
+    MatMenuModule,
+    YoutubePlayerModule
   ],
   declarations: []
 })

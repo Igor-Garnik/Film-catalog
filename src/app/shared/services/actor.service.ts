@@ -52,8 +52,9 @@ export class ActorService {
         this.page += 1;
         let res = actors.map(actor => {
           return {
-            title: actor.name,
-            posterPath: actor.profile_path
+            name: actor.name,
+            posterPath: `https://image.tmdb.org/t/p/w500${actor.profile_path}`
+
           }
         })
         return res.splice(0, 6);
@@ -64,9 +65,9 @@ export class ActorService {
     return actors.map(property => {
       return {
         id: property.id,
-        title: property.name,
+        name: property.name,
         voteAverage: property.popularity,
-        posterPath: property.profile_path
+        posterPath: `https://image.tmdb.org/t/p/w500${property.profile_path}`
       }
     })
   }
@@ -74,7 +75,7 @@ export class ActorService {
   setActor(actor) {
     return {
       id: actor.id,
-      title: actor.name,
+      name: actor.name,
       voteAverage: actor.popularity,
       posterPath: actor.profile_path,
       birthday: actor.birthday,

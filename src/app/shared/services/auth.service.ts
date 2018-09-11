@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { API_CONFIG } from '../configs/api.config';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { retry, tap, map, mergeMap } from 'rxjs/operators';
+import { Observable, BehaviorSubject, Subject, throwError, pipe } from 'rxjs';
+import { retry, tap, map, mergeMap, catchError } from 'rxjs/operators';
 import { Config } from 'protractor';
 import { Request } from '../models/request'
 

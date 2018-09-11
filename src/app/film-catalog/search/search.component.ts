@@ -3,6 +3,7 @@ import { SearchService } from '../../shared/services/search.service';
 import { Subscription, fromEvent } from 'rxjs';
 import { AuthService } from '../../shared/services/auth.service';
 import { debounceTime, pluck } from 'rxjs/operators';
+import { FilmService } from '../../shared/services/film.service';
 
 
 
@@ -21,16 +22,18 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   constructor(
     private searchService: SearchService,
-    private authService: AuthService
+    private authService: AuthService,
+    private filmService: FilmService
   ) { }
 
   clearQuery() {
     this.searchService.setQuery(this.query);
-
+    console.log(this.input.nativeElement);
+    this.input.resetForm();
   }
 
   setInput(url) {
-    this.url = url == 'actors' ? 'person' : 'movie'
+    this.url = url == 'actors' ? 'актерам' : 'фильмам'
   }
 
   getState() {

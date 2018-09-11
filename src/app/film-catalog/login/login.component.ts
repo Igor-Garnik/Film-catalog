@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Request } from '../../shared/models/request';
@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     "password": "",
   }
 
+  message = 'error';
+
   validationMessages = {
     "login": {
       "required": "The field can not be empty",
@@ -44,21 +46,29 @@ export class LoginComponent implements OnInit, OnDestroy {
   submit(): void {
     let credentials = this.userForm.value;
     this.authService.logIn(credentials.login, credentials.password)
-      .subscribe((res: Response) => {
-        this.subscription = this.authService.isLoggedIn()
-          .subscribe(res => {
-            res ? this.router.navigate(['/main']) : null;
-          })
-      })
+      .pipe(
+        mergeMap((response) => {
+          return this.authService.isLoggedIn()
+            .pipe(
+              map(
+                res => this.navigate(res),
+                console.log(response)
+              )
+            )
+        })
+      )
+      .subscribe();
   }
 
   isLoggedIn() {
     this.authService.isLoggedIn()
-      .subscribe(res => {
-        res ? this.router.navigate(['/main']) : null;
-      })
-
+      .subscribe(res => this.navigate(res))
   }
+
+  navigate(res) {
+    return res ? this.router.navigate(['/main']) : null;
+  }
+
   ngOnInit() {
     this.isLoggedIn()
     this.buildForm();

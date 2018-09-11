@@ -1,6 +1,7 @@
 export class Actor {
     id: number;
-    title: string;
+    name: string;
+    character?: string;
     voteAverage?: string;
     posterPath: string;
     birthday?: string;

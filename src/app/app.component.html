@@ -1,23 +1,31 @@
-<mat-toolbar>
-  <mat-toolbar-row>
-    <span>Film Catalog</span>
-    <span class="example-spacer"></span>
-    <div class="nav" *ngIf="isShow">
-      <!-- <app-search class="example-container"></app-search> -->
-      <a mat-button *ngFor="let link of links" [routerLink]="link.path" [routerLinkActive]="link.active">
-        <mat-icon class="example-icon">{{link.icon}}</mat-icon>{{link.label}}
-      </a>
-      <a mat-button routerLink="/login" routerLinkActive="active" (click)="logOut()">
-        <mat-icon class="example-icon">power_settings_new</mat-icon>Log out
-      </a>
+<div class="container">
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <span>Film Catalog</span>
+      <span class="example-spacer"></span>
+      <div class="nav" *ngIf="isShow">
+        <a mat-button *ngFor="let link of links" [routerLink]="link.path" [routerLinkActive]="link.active">
+          <mat-icon class="example-icon">{{link.icon}}</mat-icon>{{link.label}}
+        </a>
+        <button mat-button [matMenuTriggerFor]="menu">
+          <mat-icon class="example-icon">account_circle</mat-icon>
+          {{userName}}
+        </button>
+        <mat-menu #menu="matMenu">
+          <a mat-button routerLink="/login" routerLinkActive="active" (click)="logOut()">
+            <mat-icon class="example-icon">power_settings_new</mat-icon>Log out
+          </a>
+        </mat-menu>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div class="wrapper">
+    <div class="search">
+      <app-search class="example-container"></app-search>
     </div>
-  </mat-toolbar-row>
-</mat-toolbar>
-<div class="wrapper">
-  <div class="search">
-    <app-search class="example-container"></app-search>
   </div>
 </div>
 
-
 <router-outlet></router-outlet>
+
+<div class="footer"></div>

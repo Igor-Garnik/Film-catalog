@@ -1,6 +1,5 @@
 .main-wrapper {
   background-color: #f4f4f4;
-  margin-top: 7.8%;
 }
 
 .wrapper {
@@ -34,15 +33,12 @@ h1{
   }
   
   .card-wraper {
-    width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content : center;
-    margin: auto;
-  
+    justify-content : space-between;
   }
   
   .nested-card-wraper {
-    width: 25%;
+    width: 23.5%;
   }
   

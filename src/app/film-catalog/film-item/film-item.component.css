@@ -37,6 +37,10 @@ section {
   padding: 0 5%;
 }
 
+.discription {
+  min-height: 272px;
+}
+
 footer {
   height: 15%;
   padding: 0 5%;
@@ -56,13 +60,6 @@ header span, section, footer a {
   color: rgb(141, 137, 137)
 }
 
-/* header {
-  padding-bottom: 10%;
-}
-
-section {
-  padding-bottom: 20%;
-} */
 
 footer {
   border-top: 1px solid rgb(184, 182, 182);
@@ -98,5 +95,33 @@ a {
 .mat-button{
   width: 40px;
 }
+
+/* Альбомное отображение */
+
+.album-image-wrapper {
+  width: 100%;
+}
+
+.album-image-wrapper img {
+  width: 100%;
+  height: auto;
+}
+
+.album-content{
+  display: flex;
+}
+
+.album-content .info-group, .album-content .button-group {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 2%;
+}
+
+
+.album-content .info-group span {
+  display: inline-block;
+  font-size: 0.8em;
+}
+
 
 

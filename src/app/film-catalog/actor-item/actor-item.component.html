@@ -1,16 +1,9 @@
-<mat-card class="example-card">
-    <div class="card-img">
-        <a [routerLink]="[actor.id + '/view']">
-            <img mat-card-image src="{{actor.posterPath | transformPath: 500}}" alt="{{actor.title}}">
-        </a>
+<div class="wrapper">
+    <div class="poster">
+        <a [routerLink]="actor.id + '/view'"><img [src]="actor.posterPath" alt="actor.name"></a>
     </div>
-    <mat-card-header>
-        <mat-card-title>
-            <a [routerLink]="[actor.id + '/view']">
-                <h3>{{actor.title}}</h3>
-            </a>
-        </mat-card-title>
-        <mat-card-title>Рейтинг: {{actor.voteAverage | cutRating}}</mat-card-title>
-    </mat-card-header>
-
-</mat-card>
+    <div class="content">
+        <p><b>{{actor.name}}</b></p>
+        <span>рейтинг: {{actor.voteAverage}}</span>
+    </div>
+</div>

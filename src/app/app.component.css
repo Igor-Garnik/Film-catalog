@@ -1,4 +1,5 @@
-mat-toolbar {
+.container  {
+    margin-bottom: 114px;
     font-family: 'Source Sans Pro', Arial, sans-serif;
 }
 .example-icon {
@@ -16,6 +17,12 @@ mat-toolbar {
     top: 0px;
     left: 0px;
     z-index: 1000;
+}
+
+.footer {
+    background-color: #424242;
+    color:white;
+    height: 64px;
 }
 
 .nav, .exit {

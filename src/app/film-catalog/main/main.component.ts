@@ -6,6 +6,7 @@ import { Film } from './../../shared/models/film';
 import { Actor } from './../../shared/models/actor';
 import { Router } from '@angular/router';
 import { Subscriber, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 
 @Component({
@@ -22,19 +23,34 @@ export class MainComponent implements OnInit, OnDestroy {
     private router: Router,
   ) { }
 
-  firstFilm: Film;
-  secondFilm: Film;
-  thirdFilm: Film;
+  firstPopularFilm: Film;
+  secondPopularFilm: Film;
+  thirdPopularFilm: Film;
+  firstNowFilm: Film;
+  secondNowFilm: Film;
+  thirdNowFilm: Film;
   actorList: Actor[];
   isLoading: boolean = true;
   state: string = 'main';
   subscription: Subscription;
+  page: number = 1;
 
-  getFilms(): void {
-    this.filmService.getDashboardFilms().subscribe(films => {
-      this.isLoading = false;
-      [this.firstFilm, this.secondFilm, this.thirdFilm] = films;
-    })
+  loadPopularFilms(): void {
+    this.filmService.loadFilms(this.page, 'popular')
+      .pipe(take(3))
+      .subscribe(films => {
+        this.isLoading = false;
+        [this.firstPopularFilm, this.secondPopularFilm, this.thirdPopularFilm] = films;
+      })
+  }
+
+  loadNowPlayingFilms(): void {
+    this.filmService.loadFilms(this.page, 'now_playing')
+      .pipe(take(3))
+      .subscribe(films => {
+        this.isLoading = false;
+        [this.firstNowFilm, this.secondNowFilm, this.thirdNowFilm] = films;
+      })
   }
 
   getActors(): void {
@@ -50,7 +66,9 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getFilms();
+    this.filmService.getLocalStorage();
+    this.loadNowPlayingFilms();
+    this.loadPopularFilms();
     this.getActors();
     this.searchService.setState(this.state);
     this.redirect();

@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Tooltip } from '../../shared/models/tooltip'
+import { FilmService } from '../../shared/services/film.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'film-item',
@@ -9,37 +10,56 @@ import { Tooltip } from '../../shared/models/tooltip'
 })
 export class FilmItemComponent implements OnInit {
   @Input() film;
+  @Input() view;
   @Output() favorite = new EventEmitter<number>();
   @Output() list = new EventEmitter<any>()
 
-  constructor(private router: Router) { }
+  constructor(private filmService: FilmService) { }
 
+  //posterCardView: string = 'backdrop';
+  posterCardView: string = 'poster';
+  card: string = 'tester';
   favoriteTooltip: string;
   watchListTooltip: string;
+  subscription: Subscription;
   favoriteConf = {
     message: '',
-    add: 'Add to favotites',
-    remove: 'Remove from favorites'
+    add: 'Добавить в избранный',
+    remove: 'Удалить из избранных'
   }
   watchListConf = {
     message: '',
-    add: 'Add to watchlist',
-    remove: 'Remove from watchlist'
+    add: 'Добавить к просмотру',
+    remove: 'Удалить из просмотра'
   }
 
+  setCard() {
+    this.posterCardView = this.view;
+  }
 
+  setCardView(): void {
+    this.subscription = this.filmService.getViewType()
+      .subscribe((data: string) => {
+        this.posterCardView = data;
+        console.log(this.posterCardView);
+      });
+  }
+
+  //Добвление в избранные
   addToFavorite() {
     this.film.isFavorite = !this.film.isFavorite;
     this.setTooltip(this.favoriteConf, this.film.isFavorite);
     this.favorite.emit(this.film);
   }
 
+  //Добавление в список
   addToWatchList() {
     this.film.isWatchList = !this.film.isWatchList;
     this.setTooltip(this.watchListConf, this.film.isFavorite);
     this.list.emit(this.film);
   }
 
+  //Определение подсказки, "добавить или удалить"
   setTooltip(config: Tooltip, isChecked: boolean) {
     config.message = isChecked ? config.remove : config.add;
   }
@@ -47,6 +67,7 @@ export class FilmItemComponent implements OnInit {
   ngOnInit() {
     this.setTooltip(this.favoriteConf, this.film.isFavorite);
     this.setTooltip(this.watchListConf, this.film.isWatchList);
+    this.setCardView();
   }
 
 }

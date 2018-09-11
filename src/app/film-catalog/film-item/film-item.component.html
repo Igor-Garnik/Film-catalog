@@ -1,37 +1,7 @@
-<!-- <mat-card class="example-card">
-    <a [routerLink]="[film.id + '/view']">
-        <img class="card-img" mat-card-image src="{{film.posterPath | transformPath: 500}}" alt={{film.title}}>
-    </a>
-
-    <mat-card-header class="header">
-        <mat-card-title class="card-title">
-            <strong>{{film.title}}</strong>
-        </mat-card-title>
-        <mat-card-subtitle>Релиз: {{film.releaseDate | date: 'd MMMM y'}}</mat-card-subtitle>
-        <mat-card-subtitle>Рeйтинг: {{film.voteAverage}}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        <div class="card-description">
-            {{film.overview | cutDescription: 200}}
-        </div>
-        <div class="card-button-group">
-            <a mat-button [routerLink]="[film.id + '/view']">
-                <mat-icon>info</mat-icon>
-            </a>
-            <button mat-button (click)="addBookmark()">
-                <mat-icon>{{film.isBookmark ? 'turned_in' : 'turned_in_not'}}</mat-icon>
-            </button>
-            <button mat-button (click)="addFavorite()">
-                <mat-icon>{{film.isFavorite ? 'star' : 'star_border'}}</mat-icon>
-            </button>
-        </div>
-    </mat-card-content>
-</mat-card> -->
-
-<div class="wrapper">
+<div class="wrapper" *ngIf="posterCardView == 'poster'">
     <div class="img">
         <a [routerLink]="[film.id + '/view']">
-            <img src="{{film.posterPath | transformPath: 500}}" alt={{film.title}}>
+            <img src="{{film.posterPath}}" alt={{film.title}}>
         </a>
     </div>
     <div class="content">
@@ -48,7 +18,7 @@
         <footer>
             <div class="link">
                 <a [routerLink]="[film.id + '/view']">
-                    More info
+                    Больше информации
                 </a>
             </div>
             <div class="button-group">
@@ -61,5 +31,27 @@
             </div>
         </footer>
 
+    </div>
+</div>
+
+<div class="album-wrapper" *ngIf="posterCardView == 'backdrop'">
+    <div class="album-image-wrapper">
+        <a [routerLink]="[film.id + '/view']">
+            <img [src]="film.backdropPath" alt={{film.title}}>
+        </a>
+    </div>
+    <div class="album-content">
+        <div class="info-group">
+            <span><b>Релиз: </b>{{film.releaseDate | date: 'd MMMM y'}}</span>
+            <span><b>Рейтинг: </b>{{film.voteAverage}}</span>
+        </div>
+        <div class="button-group">
+            <button mat-icon-button (click)="addToWatchList()" matTooltip={{watchListConf.message}} aria-label="Button that displays a tooltip when focused or hovered over">
+                <mat-icon>{{film.isWatchList ? 'view_list' : 'list'}}</mat-icon>
+            </button>
+            <button mat-icon-button (click)="addToFavorite()" matTooltip={{favoriteConf.message}} aria-label="Button that displays a tooltip when focused or hovered over">
+                <mat-icon>{{film.isFavorite ? 'favorite' : 'favorite_border'}}</mat-icon>
+            </button>
+        </div>
     </div>
 </div>

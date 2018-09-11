@@ -1,0 +1,7 @@
+<p>{{data.name}}</p>
+<youtube-player [videoId]="data.video" (ready)="savePlayer($event)" (change)="onStateChange($event)"></youtube-player>
+<div>
+  <button mat-button (click)="close()">
+    Закрыть
+  </button>
+</div>

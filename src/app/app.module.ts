@@ -10,13 +10,15 @@ import lcoaleRuUA from '@angular/common/locales/ru-UA';
 import { apiConfig, API_CONFIG } from './shared/configs/api.config';
 import { SearchComponent } from './/film-catalog/search/search.component'
 import { MaterialModule } from './material.module';
+import { ModalComponent } from './modal/modal.component';
 
 registerLocaleData(lcoaleRuUA);
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchComponent
+    SearchComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,8 @@ registerLocaleData(lcoaleRuUA);
     { provide: LOCALE_ID, useValue: "ru-UA" },
     { provide: API_CONFIG, useValue: apiConfig }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ModalComponent]
 })
 export class AppModule { }
 

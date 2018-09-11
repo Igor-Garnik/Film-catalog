@@ -1,62 +1,118 @@
 .main-wrapper {
-    background-color: #f4f4f4;
-    margin-top: 7.8%;
-    font-family: 'Source Sans Pro', Arial, sans-serif;
-  }
+  background-color: #f4f4f4;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
 
-  .wrapper {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: flex;
-      box-sizing: border-box;
-  }
+}
 
-  .wrapper section {
-      width: 50%;
-      margin: 0;
-  }
+.wrapper {
+  margin: 0 auto;
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+}
 
-  .wrapper title {
-      padding: 0;
-  }
+.info-line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  opacity: .4;
+  background-color: #424242;
+}
 
-  .movie .second-line {
-      display:flex; 
-      flex-wrap: wrap;
-  }
+h2 {
+  color: white;
+  text-shadow:black 0 0 4px;
+}
 
-  .first-line{
-    margin-bottom: -4px;
-  }
 
-  .second-line div img {
-      width: 250px;
-      height: 100%;
-  }
+.wrapper h3 {
+  margin-top: 13px;
+  margin-bottom: 5px;
+}
 
-  .person .content {
-      display: flex;
-      flex-wrap:wrap;
-  }
+.movies, .second-line {
+  display: flex;
+}
 
-  .person .content div {
-      display: flex;
-      justify-content: center;
-      overflow: hidden;
-      width: 33%;
-      max-height: 212px;
-      flex-wrap: wrap;
-  }
+.popular, .now-playing {
+  width: 50%;
+}
 
-  .person img {
-      max-height: 250px;
-  }
+.first-line {
+  height: 281px;
+  position: relative;
+}
 
-  .wrapper a {
-      padding: 0;
-      text-decoration: none;
-      color: black;
+.first-line .title {
+  position:absolute;
+  top:10px;
+  left: 15px;
+  color:white;
+  font-size: 0.9em;
+  text-shadow:black 0 0 2px;
+  letter-spacing: 1px;
+}
+
+
+.first-line img {
+  width: 100%;
+  height: auto;
+}
+
+.second-line div {
+  height: 141px;
+  position: relative;
+}
+
+.second-line .title {
+  position:absolute;
+  top:10px;
+  left: 15px;
+  color:white;
+  font-size: 0.9em;
+  text-shadow:black 0 0 2px;
+  letter-spacing: 1px;
+}
+
+.second-line div img {
+  width: 100%;
+  height: auto;
+}
+
+.actors {
+  margin-top: 20px;
+}
+
+.actors .content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.actor {
+  width: 166,666px;
+  position:relative;
+}
+
+.actor-name {
+  position: absolute;
+  top:222px;
+  left: 15px;
+  color:white;
+  font-size: 0.9em;
+  text-shadow:black 0 0 2px;
+}
+
+.actor img {
+  width: 100%;
+  height: auto;
+}
+  mat-spinner {
+    position: absolute;
+    top: 30%;
+    left: 47%;
   }
+  
 
 
 

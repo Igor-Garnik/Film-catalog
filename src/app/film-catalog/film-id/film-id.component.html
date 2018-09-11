@@ -1,47 +1,93 @@
-<!-- <div class="wrapper">
-  <img class="background" [src]="film.backdropPath | transformPath: 1280" alt={{film.title}}>
-  <section class="film">
-    <div class="poster">
-      <img class="poster-img" [src]="film.posterPath | transformPath: 300" alt={{film.title}}>
+<!-- <div class="container burn" [ngStyle]="{'background' : '#274f91 url('+film.backdropPath+') center no-repeat'  }"></div> -->
+<div class="main-wrapper">
+  <div>
+    <div class="poster-wrapper">
+      <div class="poster"><img [src]="film.backdropPath" alt=""></div>
+      <div class="blue-layout"></div>
     </div>
-    <div class="content">
-      <h2>{{film.title}}</h2>
-      <p>Релиз: {{film.releaseDate | date: 'd MMMM y'}}</p>
-      <p>Рeйтинг: {{film.voteAverage}}</p>
-      <div class="card-description">
-        {{film.overview }}
+    <div class="content-wrapper">
+      <div class="wrapper">
+        <div class="image">
+          <img [src]="film.posterPath" [alt]=film.title>
+        </div>
+        <div class="content">
+          <header>
+            <h1>{{film.title}}</h1>
+            <span>Релиз: {{film.releaseDate | date: 'd MMMM y'}}</span>
+            <span>Рейтинг: {{film.voteAverage}}</span>
+            <div class="button-group">
+              <button mat-button (click)="addToWatchList()">
+                <mat-icon>{{film.isWatchList ? 'view_list' : 'list'}}</mat-icon>
+              </button>
+              <button mat-button (click)="addToFavorites()">
+                <mat-icon>{{film.isFavorite ? 'favorite' : 'favorite_border'}}</mat-icon>
+              </button>
+              <button mat-button (click)="openModal()">
+                <mat-icon>play_circle_outline</mat-icon>
+                play trailer
+              </button>
+            </div>
+          </header>
+          <section class="discription">
+            <h3>Описание</h3>
+            {{film.overview}}
+          </section>
+          <footer>
+            <h3>Создатели</h3>
+            <div class="credites-job">
+              <div *ngFor="let person of mainJob">
+                <a [routerLink]="[person.id + '/view']">
+                  <p><b>{{person.name}}</b></p>
+                </a>
+                <span>{{person.role}}</span>
+              </div>
+            </div>
+          </footer>
+        </div>
       </div>
     </div>
-  </section>
-</div> -->
+  </div>
+  <div class="addition-wrapper">
+    <mat-tab-group>
 
-<div class="main-wrapper" [ngStyle]="{'background-image' : 'url(film.backdropPath | transformPath: 1280)'}">
-  <div class="wrapper">
-    <div class="image">
-      <img [src]="film.posterPath | transformPath: 500" [alt]=film.title>
-    </div>
-    <div class="content">
-      <header>
-        <h1>{{film.title}}</h1>
-        <span>{{film.releaseDate | date: 'd MMMM y'}}</span>
-        <span>{{film.voteAverage}}</span>
-      </header>
-      <section>
-        <h3>Описание</h3>
-        {{film.overview }}
-      </section>
-      <footer>
-        <div class="button-group">
-          <button mat-button (click)="addToWatchList()">
-            <mat-icon>{{film.isWatchList ? 'view_list' : 'list'}}</mat-icon>
-          </button>
-          <button mat-button (click)="addToFavorites()">
-            <mat-icon>{{film.isFavorite ? 'favorite' : 'favorite_border'}}</mat-icon>
-          </button>
+      <mat-tab label="Актеры">
+        <div class="actor-container">
+          <div class="person" *ngFor="let character of chosenCharacter">
+            <div class="poster">
+              <img [src]="character.posterPath" alt="">
+            </div>
+            <div class="content">
+              <span><b>{{character.role}}</b></span>
+              <span>{{character.name}}</span>
+            </div>
+
+          </div>
         </div>
-      </footer>
-
-
+      </mat-tab>
+      <mat-tab label="Видео"></mat-tab>
+      <mat-tab label="Похожие фильмы">
+        <app-films-list></app-films-list>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="info-group">
+      <span class="header">Дополнительная информация</span>
+      <p><b>Дата релиза</b></p>
+      <span>{{filmDetails.relese}}</span>
+      <p><b>Cтрана</b></p>
+      <span>{{filmDetails.country}}</span>
+      <p><b>Студия</b></p>
+      <span>{{filmDetails.company}}</span>
+      <p><b>Оригинальное название</b></p>
+      <span>{{filmDetails.title}}</span>
+      <p><b>Оригинальый язык</b></p>
+      <span>{{filmDetails.language}}</span>
+      <p><b>Бютжет</b></p>
+      <span>{{filmDetails.butget}}$</span>
+      <p><b>Время</b></p>
+      <span>{{filmDetails.runtime}} минут</span>
+      <p><b>Жанр</b></p>
+      <span>{{filmDetails.genres}}</span>
     </div>
+
   </div>
 </div>

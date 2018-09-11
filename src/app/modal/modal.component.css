@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+p {
+    margin-top: 0;
+}
+
+youtube-player {
+    width: 100%;
+}

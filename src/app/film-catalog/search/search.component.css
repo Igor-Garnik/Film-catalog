@@ -1,4 +1,6 @@
-
+.wrapper {
+  height: 50px;
+}
 
 .search-input {
     width: 250px;
@@ -15,9 +17,12 @@
     
   }
 
+  ::ng-deep .mat-input-underline {
+    display: none;
+}
+
   input {
     display: inline-block;
-    padding-bottom: 4px;
   }
 
 

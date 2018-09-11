@@ -1,11 +1,11 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, tap, mergeMap, pluck } from 'rxjs/operators';
+import { map, mergeMap, pluck } from 'rxjs/operators';
 import { API_CONFIG } from '../configs/api.config';
 import { Config } from '../models/config';
 import { UtilsService } from './utils.service';
 import { Film } from '../models/film'
-import { Observable } from 'rxjs';
+import { Subject, Observable, forkJoin } from 'rxjs';
 import { LocalStorageCong } from '../models/localStorageConf'
 
 @Injectable({
@@ -18,6 +18,8 @@ export class FilmService {
     private utilsService: UtilsService,
     @Inject(API_CONFIG) public apiConfig: Config
   ) { }
+
+  viewType$ = new Subject<any>();
   films;
   page = 1;
   config: LocalStorageCong = {
@@ -25,117 +27,100 @@ export class FilmService {
     sessionId: ''
   }
 
-  getPopularFilms(page: number = this.page): Observable<Film[]> {
-    return this.http.get(`${this.apiConfig.movieUrl}/popular?${this.apiConfig.params}page=${page}`)
-      .pipe(
-        pluck('results'),
-        mergeMap(films => {
-          return this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/favorite/movies?${this.apiConfig.apiKey}&session_id=${this.config.sessionId}`)
-            .pipe(
-              pluck('results'),
-              mergeMap(favorites => {
-                return this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/watchlist/movies?${this.apiConfig.apiKey}&language=en-US&session_id=${this.config.sessionId}&sort_by=created_at.asc&page=1`)
-                  .pipe(
-                    pluck('results'),
-                    map(watchList => {
-                      this.page += 1;
-                      let favoriteIds = this.getIds(favorites);
-                      let watchListIds = this.getIds(watchList);
-                      return this.setFilms(films, favoriteIds, watchListIds);
-                    }))
-              }))
-        }))
-  }
-
-  /* getQueryFilm(query): Observable<Film[]> {
-    return this.http.get(`${this.apiConfig.searchUrl}/movie?${this.apiConfig.params}&query=${query}&page=1`)
-      .pipe(map(data => {
-        let films = this.utilsService.findExactOccurrence(data['results'], query, 'title');
-        return this.setFilms(films);
-      }))
-  } */
-
-  getQueryFilm(query): Observable<Film[]> {
-    return this.http.get(`${this.apiConfig.searchUrl}/movie?${this.apiConfig.params}&query=${query}&page=1`)
-      .pipe(
-        pluck('results'),
-        mergeMap(films => {
-          return this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/favorite/movies?${this.apiConfig.apiKey}&session_id=${this.config.sessionId}`)
-            .pipe(
-              pluck('results'),
-              mergeMap(favorites => {
-                return this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/watchlist/movies?${this.apiConfig.apiKey}&language=en-US&session_id=${this.config.sessionId}&sort_by=created_at.asc&page=1`)
-                  .pipe(
-                    pluck('results'),
-                    map(watchList => {
-                      this.page += 1;
-                      let filmsList = this.utilsService.findExactOccurrence(films, query, 'title');
-                      let favoriteIds = this.getIds(favorites);
-                      let watchListIds = this.getIds(watchList);
-                      console.log(favoriteIds);
-                      return this.setFilms(filmsList, favoriteIds, watchListIds);
-                    }))
-              }))
-        }))
-  }
-
-  getFilmById(id): Observable<Film> {
-    return this.http.get(`${this.apiConfig.movieUrl}/${id}?${this.apiConfig.params}`)
-      .pipe(map(film => {
-        return this.setFilm(film);
+  //Получение списка списка фильмов "favorites", перезаписание значения свойств избранные и список согласно даных пользователя
+  loadFilms(page: number, param: string): Observable<Film[]> {
+    return forkJoin(
+      this.http.get(`${this.apiConfig.movieUrl}/${param}?${this.apiConfig.params}page=${page}`),
+      this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/favorite/movies?${this.apiConfig.apiKey}&session_id=${this.config.sessionId}`),
+      this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/watchlist/movies?${this.apiConfig.apiKey}&language=en-US&session_id=${this.config.sessionId}&sort_by=created_at.asc&page=1`)
+    ).pipe(
+      map((res: Array<any>) => {
+        let [films, favorites, watchList] = [res[0].results, res[1].results, res[2].results];
+        let favoriteIds = this.getIds(favorites);
+        let watchListIds = this.getIds(watchList);
+        return this.setFilmsProperty(films, favoriteIds, watchListIds);
       })
-      )
+    )
   }
 
-  getDashboardFilms(): Observable<Film[]> {
-    return this.http.get(`${this.apiConfig.movieUrl}/popular?${this.apiConfig.params}page=1`)
-      .pipe(map(data => {
-        let films = data['results'];
-        let res = films.map((film, index) => {
-          return {
-            title: film.title,
-            posterPath: film.poster_path,
-            backdropPath: film.backdrop_path
-          }
-        })
-        return res.splice(0, 3);
-      }))
+  getQueryFilm(query: string): Observable<Film[]> {
+    return forkJoin(
+      this.http.get(`${this.apiConfig.searchUrl}/movie?${this.apiConfig.params}&query=${query}&page=1`),
+      this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/favorite/movies?${this.apiConfig.apiKey}&session_id=${this.config.sessionId}`),
+      this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/watchlist/movies?${this.apiConfig.apiKey}&language=en-US&session_id=${this.config.sessionId}&sort_by=created_at.asc&page=1`)
+    ).pipe(
+      map((res: Array<any>) => {
+        let [films, favorites, watchList] = [res[0].results, res[1].results, res[2].results];
+        let filmsList = this.utilsService.findExactOccurrence(films, query, 'title');
+        let favoriteIds = this.getIds(favorites);
+        let watchListIds = this.getIds(watchList);
+        return this.setFilmsProperty(filmsList, favoriteIds, watchListIds);
+      })
+    )
   }
 
-  setFilm(film): Film {
+  //Получение списка списка фильмов по поиску пользователя, перезаписание значения свойств избранные и список согласно даных пользователя
+  loadFilmById(id: number): Observable<Film> {
+    return forkJoin(
+      this.http.get(`${this.apiConfig.movieUrl}/${id}?${this.apiConfig.params}`),
+      this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/favorite/movies?${this.apiConfig.apiKey}&session_id=${this.config.sessionId}`),
+      this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/watchlist/movies?${this.apiConfig.apiKey}&language=en-US&session_id=${this.config.sessionId}&sort_by=created_at.asc&page=1`)
+    ).pipe(
+      map((res: Array<any>) => {
+        let film = res[0];
+        let [favorites, watchList] = [res[1].results, res[2].results];
+        let favoriteIds = this.getIds(favorites);
+        let watchListIds = this.getIds(watchList);
+        return this.setFilmProperty(film, favoriteIds, watchListIds);
+      })
+    )
+  }
+
+  loadSimilarFilms(id: number, page: number): Observable<Film[]> {
+    return forkJoin(
+      this.http.get(`${this.apiConfig.movieUrl}/${id}/similar?${this.apiConfig.params}page=${page}`),
+      this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/favorite/movies?${this.apiConfig.apiKey}&session_id=${this.config.sessionId}`),
+      this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/watchlist/movies?${this.apiConfig.apiKey}&language=en-US&session_id=${this.config.sessionId}&sort_by=created_at.asc&page=1`)
+    ).pipe(
+      map((res: Array<any>) => {
+        let [films, favorites, watchList] = [res[0].results, res[1].results, res[2].results];
+        let favoriteIds = this.getIds(favorites);
+        let watchListIds = this.getIds(watchList);
+        return this.setFilmsProperty(films, favoriteIds, watchListIds);
+      })
+    )
+  }
+
+
+
+  setFilmsProperty(films, favoritesId: number[], watchListId: number[]): Film[] {
+    return films.map((film) => {
+      return this.setFilmProperty(film, favoritesId, watchListId)
+    })
+  }
+
+  //Определение необходимых свойтв фильма
+  setFilmProperty(film, favoritesId: number[], watchListId: number[]): Film {
     return {
       title: film.title,
       releaseDate: film.release_date,
       overview: film.overview,
       voteAverage: film.vote_average,
-      posterPath: film.poster_path,
-      backdropPath: film.backdrop_path,
+      posterPath: this.utilsService.setImage(this.apiConfig.midImgPath, film.poster_path),
+      backdropPath: this.utilsService.setImage(this.apiConfig.bigBackPath, film.backdrop_path),
       id: film.id,
-      isFavorite: false,
-      isWatchList: false
+      isFavorite: this.isSelected(favoritesId, film.id),
+      isWatchList: this.isSelected(watchListId, film.id)
     }
   }
 
-  setFilms(films, favoritesId: number[], watchListId: number[]): Film[] {
-    return films.map((film) => {
-      return {
-        title: film.title,
-        releaseDate: film.release_date,
-        overview: film.overview,
-        voteAverage: film.vote_average,
-        posterPath: film.poster_path,
-        backdropPath: film.backdrop_path,
-        id: film.id,
-        isFavorite: this.isSelected(favoritesId, film),
-        isWatchList: this.isSelected(watchListId, film)
-      }
-    })
-  }
-
+  //Установка свойств избранные и список
   setFavoritesOrWatchlist(params, request): Observable<any> {
+    console.log(params);
     return this.http.post(`${this.apiConfig.authUrl}/account/${this.config.userId}/${request}?${this.apiConfig.apiKey}&session_id=${this.config.sessionId}`, params)
   }
 
+  //Загрузка фильмов в списке "избранные"
   loadFavorites(): Observable<any> {
     return this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/favorite/movies?${this.apiConfig.apiKey}&session_id=${this.config.sessionId}`)
       .pipe(map(data => {
@@ -143,6 +128,7 @@ export class FilmService {
       }))
   }
 
+  //Загрузка фильмов в списке "список"
   loadWatchList(): Observable<any> {
     return this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/watchlist/movies?${this.apiConfig.apiKey}&language=en-US&session_id=${this.config.sessionId}&sort_by=created_at.asc&page=1`)
       .pipe(map(data => {
@@ -150,36 +136,29 @@ export class FilmService {
       }))
   }
 
+  //Получение массива id фильмов
   getIds(films): number[] {
     return films.map(film => film['id']);
   }
 
-  setState(films: Film[], ids: number[], config): Film[] {
-    return films.map((film: Film) => {
-      ids.forEach((id: number) => {
-        if (id == film['id']) film[config] = true; //config.property - isFavorite or isWatchList
-      })
-      return film;
-    })
-  }
-
+  //Установка значение "в избранном" или "в списке" согласно загруженых данных пользователя
   isSelected(ids: number[], filmId: number): boolean {
     return ids.includes(filmId);
   }
 
-  setOneFilmState(film: Film, ids: number[], config): Film {
-    ids.forEach(id => {
-      if (id == film.id) {
-        film[config.property] = true;
-      }
-    })
-    return film;
-  }
-
+  //Получение данных из local storage
   getLocalStorage(): void {
     if (this.config.userId && this.config.sessionId) return;
     this.config.userId = localStorage.getItem('user_id');
     this.config.sessionId = localStorage.getItem('session_id');
+  }
+
+  setViewType(type: string): void {
+    this.viewType$.next(type);
+  }
+
+  getViewType(): Observable<string> {
+    return this.viewType$.asObservable();
   }
 
 }
