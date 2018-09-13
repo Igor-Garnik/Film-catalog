@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Actor } from './../../shared/models/actor';
 import { ActorService } from './../../shared/services/actor.service';
 import { SearchService } from '../../shared/services/search.service';
@@ -20,6 +20,8 @@ export class ActorsListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) { }
 
+  @Input() filmId;
+
   query: string;
   actorList: Actor[] = [];
   isUploaded: boolean = true;
@@ -27,41 +29,55 @@ export class ActorsListComponent implements OnInit, OnDestroy {
   isErrorMessage: boolean = false;
   subscription: Subscription;
   state: string = 'actors';
+  team
+
+  toggleActorView() {
+    this.filmId == undefined
+      ? this.viewActors() : this.viewCredits();
+    console.log(this.filmId);
+  }
+
+  viewCredits(): void {
+    this.actorService.loadCrew(this.filmId)
+      .subscribe((crew: Array<any>) => {
+        this.actorList = [...this.actorList, ...crew[0]];
+        console.log(this.actorList)
+      })
+  }
 
   //Загрузить список актеров
   viewActors(): void {
-    this.actorService.getPopularActors().subscribe(actors => {
+    this.actorService.loadPopularActors().subscribe(actors => {
       this.isUploaded = false;
       this.actorList = [...this.actorList, ...actors];
-      console.log(actors)
     });
   }
 
   //Добавление страницы
   addPage(): void {
-    this.viewActors();
+    this.toggleActorView();
   }
 
   viewQuery() {
-    this.searchService.getQuery().subscribe((query: string) => {
-      this.query = query;
-      this.subscription = this.actorService.getQueryActor(query).subscribe(data => {
-        this.queryResponse = data;
-        this.isErrorMessage = this.utilsService.checkErrroMessage(this.queryResponse)
-      });
-    })
+    this.searchService.getQuery()
+      .subscribe((query: string) => {
+        this.query = query;
+        this.subscription = this.actorService.loadQueryActor(query)
+          .subscribe(data => {
+            this.queryResponse = data;
+            this.isErrorMessage = this.utilsService.checkErrroMessage(this.queryResponse)
+          });
+      })
   }
 
   ngOnInit() {
-    this.viewActors();
+    this.toggleActorView();
     this.searchService.setState(this.state);
     this.viewQuery();
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    if (this.subscription) this.subscription.unsubscribe();
   }
 
 }

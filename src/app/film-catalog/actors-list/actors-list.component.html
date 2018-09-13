@@ -2,7 +2,7 @@
   <div class="wrapper">
     <mat-spinner *ngIf="isUploaded"></mat-spinner>
 
-    <h1>Popular people</h1>
+    <h1 *ngIf="filmId == undefined">Popular people</h1>
 
     <div class="card-wraper" *ngIf="!query; else queryBlock">
       <div class="nested-card-wraper" *ngFor="let actor of actorList">

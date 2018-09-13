@@ -1,14 +1,17 @@
 .wrapper {
-    height: 700px;
-    overflow: hidden;
+    background-color: #f4f4f4;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    padding-top: 50px;
 }
 
-.actor {
+.main {
     max-width: 1000px;
     margin: auto;
-    display: flex;
     box-sizing: border-box;
-    padding-top: 2%;
+}
+
+.poster-container {
+    display: flex;
 }
 
 .poster {
@@ -17,11 +20,58 @@
 }
 
 .content {
-    width: 60%;
+    width: 70%;
     padding-left: 2%;
     line-height: 1.2em;
 }
 
-h2 {
-    margin-top: 0;
+.info-container {
+    display: flex;
+    box-sizing: border-box;
 }
+.actor-info {
+    width: 30%;
+    padding-left: 1%;
+}
+
+.actor-details {
+    width: 70%;
+    padding-left: 2%;
+}
+
+.actor-info span {
+    font-size: 0.9em;
+    color: rgba(0, 0, 0, 0.50);
+}
+
+.actor-info p {
+    margin-bottom: 0;
+}
+
+.block {
+    display: block;
+}
+
+.actor-details-poster {
+    display: flex;
+}
+
+.actor-details-poster .image {
+    width: 19.2%;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.actor-details-poster img {
+    width: 100%;
+    height: auto;
+}
+
+.actor-details-poster img:hover {
+    transform: scale(1.06,1.06);
+    transition-timing-function: ease-out;
+    transition-duration: 550ms;
+  }
+
+

@@ -6,6 +6,7 @@
   width: 194px;
   max-height: 291px;
   min-height: 291px;
+  overflow: hidden;
 }
 
 .wrapper .img img {
@@ -99,12 +100,28 @@ a {
 /* Альбомное отображение */
 
 .album-image-wrapper {
-  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
 .album-image-wrapper img {
   width: 100%;
-  height: auto;
+  min-height: 200px;
+}
+
+.album-image-wrapper a {
+  height: 200px;
+}
+
+.album-film-title{
+  display: block;
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  color: white;
+  font-size: 0.9em;
+  text-shadow:black 0 0 2px;
 }
 
 .album-content{
@@ -121,6 +138,18 @@ a {
 .album-content .info-group span {
   display: inline-block;
   font-size: 0.8em;
+}
+
+.img img:hover {
+  transform: scale(1.06,1.06);
+  transition-timing-function: ease-out;
+  transition-duration: 550ms;
+}
+
+.album-image-wrapper img:hover {
+  transform: scale(1.06,1.06);
+  transition-timing-function: ease-out;
+  transition-duration: 550ms;
 }
 
 

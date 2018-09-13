@@ -2,7 +2,7 @@
   <div class="wrapper">
     <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-    <div class="header" *ngIf="showPageHeader">
+    <div class="header" *ngIf="filmId == undefined">
       <h3>Популяные фильмы</h3>
     </div>
 
@@ -10,14 +10,14 @@
 
       <div class="card-wrapper" *ngIf="!query; else queryBlock">
         <div class="card" *ngFor="let film of filmList">
-          <film-item [film]="film" (favorite)="addToFavorite($event)" (list)="addToWatchlist($event)"></film-item>
+          <film-item [film]="film" [cardView]="cardView" (favorite)="addToFavorite($event)" (list)="addToWatchlist($event)"></film-item>
         </div>
       </div>
 
       <ng-template #queryBlock>
         <div class="card-wrapper" *ngIf="isErrorMessage == false ; else errorBlock">
           <div class="card" *ngFor="let film of queryResponse">
-            <film-item [film]="film" [view]="poster" (favorite)="addToFavorite($event)" (list)="addToWatchlist($event)"></film-item>
+            <film-item [film]="film" (favorite)="addToFavorite($event)" (list)="addToWatchlist($event)"></film-item>
           </div>
         </div>
 

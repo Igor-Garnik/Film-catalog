@@ -81,25 +81,29 @@ h2 {
 }
 
 .actors {
-  margin-top: 20px;
+  margin-bottom: 50px;
 }
 
 .actors .content {
   display: flex;
-  justify-content: space-between;
 }
 
-.actor {
-  width: 166,666px;
+ .actor {
+  width: 11.11111%
+}
+
+.actor-img {
+  max-height: 140px;
+  overflow: hidden;
   position:relative;
 }
 
 .actor-name {
   position: absolute;
-  top:222px;
-  left: 15px;
+  top: 0px;
+  left: 0px;
   color:white;
-  font-size: 0.9em;
+  font-size: 0.8em;
   text-shadow:black 0 0 2px;
 }
 
@@ -107,11 +111,13 @@ h2 {
   width: 100%;
   height: auto;
 }
-  mat-spinner {
-    position: absolute;
-    top: 30%;
-    left: 47%;
-  }
+mat-spinner {
+  position: absolute;
+  top: 30%;
+  left: 47%;
+}
+
+
   
 
 

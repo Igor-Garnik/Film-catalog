@@ -1,13 +1,49 @@
 <div class="wrapper">
-  <section class="actor">
-    <div class="poster">
-      <img class="poster-img" [src]="actor.posterPath | transformPath: 300" alt={{actor.title}}>
+  <section class="main">
+    <div class="poster-container">
+      <div class="poster">
+        <img class="poster-img" [src]="actor.posterPath | transformPath: 300" alt={{actor.title}}>
+      </div>
+      <div class="content">
+        <h2>{{actor.name}}</h2>
+        <h4>Биография</h4>
+        <span>{{actor.biography | transformDescription: 1400}}</span>
+      </div>
     </div>
-    <div class="content">
-      <h2>{{actor.title}}</h2>
-      <p>birthday: {{actor.birthday}}</p>
-      <p>birthday: {{actor.placeOfBirth}}</p>
-      <p>Рейтинг: {{actor.voteAverage | cutRating}}</p>
+    <div class="info-container">
+      <div class="actor-info">
+        <h2>Информация о актере</h2>
+        <p><b>Дата рождения</b></p>
+        <span>{{actor.birthday | date: 'd MMMM y'}}</span>
+        <div *ngIf="actor.deathday">
+          <p><b>Дата смерти</b></p>
+          <span>{{actor.deathday}}</span>
+        </div>
+        <p><b>Место рождения</b></p>
+        <span>{{actor.placeOfBirth}}</span>
+        <p><b>Рейтинг</b></p>
+        <span>{{actor.voteAverage | transformRating}}</span>
+        <p><b>Известен также как</b></p>
+        <div *ngFor="let name of actor.alsoKnownAs; index as i">
+          <span>{{name}}</span>
+        </div>
+
+      </div>
+      <div class="actor-details">
+        <mat-tab-group>
+          <mat-tab label="Другие фильмы">
+            <app-films-list [filmId]="actorId" [cardView]="'backdrop'" [kindOfFilmsList]="'credits'"></app-films-list>
+          </mat-tab>
+          <mat-tab label="Постеры">
+            <div class="actor-details-poster">
+              <div class="image">
+                <img src="" alt="">
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
     </div>
+
   </section>
 </div>

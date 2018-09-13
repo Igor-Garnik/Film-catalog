@@ -1,9 +1,8 @@
 <div class="wrapper">
     <div class="poster">
-        <a [routerLink]="actor.id + '/view'"><img [src]="actor.posterPath" alt="actor.name"></a>
+        <a [routerLink]="'/actors/' + actor.id + '/view'"><img [src]="actor.posterPath | transformPath: 300" alt="actor.name"></a>
     </div>
     <div class="content">
         <p><b>{{actor.name}}</b></p>
-        <span>рейтинг: {{actor.voteAverage}}</span>
     </div>
 </div>

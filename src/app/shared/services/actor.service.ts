@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map } from "rxjs/operators"
+import { map, pluck } from "rxjs/operators"
 import { API_CONFIG } from '../configs/api.config';
 import { Config } from '../models/config';
 import { UtilsService } from './../services/utils.service';
@@ -21,7 +21,7 @@ export class ActorService {
 
   page = 1;
 
-  getPopularActors(page: number = this.page): Observable<Actor[]> {
+  loadPopularActors(page: number = this.page): Observable<Actor[]> {
     return this.http.get(`${this.apiConfig.personUrl}/popular?${this.apiConfig.params}page=${page}`)
       .pipe(map(data => {
         let actors = data['results'];
@@ -30,7 +30,7 @@ export class ActorService {
       }))
   }
 
-  getQueryActor(query): Observable<Actor[]> {
+  loadQueryActor(query): Observable<Actor[]> {
     return this.http.get(`${this.apiConfig.searchUrl}/person?${this.apiConfig.params}&query=${query}&page=1&include_adult=false`)
       .pipe(map(data => {
         let actors = this.utilsService.findExactOccurrence(data['results'], query, 'name');
@@ -38,49 +38,73 @@ export class ActorService {
       }))
   }
 
-  getActorById(id): Observable<Actor> {
+  loadActorById(id): Observable<Actor> {
     return this.http.get(`${this.apiConfig.personUrl}/${id}?${this.apiConfig.params}&page=1&include_adult=false`)
       .pipe(map(actor => {
-        return this.setActor(actor);
+        return this.setActorDetails(actor);
       }))
   }
 
-  getDashboardActors(): Observable<Actor[]> {
-    return this.http.get(`${this.apiConfig.personUrl}/popular?${this.apiConfig.params}page=1`)
-      .pipe(map(data => {
-        let actors = data['results'];
-        this.page += 1;
-        let res = actors.map(actor => {
-          return {
-            name: actor.name,
-            posterPath: `https://image.tmdb.org/t/p/w500${actor.profile_path}`
 
-          }
+  loadDashboardActors(): Observable<Actor[]> {
+    return this.http.get(`${this.apiConfig.personUrl}/popular?${this.apiConfig.params}page=1`)
+      .pipe(
+        pluck('results'),
+        map(data => {
+          return this.setActors(data);
         })
-        return res.splice(0, 6);
-      }))
+      )
+  }
+
+  loadCrew(filmId: number): Observable<Actor[]> {
+    return this.http.get(`${this.apiConfig.movieUrl}/${filmId}/credits?${this.apiConfig.params}`)
+      .pipe(
+        map(data => {
+          let credits: Array<any> = [];
+          credits.push(this.setCredits(data['cast'], 'character'));
+          credits.push(this.setCredits(data['crew'], 'job'));
+          return credits;
+        })
+      )
   }
 
   setActors(actors): Actor[] {
-    return actors.map(property => {
+    return actors.map(actor => {
       return {
-        id: property.id,
-        name: property.name,
-        voteAverage: property.popularity,
-        posterPath: `https://image.tmdb.org/t/p/w500${property.profile_path}`
+        id: actor.id,
+        name: actor.name,
+        voteAverage: actor.popularity,
+        posterPath: actor.profile_path,
       }
     })
   }
 
-  setActor(actor) {
+  setActorDetails(actor) {
     return {
       id: actor.id,
       name: actor.name,
       voteAverage: actor.popularity,
       posterPath: actor.profile_path,
       birthday: actor.birthday,
-      placeOfBirth: actor.place_of_birth
+      deathday: actor.deathday,
+      alsoKnownAs: actor.also_known_as.map(name => name),
+      biography: actor.biography,
+      placeOfBirth: actor.place_of_birth,
+      homePage: actor.homepage
     }
+  }
+
+  ыуе
+
+  setCredits(credits, job): Actor[] {
+    return credits.map(person => {
+      return {
+        id: person.id,
+        name: person.name,
+        role: person[job],
+        posterPath: person.profile_path
+      }
+    })
   }
 
 }

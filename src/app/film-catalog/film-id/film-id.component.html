@@ -1,14 +1,13 @@
-<!-- <div class="container burn" [ngStyle]="{'background' : '#274f91 url('+film.backdropPath+') center no-repeat'  }"></div> -->
 <div class="main-wrapper">
   <div>
     <div class="poster-wrapper">
-      <div class="poster"><img [src]="film.backdropPath" alt=""></div>
+      <div class="poster"><img [src]="film.backdropPath | transformPath: 1280" alt=""></div>
       <div class="blue-layout"></div>
     </div>
     <div class="content-wrapper">
       <div class="wrapper">
         <div class="image">
-          <img [src]="film.posterPath" [alt]=film.title>
+          <img [src]="film.posterPath | transformPath: 300" [alt]=film.title>
         </div>
         <div class="content">
           <header>
@@ -35,7 +34,7 @@
           <footer>
             <h3>Создатели</h3>
             <div class="credites-job">
-              <div *ngFor="let person of mainJob">
+              <div *ngFor="let person of crew">
                 <a [routerLink]="[person.id + '/view']">
                   <p><b>{{person.name}}</b></p>
                 </a>
@@ -51,22 +50,20 @@
     <mat-tab-group>
 
       <mat-tab label="Актеры">
-        <div class="actor-container">
-          <div class="person" *ngFor="let character of chosenCharacter">
-            <div class="poster">
-              <img [src]="character.posterPath" alt="">
-            </div>
-            <div class="content">
-              <span><b>{{character.role}}</b></span>
-              <span>{{character.name}}</span>
-            </div>
+        <app-actors-list [filmId]="filmId"></app-actors-list>
+      </mat-tab>
 
+      <mat-tab label="Постеры">
+        <div class="poster-container">
+          <div class="poster-view" *ngFor="let poster of posters">
+            <a [href]='poster.posterPath | transformPath: 1280' target="_blank"><img [src]="poster.posterPath | transformPath: 300"></a>
+            <span><b>Размер: </b>{{poster.width}}*{{poster.height}}</span>
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="Видео"></mat-tab>
+
       <mat-tab label="Похожие фильмы">
-        <app-films-list></app-films-list>
+        <app-films-list [filmId]="filmId" [cardView]="'backdrop'" [kindOfFilmsList]="'similar'"></app-films-list>
       </mat-tab>
     </mat-tab-group>
     <div class="info-group">

@@ -17,28 +17,6 @@ export class DetailsService {
     @Inject(API_CONFIG) public apiConfig: Config
   ) { }
 
-  loadCredits(filmId: number): Observable<Actor[]> {
-    return this.http.get(`${this.apiConfig.movieUrl}/${filmId}/credits?${this.apiConfig.params}`)
-      .pipe(
-        map(data => {
-          let credits = [];
-          credits.push(this.setCredits(data['cast'], 'character'));
-          credits.push(this.setCredits(data['crew'], 'job'));
-          return credits;
-        })
-      )
-  }
-
-  setCredits(credits, job): Actor[] {
-    return credits.map(person => {
-      return {
-        id: person.id,
-        name: person.name,
-        role: person[job],
-        posterPath: `https://image.tmdb.org/t/p/w500${person.profile_path}`
-      }
-    })
-  }
 
   loadVideo(filmId): Observable<Video[]> {
     return this.http.get(`${this.apiConfig.movieUrl}/${filmId}/videos?${this.apiConfig.params}`)
@@ -77,6 +55,25 @@ export class DetailsService {
           return this.setDetails(data);
         })
       )
+  }
+
+  loadImages(filmId): Observable<any> {
+    return this.http.get(`${this.apiConfig.movieUrl}/${filmId}/images?${this.apiConfig.apiKey}&language=en`)
+      .pipe(
+        map((data: any) => {
+          return this.setPoster(data.posters);
+        })
+      )
+  }
+
+  setPoster(posterList): Array<string> {
+    return posterList.map(poster => {
+      return {
+        posterPath: poster.file_path,
+        height: poster.height,
+        width: poster.width
+      }
+    })
   }
 
   setDetails(details): Object {

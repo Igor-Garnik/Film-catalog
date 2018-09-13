@@ -5,8 +5,8 @@
 }
 
 .poster{
-  width: 235px;
-  height: 270px;
+  width: 100%;
+  height: 228px;
   overflow: hidden;
 }
 
@@ -17,6 +17,7 @@
 }
 
 .content {
+  height: 24px;
   padding-left: 6%;
   padding-bottom: 6%;
 }
@@ -28,4 +29,10 @@
 .content span {
   display: inline-block;
   color: rgba(0, 0, 0, 0.50);
+}
+
+.poster img:hover {
+  transform: scale(1.06,1.06);
+  transition-timing-function: ease-out;
+  transition-duration: 550ms;
 }

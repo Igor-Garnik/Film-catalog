@@ -11,6 +11,8 @@ import { apiConfig, API_CONFIG } from './shared/configs/api.config';
 import { SearchComponent } from './/film-catalog/search/search.component'
 import { MaterialModule } from './material.module';
 import { ModalComponent } from './modal/modal.component';
+//import { TransformPathPipe } from './shared/pipes/transform-path.pipe';
+
 
 registerLocaleData(lcoaleRuUA);
 
@@ -18,7 +20,8 @@ registerLocaleData(lcoaleRuUA);
   declarations: [
     AppComponent,
     SearchComponent,
-    ModalComponent
+    ModalComponent,
+    //TransformPathPipe
   ],
   imports: [
     BrowserModule,

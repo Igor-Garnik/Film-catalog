@@ -1,7 +1,4 @@
 <div class="main-wrapper">
-    <section class="info-line">
-        <h2>Фильмы</h2>
-    </section>
     <div class="wrapper">
         <mat-spinner *ngIf="isLoading"></mat-spinner>
 
@@ -11,17 +8,17 @@
                     <a mat-button routerLink="/movie"><h3>Популярные фильмы</h3></a>
                 </div>
                 <div class="content">
-                    <div class="first-line">
-                        <img [src]="firstPopularFilm.backdropPath" alt="{{firstPopularFilm.title}}">
+                    <div class="first-line poster">
+                        <img [src]="firstPopularFilm.backdropPath | transformPath: 500" alt="{{firstPopularFilm.title}}">
                         <div class="title">{{firstPopularFilm.title}}</div>
                     </div>
                     <div class="second-line">
-                        <div>
-                            <img [src]="secondPopularFilm.backdropPath" alt="{{secondPopularFilm.title}}">
+                        <div class="poster">
+                            <img [src]="secondPopularFilm.backdropPath | transformPath: 300" alt="{{secondPopularFilm.title}}">
                             <div class="title">{{secondPopularFilm.title}}</div>
                         </div>
-                        <div>
-                            <img [src]="thirdPopularFilm.backdropPath" alt="{{thirdPopularFilm.title}}">
+                        <div class="poster">
+                            <img [src]="thirdPopularFilm.backdropPath | transformPath: 300" alt="{{thirdPopularFilm.title}}">
                             <div class="title">{{thirdPopularFilm.title}}</div>
                         </div>
                     </div>
@@ -34,16 +31,16 @@
                 <div class="content">
                     <div class="second-line">
                         <div>
-                            <img [src]="secondNowFilm.backdropPath" alt="{{secondNowFilm.title}}">
+                            <img [src]="secondNowFilm.backdropPath | transformPath: 300" alt="{{secondNowFilm.title}}">
                             <div class="title">{{secondNowFilm.title}}</div>
                         </div>
                         <div>
-                            <img [src]="thirdNowFilm.backdropPath" alt="{{thirdNowFilm.title}}">
+                            <img [src]="thirdNowFilm.backdropPath | transformPath: 300" alt="{{thirdNowFilm.title}}">
                             <div class="title">{{thirdNowFilm.title}}</div>
                         </div>
                     </div>
                     <div class="first-line">
-                        <img [src]="firstNowFilm.backdropPath" alt="{{firstNowFilm.title}}">
+                        <img [src]="firstNowFilm.backdropPath | transformPath: 500" alt="{{firstNowFilm.title}}">
                         <div class="title">{{firstNowFilm.title}}</div>
                     </div>
                 </div>
@@ -55,7 +52,9 @@
             </div>
             <div class="content">
                 <div class="actor" *ngFor="let actor of actorList">
-                    <img src="{{actor.posterPath}}" alt="actor.title">
+                    <div class="actor-img">
+                        <a [routerLink]="[actor.id + '/view']"> <img [src]="actor.posterPath | transformPath: 300" alt="actor.title"></a>
+                    </div>
                     <div class="actor-name">{{actor.title}}</div>
                 </div>
             </div>

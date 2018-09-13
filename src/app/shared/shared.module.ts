@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CutDescriptionPipe } from './pipes/cut-description.pipe';
+import { TransformDescriptionPipe } from './pipes/transform-description.pipe';
 import { TransformPathPipe } from './pipes/transform-path.pipe';
-import { CutRatingPipe } from './pipes/cut-rating.pipe';
+import { TransformRatingPipe } from './pipes/transform-rating.pipe';
 
 
 @NgModule({
     declarations: [
-        CutDescriptionPipe,
+        TransformDescriptionPipe,
         TransformPathPipe,
-        CutRatingPipe],
+        TransformRatingPipe],
     imports: [
         CommonModule,
     ],
     exports: [
-        CutDescriptionPipe,
-        CutRatingPipe,
+        TransformDescriptionPipe,
+        TransformRatingPipe,
         TransformPathPipe
     ]
 })

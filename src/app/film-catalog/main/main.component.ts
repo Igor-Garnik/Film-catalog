@@ -37,7 +37,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
   loadPopularFilms(): void {
     this.filmService.loadFilms(this.page, 'popular')
-      .pipe(take(3))
       .subscribe(films => {
         this.isLoading = false;
         [this.firstPopularFilm, this.secondPopularFilm, this.thirdPopularFilm] = films;
@@ -46,7 +45,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
   loadNowPlayingFilms(): void {
     this.filmService.loadFilms(this.page, 'now_playing')
-      .pipe(take(3))
       .subscribe(films => {
         this.isLoading = false;
         [this.firstNowFilm, this.secondNowFilm, this.thirdNowFilm] = films;
@@ -54,9 +52,8 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   getActors(): void {
-    this.actorService.getDashboardActors().subscribe(actors => {
-      this.actorList = actors;
-    })
+    this.actorService.loadDashboardActors()
+      .subscribe(actors => this.actorList = [...actors].splice(0, 10));
   }
 
   redirect() {

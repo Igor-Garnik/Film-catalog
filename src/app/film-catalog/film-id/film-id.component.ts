@@ -27,11 +27,10 @@ export class FilmIdComponent implements OnInit {
     public dialog: MatDialog
   ) { }
 
-  id: number;
+  filmId: number;
+  posters: Array<string>;
   film: Film;
-  character: Actor[];
-  job: Actor[];
-  mainJob: Actor[];
+  crew: Actor[];
   chosenCharacter: Actor[];
   filmDetails: Array<any>;
   request = {
@@ -39,19 +38,24 @@ export class FilmIdComponent implements OnInit {
     watchlist: 'watchlist'
   }
   video: Video[];
+  player: YT.Player;
+  isLoading: boolean = true;
+  cardView: 'backdrop'
 
   //Получение и отображение фильма
   showFilm() {
     this.route.paramMap
       .pipe(
         mergeMap((params: ParamMap) => {
-          this.id = +params.get("id");
-          this.getCreits();
+          this.filmId = +params.get("id");
+          this.getCrew();
           this.getVideos();
           this.getDetails();
-          return this.filmService.loadFilmById(this.id)
+          this.getPosters();
+          return this.filmService.loadFilmById(this.filmId)
             .pipe(
               map((film: Film) => {
+                this.isLoading = false;
                 this.film = film;
               }))
         }))
@@ -83,35 +87,38 @@ export class FilmIdComponent implements OnInit {
     return config;
   }
 
-  getCreits(): void {
-    this.detalesService.loadCredits(this.id)
-      .subscribe((role: {}) => {
-        this.character = [...role[0]];
-        this.job = [...role[1]];
-        this.chosenCharacter = this.character.splice(0, 18);
-        this.mainJob = this.job.splice(0, 5)
-      });
+  getCrew(): void {
+    this.actorService.loadCrew(this.filmId)
+      .subscribe((crew: Array<any>) => this.crew = [...crew[1]].splice(0, 5));
   }
 
-
   getVideos(): void {
-    this.detalesService.loadVideo(this.id)
-      .subscribe((video: Video[]) => {
-        this.video = [...video];
-      });
+    this.detalesService.loadVideo(this.filmId)
+      .subscribe((video: Video[]) => this.video = [...video]);
   }
 
   getDetails(): void {
-    this.detalesService.loadFilmDetails(this.id)
-      .subscribe(data => {
-        this.filmDetails = data
-      });
+    this.detalesService.loadFilmDetails(this.filmId)
+      .subscribe(data => this.filmDetails = data);
+  }
+
+  getPosters(): void {
+    this.detalesService.loadImages(this.filmId)
+      .subscribe(images => this.posters = [...images]);
   }
 
   openModal() {
     this.dialog.open(ModalComponent, {
       data: { video: this.video[0].key, name: this.video[0].name }
     });
+  }
+
+  savePlayer(player) {
+    this.player = player;
+    console.log('player instance', player);
+  }
+  onStateChange(event) {
+    console.log('player state', event.data);
   }
 
   ngOnInit() {

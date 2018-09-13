@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FilmService } from './../../shared/services/film.service';
 import { Film } from './../../shared/models/film';
@@ -15,7 +15,10 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class FilmsListComponent implements OnInit, OnDestroy {
 
-  showPageHeader: boolean = true;
+  @Input() filmId;
+  @Input() cardView;
+  @Input() kindOfFilmsList;
+
   query: string;
   page: number = 1;
   filmList: Film[] = [];
@@ -36,34 +39,47 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) { }
 
-  getUrlParams(): any {
-    return this.route.snapshot.url.map(url => url.path);
+  /* toggleFilmList() {
+    this.filmId !== undefined
+      ? this.viewSimilarFilms() : this.viewFilms();
+  } */
+
+  toggleFilmList(): void {
+    switch (this.kindOfFilmsList) {
+      case 'similar': this.viewSimilarFilms();
+        break;
+      case 'credits': this.viewMovieCreditsFilms();
+        break;
+      default:
+        this.viewPopularFilms();
+    }
   }
 
-  toggleFilmList() {
-    let [state, id, tail = 'empty'] = this.getUrlParams();
-    this.utilsService.includePram(tail)
-      ? this.viewSimilarFilms(id) : this.viewFilms();
-  }
-
-  //Получить списка похожих фильмов
-  viewSimilarFilms(id: number): void {
-    this.filmService.loadSimilarFilms(id, this.page)
+  //Получить списк похожих фильмов
+  viewSimilarFilms(): void {
+    this.filmService.loadSimilarFilms(this.filmId, this.page)
       .subscribe((films: Film[]) => {
         this.isLoading = false;
         this.filmList = [...this.filmList, ...films];
-        this.showPageHeader = false;
-        this.filmService.setViewType('backdrop');
+      })
+  }
+
+  //Получить список фильмов с учатием определенного актера
+  viewMovieCreditsFilms(): void {
+    this.filmService.loadMovieCredits(this.filmId)
+      .subscribe((films: Film[]) => {
+        this.isLoading = false;
+        this.filmList = [...this.filmList, ...films];
+        console.log(films);
       })
   }
 
   //Получить список фильмов
-  viewFilms(): void {
+  viewPopularFilms(): void {
     this.filmService.loadFilms(this.page, 'popular')
       .subscribe((films: Film[]) => {
         this.isLoading = false;
         this.filmList = [...this.filmList, ...films];
-        this.filmService.setViewType('poster');
       });
   }
 
@@ -112,7 +128,6 @@ export class FilmsListComponent implements OnInit, OnDestroy {
   //Добавление страницы
   addPage(): void {
     this.page += 1;
-    //this.viewFilms();
     this.toggleFilmList();
   }
 
@@ -121,6 +136,9 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     this.toggleFilmList();
     this.searchService.setState(this.state);
     this.getQuery();
+    console.log(this.filmId)
+    console.log(this.kindOfFilmsList)
+    console.log(this.cardView)
   }
 
   ngOnDestroy() {

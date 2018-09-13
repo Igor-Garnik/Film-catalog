@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-actor-item',
@@ -6,9 +6,6 @@ import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
   styleUrls: ['./actor-item.component.css']
 })
 export class ActorItemComponent implements OnInit {
-
-  list: any;
-  query: string = '';
 
   constructor() { }
   @Input() actor;

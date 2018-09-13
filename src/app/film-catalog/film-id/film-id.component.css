@@ -134,6 +134,10 @@ mat-tab-group {
     justify-content: space-between;
 }
 
+.video-container {
+    width: 49%;
+}
+
 .addition-wrapper .person {
     width: 15.8333333%;
     box-sizing: border-box;
@@ -154,3 +158,42 @@ mat-tab-group {
     width: 100%;
     height: auto;
 }
+
+.poster-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 2%;;
+    justify-content: space-between;
+}
+
+.poster-view {
+    width: 24%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 2%;
+    overflow: hidden;
+    max-height: 257px;
+}
+
+.poster-view img {
+    width: 100%;
+    min-height: 257px;
+}
+
+.poster-view span {
+    display: block;
+    padding: 2% 4% 4% 4%;
+    font-size: 0.8em;
+    color: rgba(0, 0, 0, 0.50);
+}
+
+mat-spiner {
+    position: absolute;
+    left: 50%;
+    color: #f4f4f4;
+}
+
+.poster-view img:hover {
+    transform: scale(1.06,1.06);
+    transition-timing-function: ease-out;
+    transition-duration: 550ms;
+  }

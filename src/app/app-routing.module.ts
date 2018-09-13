@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: "movie/:id/view", component: FilmIdComponent, canActivate: [AuthGuard] },
   { path: "actors", component: ActorsListComponent, canActivate: [AuthGuard] },
   { path: "actors/:id/view", component: ActorIdComponent, canActivate: [AuthGuard] },
-  { path: "**", component: NotFoundComponent }
+  //{ path: "**", component: NotFoundComponent }
 ];
 
 @NgModule({

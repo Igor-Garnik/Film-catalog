@@ -10,15 +10,12 @@ import { Subscription } from 'rxjs';
 })
 export class FilmItemComponent implements OnInit {
   @Input() film;
-  @Input() view;
+  @Input() cardView;
   @Output() favorite = new EventEmitter<number>();
   @Output() list = new EventEmitter<any>()
 
   constructor(private filmService: FilmService) { }
 
-  //posterCardView: string = 'backdrop';
-  posterCardView: string = 'poster';
-  card: string = 'tester';
   favoriteTooltip: string;
   watchListTooltip: string;
   subscription: Subscription;
@@ -31,18 +28,6 @@ export class FilmItemComponent implements OnInit {
     message: '',
     add: 'Добавить к просмотру',
     remove: 'Удалить из просмотра'
-  }
-
-  setCard() {
-    this.posterCardView = this.view;
-  }
-
-  setCardView(): void {
-    this.subscription = this.filmService.getViewType()
-      .subscribe((data: string) => {
-        this.posterCardView = data;
-        console.log(this.posterCardView);
-      });
   }
 
   //Добвление в избранные
@@ -67,7 +52,6 @@ export class FilmItemComponent implements OnInit {
   ngOnInit() {
     this.setTooltip(this.favoriteConf, this.film.isFavorite);
     this.setTooltip(this.watchListConf, this.film.isWatchList);
-    this.setCardView();
   }
 
 }

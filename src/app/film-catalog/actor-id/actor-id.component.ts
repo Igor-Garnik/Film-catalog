@@ -12,26 +12,28 @@ export class ActorIdComponent implements OnInit {
 
   constructor(
     private actorService: ActorService,
-    private router: Router,
     private route: ActivatedRoute
   ) { }
 
   actor: Actor;
-  id: number;
+  actorId: number;
 
   showActor() {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.id = +params.get("id");
-      this.actorService.getActorById(this.id)
-        .subscribe((actor: Actor) => {
-          console.log(actor)
-          this.actor = actor
-        })
+      this.actorId = +params.get("id");
+      this.actorService.loadActorById(this.actorId)
+        .subscribe((actor: Actor) => this.actor = actor);
     })
   }
 
+  getPosters(): void {
+
+  }
+
+
   ngOnInit() {
     this.showActor();
+
   }
 
 }

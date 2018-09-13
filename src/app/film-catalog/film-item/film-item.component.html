@@ -1,7 +1,7 @@
-<div class="wrapper" *ngIf="posterCardView == 'poster'">
+<div class="wrapper" *ngIf="!cardView">
     <div class="img">
-        <a [routerLink]="[film.id + '/view']">
-            <img src="{{film.posterPath}}" alt={{film.title}}>
+        <a [routerLink]="['/movie/' + film.id + '/view']">
+            <img [src]="film.posterPath | transformPath: 300" alt={{film.title}}>
         </a>
     </div>
     <div class="content">
@@ -13,7 +13,7 @@
             <span><b>Рейтинг: </b>{{film.voteAverage}}</span>
         </header>
         <section>
-            {{film.overview | cutDescription: 200}}
+            {{film.overview | transformDescription: 200}}
         </section>
         <footer>
             <div class="link">
@@ -34,12 +34,15 @@
     </div>
 </div>
 
-<div class="album-wrapper" *ngIf="posterCardView == 'backdrop'">
+<div class="album-wrapper" *ngIf="cardView == 'backdrop'">
+
     <div class="album-image-wrapper">
-        <a [routerLink]="[film.id + '/view']">
-            <img [src]="film.backdropPath" alt={{film.title}}>
+        <a [routerLink]="['/movie/' + film.id + '/view']">
+            <img [src]="film.backdropPath | transformPath: 500" alt={{film.title}}>
         </a>
+        <span class="album-film-title">{{film.title}}</span>
     </div>
+
     <div class="album-content">
         <div class="info-group">
             <span><b>Релиз: </b>{{film.releaseDate | date: 'd MMMM y'}}</span>
