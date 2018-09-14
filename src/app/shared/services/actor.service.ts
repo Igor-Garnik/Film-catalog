@@ -68,6 +68,26 @@ export class ActorService {
       )
   }
 
+  loadImages(filmId): Observable<any> {
+    return this.http.get(`${this.apiConfig.personUrl}/${filmId}/images?${this.apiConfig.apiKey}`)
+      .pipe(
+        pluck('profiles'),
+        map(data => {
+          return this.setImage(data);
+        })
+      )
+  }
+
+  setImage(data): Array<any> {
+    return data.map(image => {
+      return {
+        path: image.file_path,
+        width: image.width,
+        height: image.height
+      }
+    })
+  }
+
   setActors(actors): Actor[] {
     return actors.map(actor => {
       return {
@@ -86,15 +106,16 @@ export class ActorService {
       voteAverage: actor.popularity,
       posterPath: actor.profile_path,
       birthday: actor.birthday,
-      deathday: actor.deathday,
+      deathday: this.setdeathDay(actor.deathday),
       alsoKnownAs: actor.also_known_as.map(name => name),
       biography: actor.biography,
       placeOfBirth: actor.place_of_birth,
-      homePage: actor.homepage
     }
   }
 
-  ыуе
+  setdeathDay(data): string {
+    return data === null ? 'alive' : data;
+  }
 
   setCredits(credits, job): Actor[] {
     return credits.map(person => {
@@ -108,3 +129,4 @@ export class ActorService {
   }
 
 }
+

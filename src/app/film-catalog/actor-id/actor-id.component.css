@@ -39,7 +39,7 @@
     padding-left: 2%;
 }
 
-.actor-info span {
+.actor-info span, .info-wrapper span {
     font-size: 0.9em;
     color: rgba(0, 0, 0, 0.50);
 }
@@ -48,7 +48,7 @@
     margin-bottom: 0;
 }
 
-.block {
+.block, .info-wrapper span {
     display: block;
 }
 
@@ -57,13 +57,13 @@
 }
 
 .actor-details-poster .image {
-    width: 19.2%;
+    width: 24.25%;
     box-sizing: border-box;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    overflow: hidden;
 }
 
-.actor-details-poster img {
+
+.actor-details-poster .img {
     width: 100%;
     height: auto;
 }
@@ -72,6 +72,8 @@
     transform: scale(1.06,1.06);
     transition-timing-function: ease-out;
     transition-duration: 550ms;
-  }
+}
+
+
 
 

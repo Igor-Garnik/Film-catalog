@@ -12,6 +12,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { FilmIdComponent } from './film-id/film-id.component';
 import { ActorIdComponent } from './actor-id/actor-id.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { MyListComponent } from '../my-list/my-list.component';
 
 
 
@@ -32,7 +33,8 @@ import { AppRoutingModule } from '../app-routing.module';
     LoginComponent,
     NotFoundComponent,
     FilmIdComponent,
-    ActorIdComponent
+    ActorIdComponent,
+    MyListComponent
   ]
 })
 export class FilmCatalogModule { }

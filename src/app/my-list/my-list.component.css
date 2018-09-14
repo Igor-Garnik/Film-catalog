@@ -1,0 +1,13 @@
+.main-wrapper {
+    background-color: #f4f4f4;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+}
+
+.wrapper {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+mat-tab-group mat-tab {
+    width: 50%;
+}

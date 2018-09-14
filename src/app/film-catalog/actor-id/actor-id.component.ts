@@ -17,6 +17,7 @@ export class ActorIdComponent implements OnInit {
 
   actor: Actor;
   actorId: number;
+  images: {}[];
 
   showActor() {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -27,13 +28,14 @@ export class ActorIdComponent implements OnInit {
   }
 
   getPosters(): void {
-
+    this.actorService.loadImages(this.actorId)
+      .subscribe(data => this.images = [...data]);
   }
 
 
   ngOnInit() {
     this.showActor();
-
+    this.getPosters();
   }
 
 }

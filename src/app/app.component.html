@@ -11,10 +11,17 @@
           <mat-icon class="example-icon">account_circle</mat-icon>
           {{userName}}
         </button>
-        <mat-menu #menu="matMenu">
-          <a mat-button routerLink="/login" routerLinkActive="active" (click)="logOut()">
-            <mat-icon class="example-icon">power_settings_new</mat-icon>Log out
-          </a>
+        <mat-menu #menu="matMenu" class="user-tab">
+          <div class="div">
+            <a mat-button routerLink="/movie/mylist">
+              <mat-icon class="example-icon">list</mat-icon>Мои фильмы
+            </a>
+          </div>
+          <div>
+            <a mat-button routerLink="/login" routerLinkActive="active" (click)="logOut()">
+              <mat-icon class="example-icon">power_settings_new</mat-icon>Log out
+            </a>
+          </div>
         </mat-menu>
       </div>
     </mat-toolbar-row>

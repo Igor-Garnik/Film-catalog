@@ -8,6 +8,7 @@ import { AuthGuard } from './shared/guards/auth-guard.service';
 import { NotFoundComponent } from './film-catalog/not-found/not-found.component'
 import { FilmIdComponent } from './film-catalog/film-id/film-id.component';
 import { ActorIdComponent } from './film-catalog/actor-id/actor-id.component';
+import { MyListComponent } from './my-list/my-list.component';
 
 const routes: Routes = [
   { path: "", pathMatch: "full", redirectTo: "login" },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: "main", component: MainComponent, canActivate: [AuthGuard] },
   { path: "movie", component: FilmsListComponent, canActivate: [AuthGuard] },
   { path: "movie/:id/view", component: FilmIdComponent, canActivate: [AuthGuard] },
+  { path: "movie/mylist", component: MyListComponent, canActivate: [AuthGuard] },
   { path: "actors", component: ActorsListComponent, canActivate: [AuthGuard] },
   { path: "actors/:id/view", component: ActorIdComponent, canActivate: [AuthGuard] },
   //{ path: "**", component: NotFoundComponent }

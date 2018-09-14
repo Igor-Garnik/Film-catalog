@@ -15,7 +15,7 @@
         <h2>Информация о актере</h2>
         <p><b>Дата рождения</b></p>
         <span>{{actor.birthday | date: 'd MMMM y'}}</span>
-        <div *ngIf="actor.deathday">
+        <div *ngIf="actor.deathday !== 'alive'">
           <p><b>Дата смерти</b></p>
           <span>{{actor.deathday}}</span>
         </div>
@@ -35,9 +35,15 @@
             <app-films-list [filmId]="actorId" [cardView]="'backdrop'" [kindOfFilmsList]="'credits'"></app-films-list>
           </mat-tab>
           <mat-tab label="Постеры">
-            <div class="actor-details-poster">
+            <div class="actor-details-poster" *ngFor="let image of images">
               <div class="image">
-                <img src="" alt="">
+                <div class="image-wrapper">
+                  <a [href]='image.path| transformPath: 1280' target="_blank"><img [src]="image.path | transformPath: 300"></a>
+                  <div class="info-wrapper">
+                    <span><b>width: </b>{{image.width}}</span>
+                    <span><b>height: </b>{{image.height}}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </mat-tab>

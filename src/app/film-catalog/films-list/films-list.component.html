@@ -2,7 +2,7 @@
   <div class="wrapper">
     <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-    <div class="header" *ngIf="filmId == undefined">
+    <div class="header" *ngIf="!viewHeaderTitle()">
       <h3>Популяные фильмы</h3>
     </div>
 
