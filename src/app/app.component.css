@@ -10,6 +10,10 @@
     flex: 1 1 auto;
 }
 
+.title {
+    color: #039be5;
+}
+
 mat-toolbar {
     background-color: #424242;
     color:white;
@@ -32,6 +36,21 @@ mat-toolbar {
     justify-content:flex-end;
     align-items: center;
 }
+.nav a {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    font-size: 0.7em;
+}
+
+.nav a:hover {
+    color: #039be5;
+}
+
+
+.nav a.active {
+    color: #039be5;
+  }
 
 .wrapper {
     width: 100%;

@@ -44,7 +44,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   loadNowPlayingFilms(): void {
-    this.filmService.loadFilms(this.page, 'now_playing')
+    this.filmService.loadFilms(this.page, 'upcoming')
       .subscribe(films => {
         this.isLoading = false;
         [this.firstNowFilm, this.secondNowFilm, this.thirdNowFilm] = films;

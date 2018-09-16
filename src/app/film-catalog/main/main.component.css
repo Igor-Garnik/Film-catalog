@@ -27,17 +27,18 @@ h2 {
 
 
 .wrapper h3 {
-  margin-top: 13px;
-  margin-bottom: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .movies, .second-line {
   display: flex;
 }
 
-.popular, .now-playing {
+.popular, .upcoming {
   width: 50%;
 }
+
 
 .first-line {
   height: 281px;
@@ -115,6 +116,11 @@ mat-spinner {
   position: absolute;
   top: 30%;
   left: 47%;
+}
+
+.movies a {
+  color: black;
+  text-decoration: none;
 }
 
 

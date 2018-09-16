@@ -1,19 +1,19 @@
 <div class="container">
   <mat-toolbar>
     <mat-toolbar-row>
-      <span>Film Catalog</span>
+      <span class="title">Film Catalog</span>
       <span class="example-spacer"></span>
       <div class="nav" *ngIf="isShow">
-        <a mat-button *ngFor="let link of links" [routerLink]="link.path" [routerLinkActive]="link.active">
-          <mat-icon class="example-icon">{{link.icon}}</mat-icon>{{link.label}}
-        </a>
+        <a mat-button routerLink="/main" routerLinkActive="active">Главная</a>
+        <a mat-button routerLink="/movie/popular" routerLinkActive="active">Фильмы</a>
+        <a mat-button routerLink="/actors" routerLinkActive="active">Актеры</a>
         <button mat-button [matMenuTriggerFor]="menu">
           <mat-icon class="example-icon">account_circle</mat-icon>
           {{userName}}
         </button>
         <mat-menu #menu="matMenu" class="user-tab">
           <div class="div">
-            <a mat-button routerLink="/movie/mylist">
+            <a mat-button routerLink="/movie/my-list/favorite">
               <mat-icon class="example-icon">list</mat-icon>Мои фильмы
             </a>
           </div>

@@ -57,6 +57,7 @@ export class FilmIdComponent implements OnInit {
               map((film: Film) => {
                 this.isLoading = false;
                 this.film = film;
+
               }))
         }))
       .subscribe();

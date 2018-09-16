@@ -1,4 +1,4 @@
-<div class="main-wrapper">
+<div class="main-wrapper" *ngIf="film">
   <div>
     <div class="poster-wrapper">
       <div class="poster"><img [src]="film.backdropPath | transformPath: 1280" alt=""></div>
@@ -56,7 +56,7 @@
       <mat-tab label="Постеры">
         <div class="poster-container">
           <div class="poster-view" *ngFor="let poster of posters">
-            <a [href]='poster.posterPath | transformPath: 1280' target="_blank"><img [src]="poster.posterPath | transformPath: 300"></a>
+            <a [attr.href]='poster.posterPath | transformPath: 1280' target="_blank"><img [src]="poster.posterPath | transformPath: 300"></a>
             <span><b>Размер: </b>{{poster.width}}*{{poster.height}}</span>
           </div>
         </div>

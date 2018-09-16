@@ -1,15 +1,15 @@
-<div class="main-wrapper">
+<div class="main-wrapper" *ngIf="firstPopularFilm">
     <div class="wrapper">
         <mat-spinner *ngIf="isLoading"></mat-spinner>
 
         <section class="movies">
             <div class="popular">
                 <div class="title">
-                    <a mat-button routerLink="/movie"><h3>Популярные фильмы</h3></a>
+                    <a routerLink="/movie/popular"><h3>Популярные фильмы</h3></a>
                 </div>
                 <div class="content">
                     <div class="first-line poster">
-                        <img [src]="firstPopularFilm.backdropPath | transformPath: 500" alt="{{firstPopularFilm.title}}">
+                        <a routerLink="popular"> <img [src]="firstPopularFilm.backdropPath | transformPath: 500" alt="{{firstPopularFilm.title}}"></a>
                         <div class="title">{{firstPopularFilm.title}}</div>
                     </div>
                     <div class="second-line">
@@ -24,9 +24,9 @@
                     </div>
                 </div>
             </div>
-            <div class="now-playing">
+            <div class="upcoming">
                 <div class="title">
-                    <a mat-button routerLink="/movie"><h3>В кинотеатрах</h3></a>
+                    <a routerLink="/movie/upcoming"><h3>Предстоящие фильмы</h3></a>
                 </div>
                 <div class="content">
                     <div class="second-line">

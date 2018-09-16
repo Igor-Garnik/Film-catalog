@@ -5,6 +5,8 @@ import { Film } from './../../shared/models/film';
 import { SearchService } from '../../shared/services/search.service';
 import { UtilsService } from '../../shared/services/utils.service';
 import { ListConfig } from '../../shared/models/listConfig'
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { map, switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -30,12 +32,21 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     favorite: 'favorite',
     watchlist: 'watchlist'
   }
+  test;
 
   constructor(
     private filmService: FilmService,
     private searchService: SearchService,
     private utilsService: UtilsService,
+    private route: ActivatedRoute
   ) { }
+
+  getParam() {
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.test = params.get('list-type'))
+    )
+  }
 
   //Отображение подписи Популярных фильмов
   viewHeaderTitle(): boolean {
@@ -143,6 +154,10 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     this.toggleFilmList();
     this.searchService.setState(this.state);
     this.getQuery();
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.test = params.get('list-type'))
+    )
   }
 
   ngOnDestroy() {
