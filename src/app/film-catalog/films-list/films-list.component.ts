@@ -6,7 +6,7 @@ import { SearchService } from '../../shared/services/search.service';
 import { UtilsService } from '../../shared/services/utils.service';
 import { ListConfig } from '../../shared/models/listConfig'
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 
 @Component({
@@ -32,7 +32,7 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     favorite: 'favorite',
     watchlist: 'watchlist'
   }
-  test;
+  urlParam: string;
 
   constructor(
     private filmService: FilmService,
@@ -43,14 +43,16 @@ export class FilmsListComponent implements OnInit, OnDestroy {
 
   getParam() {
     this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.test = params.get('list-type'))
-    )
+      tap((params: ParamMap) =>
+        this.urlParam = params.get('list-type'))
+    ).subscribe(() => {
+      this.checkParam(this.urlParam);
+      this.toggleFilmList();
+    })
   }
 
-  //Отображение подписи Популярных фильмов
-  viewHeaderTitle(): boolean {
-    return this.filmId || this.cardView || this.kindOfFilmsList ? true : false;
+  checkParam(param: string): void {
+    if (param !== null) this.kindOfFilmsList = param;
   }
 
   toggleFilmList(): void {
@@ -63,8 +65,14 @@ export class FilmsListComponent implements OnInit, OnDestroy {
         break;
       case 'watchList': this.viewMovieCreditsFilms();
         break;
+      case 'upcoming': this.viewDifferentFilmsList(this.kindOfFilmsList); //передача параметра запроса
+        break;
+      case 'top_rated': this.viewDifferentFilmsList(this.kindOfFilmsList); //передача параметра запроса
+        break;
+      case 'now_playing': this.viewDifferentFilmsList(this.kindOfFilmsList); //передача параметра запроса
+        break;
       default:
-        this.viewPopularFilms();
+        this.viewDifferentFilmsList(); //параметр запросы по умолчанию
     }
   }
 
@@ -91,14 +99,14 @@ export class FilmsListComponent implements OnInit, OnDestroy {
   }
 
   //Получить список фильмов
-  viewPopularFilms(): void {
-    this.filmService.loadFilms(this.page, 'popular')
+  viewDifferentFilmsList(param?): void {
+    this.filmService.loadFilms(this.page, param)
       .subscribe((films: Film[]) => this.copyFilmList(films));
   }
 
   copyFilmList(films: Film[]): void {
     this.isLoading = false;
-    this.filmList = [...this.filmList, ...films];
+    this.filmList = [...films];
   }
 
   //Получить список фильмов согласно поиска
@@ -151,13 +159,9 @@ export class FilmsListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.filmService.getLocalStorage();
-    this.toggleFilmList();
     this.searchService.setState(this.state);
     this.getQuery();
-    this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.test = params.get('list-type'))
-    )
+    this.getParam();
   }
 
   ngOnDestroy() {

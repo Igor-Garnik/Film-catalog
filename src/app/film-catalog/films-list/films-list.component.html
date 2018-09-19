@@ -2,8 +2,17 @@
   <div class="wrapper">
     <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-    <div class="header" *ngIf="!viewHeaderTitle()">
-      <h3>Популяные фильмы{{test}}</h3>
+    <div class="header" *ngIf="kindOfFilmsList === 'popular'">
+      <h3>Популяные фильмы</h3>
+    </div>
+    <div class="header" *ngIf="kindOfFilmsList === 'upcoming'">
+      <h3>Ожидаемые фильмы</h3>
+    </div>
+    <div class="header" *ngIf="kindOfFilmsList === 'top_rated'">
+      <h3>Фильмы с высшим рейтингом</h3>
+    </div>
+    <div class="header" *ngIf="kindOfFilmsList === 'now_playing'">
+      <h3>Сейчас в кинотеатрах</h3>
     </div>
 
     <div>

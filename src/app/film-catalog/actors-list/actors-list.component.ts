@@ -34,15 +34,12 @@ export class ActorsListComponent implements OnInit, OnDestroy {
   toggleActorView() {
     this.filmId == undefined
       ? this.viewActors() : this.viewCredits();
-    console.log(this.filmId);
   }
 
   viewCredits(): void {
     this.actorService.loadCrew(this.filmId)
-      .subscribe((crew: Array<any>) => {
-        this.actorList = [...this.actorList, ...crew[0]];
-        console.log(this.actorList)
-      })
+      .subscribe((crew: Array<any>) =>
+        this.actorList = [...this.actorList, ...crew[0]])
   }
 
   //Загрузить список актеров

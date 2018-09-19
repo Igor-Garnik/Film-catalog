@@ -28,7 +28,7 @@ export class FilmService {
   }
 
   //Получение списка списка фильмов "favorites", перезаписание значения свойств избранные и список согласно даных пользователя
-  loadFilms(page: number, param: string): Observable<Film[]> {
+  loadFilms(page: number, param: string = 'popular'): Observable<Film[]> {
     return forkJoin(
       this.http.get(`${this.apiConfig.movieUrl}/${param}?${this.apiConfig.params}page=${page}`),
       this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/favorite/movies?${this.apiConfig.apiKey}&session_id=${this.config.sessionId}&language=ru-Ru&sort_by=created_at.asc&page=1`),
