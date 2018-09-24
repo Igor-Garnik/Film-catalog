@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 export class FilmItemComponent implements OnInit {
   @Input() film;
   @Input() cardView;
+  @Input() isLoading;
   @Output() favorite = new EventEmitter<number>();
   @Output() list = new EventEmitter<any>()
 
@@ -29,6 +30,7 @@ export class FilmItemComponent implements OnInit {
     add: 'Добавить к просмотру',
     remove: 'Удалить из просмотра'
   }
+
 
   //Добвление в избранные
   addToFavorite() {

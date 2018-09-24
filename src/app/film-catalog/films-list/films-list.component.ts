@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FilmService } from './../../shared/services/film.service';
 import { Film } from './../../shared/models/film';
@@ -7,11 +7,13 @@ import { UtilsService } from '../../shared/services/utils.service';
 import { ListConfig } from '../../shared/models/listConfig'
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { map, switchMap, tap } from 'rxjs/operators';
+import { PageEvent } from '@angular/material';
 
 @Component({
   selector: 'app-films-list',
   templateUrl: './films-list.component.html',
   styleUrls: ['./films-list.component.css']
+  /* changeDetection: ChangeDetectionStrategy.OnPush */
 })
 export class FilmsListComponent implements OnInit, OnDestroy {
 
@@ -25,6 +27,7 @@ export class FilmsListComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   queryResponse: Film[] = [];
   subscription: Subscription;
+  filmsResults: Subscription;
   isErrorMessage: boolean = false;
   state: string = 'films';
   request = {
@@ -35,7 +38,10 @@ export class FilmsListComponent implements OnInit, OnDestroy {
   urlParam: string;
   pagesQuantity = 0;
   pageSize = 20;
-  pageSizeOptions: number[] = [5, 10, 20];
+  pageSizeOptions: number[] = [20, 40];
+  totalPages: number;
+
+
 
   constructor(
     private filmService: FilmService,
@@ -44,7 +50,12 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) { }
 
+  getPage(event) {
+    console.log(event);
+  }
+
   getParam() {
+    this.isLoading = true;
     this.route.paramMap.pipe(
       tap((params: ParamMap) =>
         this.urlParam = params.get('list-type'))
@@ -58,6 +69,7 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     if (this.filmListState !== this.kindOfFilmsList) {
       this.filmListState = this.kindOfFilmsList;
       this.filmList = [];
+      this.isLoading = true;
     }
   }
 
@@ -168,14 +180,22 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     this.toggleFilmList();
   }
 
+  getFilmsTotalPages(): void {
+    this.filmsResults = this.filmService.getTotalFilmsResults()
+      .subscribe((result: number) => this.totalPages = result);
+
+  }
+
   ngOnInit() {
     this.filmService.getLocalStorage();
     this.searchService.setState(this.state);
     this.getQuery();
     this.getParam();
+    this.getFilmsTotalPages();
   }
 
   ngOnDestroy() {
-    if (this.subscription) { this.subscription.unsubscribe() };
+    if (this.subscription) this.subscription.unsubscribe();
+    this.filmsResults.unsubscribe();
   }
 }

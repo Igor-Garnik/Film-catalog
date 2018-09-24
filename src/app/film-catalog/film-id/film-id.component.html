@@ -1,3 +1,8 @@
+<div class="gag" *ngIf="!film">
+  <div></div>
+  <div></div>
+</div>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
 <div class="main-wrapper" *ngIf="film">
   <div>
     <div class="poster-wrapper">
@@ -69,7 +74,7 @@
     <div class="info-group">
       <span class="header">Дополнительная информация</span>
       <p><b>Дата релиза</b></p>
-      <span>{{filmDetails.relese}}</span>
+      <span>{{filmDetails.release | date: 'd MMMM y'}}</span>
       <p><b>Cтрана</b></p>
       <span>{{filmDetails.country}}</span>
       <p><b>Студия</b></p>

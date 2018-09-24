@@ -120,13 +120,13 @@ button a {
 
 main {
     background-color: #f4f4f4;
+    padding-bottom: 50px;
 }
 
 /*********************footer***************/
 
 footer{
     background-color: #424242;
-    margin-top: 50px;
 }
 
 .row div {

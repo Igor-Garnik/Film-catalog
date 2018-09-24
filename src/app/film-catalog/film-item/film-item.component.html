@@ -1,3 +1,4 @@
+<div class="gag" *ngIf="true"></div>
 <div class="wrapper" *ngIf="!cardView">
     <div class="img">
         <a [routerLink]="['/movie/' + film.id + '/view']">
@@ -30,9 +31,10 @@
                 </button>
             </div>
         </footer>
-
     </div>
 </div>
+
+
 
 <div class="album-wrapper" *ngIf="cardView == 'backdrop'">
 

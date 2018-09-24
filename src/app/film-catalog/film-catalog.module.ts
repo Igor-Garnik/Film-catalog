@@ -14,6 +14,7 @@ import { ActorIdComponent } from './actor-id/actor-id.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { MyFilmsComponent } from './my-films/my-films.component';
 import { Ng2CarouselamosModule } from 'ng2-carouselamos';
+import { NgxPaginationModule } from 'ngx-pagination'
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { Ng2CarouselamosModule } from 'ng2-carouselamos';
     SharedModule,
     MaterialModule,
     AppRoutingModule,
-    Ng2CarouselamosModule
+    Ng2CarouselamosModule,
+    NgxPaginationModule
 
   ],
   declarations: [

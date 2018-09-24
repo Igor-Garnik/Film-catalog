@@ -1,4 +1,4 @@
-.main-wrapper {
+.main-wrapper, mat-paginator, .wrapper-poginator  {
   background-color: #f4f4f4;
 
   font-family: 'Source Sans Pro', Arial, sans-serif;
@@ -36,16 +36,31 @@ h3 {
 }
 
 
-.wrapper-paginator {
+.wrapper-poginator {
   display: flex;
   justify-content: flex-end;
-  padding: 3% 0;
 }
 
 mat-spinner {
   position: absolute;
   top: 30%;
   left: 47%;
+}
+
+
+/*Заглушка*/
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.row div {
+  height: 291px;
+  width: 49%;
+  margin-bottom: 2%;
+  background-color: rgb(23, 23, 61, 0.2);
 }
 
 

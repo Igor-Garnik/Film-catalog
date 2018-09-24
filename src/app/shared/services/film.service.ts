@@ -19,7 +19,7 @@ export class FilmService {
     @Inject(API_CONFIG) public apiConfig: Config
   ) { }
 
-  viewType$ = new Subject<any>();
+  filmsResults$ = new Subject<any>();
   films;
   page = 1;
   config: LocalStorageCong = {
@@ -35,13 +35,21 @@ export class FilmService {
       this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/watchlist/movies?${this.apiConfig.apiKey}&language=en-US&session_id=${this.config.sessionId}&sort_by=created_at.asc&page=1`)
     ).pipe(
       map((res: Array<any>) => {
-        let [totalResults, films, favorites, watchList] =
-          [res[0].total_results, res[0].results, res[1].results, res[2].results];
+        this.setTotalFilmsResults(res[0].total_pages)
+        let [films, favorites, watchList] = [res[0].results, res[1].results, res[2].results];
         let favoriteIds = this.getIds(favorites);
         let watchListIds = this.getIds(watchList);
         return this.setFilmsProperty(films, favoriteIds, watchListIds);
       })
     )
+  }
+
+  setTotalFilmsResults(results): void {
+    this.filmsResults$.next(results);
+  }
+
+  getTotalFilmsResults(): Observable<number> {
+    return this.filmsResults$.asObservable();
   }
 
   getQueryFilm(query: string): Observable<Film[]> {

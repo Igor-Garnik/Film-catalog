@@ -12,8 +12,7 @@ import { SearchComponent } from './/film-catalog/search/search.component'
 import { MaterialModule } from './material.module';
 import { ModalComponent } from './modal/modal.component';
 import { Ng2CarouselamosModule } from 'ng2-carouselamos';
-
-
+import { PaginatorComponent } from './paginator/paginator.component';
 
 registerLocaleData(lcoaleRuUA);
 
@@ -21,7 +20,9 @@ registerLocaleData(lcoaleRuUA);
   declarations: [
     AppComponent,
     SearchComponent,
-    ModalComponent
+    ModalComponent,
+    PaginatorComponent
+
   ],
   imports: [
     BrowserModule,
@@ -30,6 +31,7 @@ registerLocaleData(lcoaleRuUA);
     SharedModule,
     MaterialModule,
     Ng2CarouselamosModule
+
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "ru-UA" },

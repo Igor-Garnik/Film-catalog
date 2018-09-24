@@ -16,6 +16,7 @@
     </div>
     <div>
 
+
       <div class="card-wrapper" *ngIf="!query; else queryBlock">
         <div class="card" *ngFor="let film of filmList">
           <film-item [film]="film" [cardView]="cardView" (favorite)="addToFavorite($event)" (list)="addToWatchlist($event)"></film-item>
@@ -29,6 +30,7 @@
           </div>
         </div>
 
+
         <ng-template #errorBlock>
           <div class="message">
             <h2>По запросу
@@ -41,9 +43,17 @@
       </ng-template>
     </div>
 
-    <!--     <div class="wrapper-poginator" *ngIf="!query">
-      <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
-      </mat-paginator>
-    </div> -->
+    <!-- Заглушка -->
+    <div class="row" *ngIf="isLoading">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <!-- Заглушка -->
+
+    <div class="wrapper-poginator">
+
+    </div>
   </div>
 </div>
