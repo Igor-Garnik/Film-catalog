@@ -20,6 +20,7 @@
   background-color: #424242;
 }
 
+
 h2 {
   color: white;
   text-shadow:black 0 0 4px;
@@ -31,11 +32,43 @@ h2 {
   margin-bottom: 15px;
 }
 
-.movies, .second-line {
+.list-title a, .title a {
+  text-decoration: none;
+  color: black;
+}
+
+#carousel-container {
+  width: 100%;
+  margin: 5em auto;
+  padding: 0;
+  background:#fff;
+}
+
+.carousel-films {
+  width: 198px;
+  height: 278px;
+}
+
+
+.carousel-films span {
+  display: block;
+  padding: 1em 2em;
+}
+
+#left, #right { 
+  margin: 10px;
+  
+}
+
+.arrow {
+  cursor: pointer;
+}
+
+.movies, .second-line, .row {
   display: flex;
 }
 
-.popular, .upcoming {
+.popular, .upcoming, .list-title, .block, .items {
   width: 50%;
 }
 
@@ -47,12 +80,13 @@ h2 {
 
 .first-line .title {
   position:absolute;
-  top:10px;
+  bottom: 10px;
   left: 15px;
   color:white;
   font-size: 0.9em;
   text-shadow:black 0 0 2px;
   letter-spacing: 1px;
+  
 }
 
 
@@ -67,8 +101,10 @@ h2 {
 }
 
 .second-line .title {
+  display: inline-block;
+  height: 20px;
   position:absolute;
-  top:10px;
+  top:115px;
   left: 15px;
   color:white;
   font-size: 0.9em;
@@ -81,46 +117,46 @@ h2 {
   height: auto;
 }
 
-.actors {
-  margin-bottom: 50px;
-}
-
-.actors .content {
+.carousel-gag {
+  width: 996px;
+  height: 278px;
   display: flex;
 }
 
- .actor {
-  width: 11.11111%
+.carousel-gag div {
+  width: 20%;
+  height: 100%;
+  border: 1px solid #f4f4f4;
+  box-sizing: border-box;
+  background-color: rgb(23, 23, 61, 0.2);
 }
 
-.actor-img {
-  max-height: 140px;
-  overflow: hidden;
-  position:relative;
-}
-
-.actor-name {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  color:white;
-  font-size: 0.8em;
-  text-shadow:black 0 0 2px;
-}
-
-.actor img {
+.gag {
+  display: flex;
   width: 100%;
-  height: auto;
+  
 }
+
+.item {
+  height: 281px;
+  width: 100%;
+  border: 1px solid #f4f4f4;
+  box-sizing: border-box;
+  background-color: rgb(23, 23, 61, 0.2);
+}
+
+.items {
+  height: 141px;
+  border: 1px solid #f4f4f4;
+  box-sizing: border-box;
+  background-color: rgb(23, 23, 61, 0.2);
+}
+
+
 mat-spinner {
   position: absolute;
   top: 30%;
   left: 47%;
-}
-
-.movies a {
-  color: black;
-  text-decoration: none;
 }
 
 

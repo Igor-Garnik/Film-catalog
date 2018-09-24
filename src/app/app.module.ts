@@ -11,6 +11,7 @@ import { apiConfig, API_CONFIG } from './shared/configs/api.config';
 import { SearchComponent } from './/film-catalog/search/search.component'
 import { MaterialModule } from './material.module';
 import { ModalComponent } from './modal/modal.component';
+import { Ng2CarouselamosModule } from 'ng2-carouselamos';
 
 
 
@@ -27,7 +28,8 @@ registerLocaleData(lcoaleRuUA);
     AppRoutingModule,
     FilmCatalogModule,
     SharedModule,
-    MaterialModule
+    MaterialModule,
+    Ng2CarouselamosModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "ru-UA" },

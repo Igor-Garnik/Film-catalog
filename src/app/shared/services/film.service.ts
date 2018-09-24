@@ -35,7 +35,8 @@ export class FilmService {
       this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/watchlist/movies?${this.apiConfig.apiKey}&language=en-US&session_id=${this.config.sessionId}&sort_by=created_at.asc&page=1`)
     ).pipe(
       map((res: Array<any>) => {
-        let [films, favorites, watchList] = [res[0].results, res[1].results, res[2].results];
+        let [totalResults, films, favorites, watchList] =
+          [res[0].total_results, res[0].results, res[1].results, res[2].results];
         let favoriteIds = this.getIds(favorites);
         let watchListIds = this.getIds(watchList);
         return this.setFilmsProperty(films, favoriteIds, watchListIds);
@@ -121,20 +122,6 @@ export class FilmService {
     )
   }
 
-  /* loadWatchListFilms(): Observable<Film[]> {
-    return forkJoin(
-      this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/favorite/movies?${this.apiConfig.apiKey}&session_id=${this.config.sessionId}&language=ru-Ru&sort_by=created_at.asc&page=1`),
-      this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/watchlist/movies?${this.apiConfig.apiKey}&language=en-US&session_id=${this.config.sessionId}&sort_by=created_at.asc&page=1`)
-    ).pipe(
-      map((res: Array<any>) => {
-        let [favorites, watchList] = [res[0].results, res[1].results];
-        let favoriteIds = this.getIds(favorites);
-        let watchListIds = this.getIds(watchList);
-        return this.setFilmsProperty(watchList, favoriteIds, watchListIds);
-      })
-    )
-  } */
-
   loadWatchlistFilms(): Observable<Film[]> {
     return forkJoin(
       this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/favorite/movies?${this.apiConfig.apiKey}&session_id=${this.config.sessionId}&language=ru-Ru&sort_by=created_at.asc&page=1`),
@@ -145,6 +132,21 @@ export class FilmService {
         let favoriteIds = this.getIds(favorites);
         let watchListIds = this.getIds(watchList);
         return this.setFilmsProperty(favorites, favoriteIds, watchListIds);
+      })
+    )
+  }
+
+  loadFilmsList(id: number, page: number): Observable<Film[]> {
+    return forkJoin(
+      this.http.get(`https://api.themoviedb.org/4/list/${id}?page=${page}${this.apiConfig.params}`),
+      this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/favorite/movies?${this.apiConfig.apiKey}&session_id=${this.config.sessionId}&language=ru-Ru&sort_by=created_at.asc&page=1`),
+      this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/watchlist/movies?${this.apiConfig.apiKey}&language=en-US&session_id=${this.config.sessionId}&sort_by=created_at.asc&page=1`)
+    ).pipe(
+      map((res: Array<any>) => {
+        let [films, favorites, watchList] = [res[0], res[1], res[2]];
+        let favoriteIds = this.getIds(favorites);
+        let watchListIds = this.getIds(watchList);
+        return this.setFilmsProperty(films, favoriteIds, watchListIds);
       })
     )
   }

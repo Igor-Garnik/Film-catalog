@@ -18,6 +18,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { YoutubePlayerModule } from 'ng2-youtube-player';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { YoutubePlayerModule } from 'ng2-youtube-player';
     MatTooltipModule,
     MatDialogModule,
     MatMenuModule,
-    YoutubePlayerModule
+    YoutubePlayerModule,
+    MatPaginatorModule
   ],
   exports: [
     FormsModule,
@@ -60,7 +62,8 @@ import { YoutubePlayerModule } from 'ng2-youtube-player';
     MatTooltipModule,
     MatDialogModule,
     MatMenuModule,
-    YoutubePlayerModule
+    YoutubePlayerModule,
+    MatPaginatorModule
   ],
   declarations: []
 })

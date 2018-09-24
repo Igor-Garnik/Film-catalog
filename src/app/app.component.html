@@ -1,9 +1,9 @@
 <header>
-  <div class="container">
+  <div class="container" (scroll)="onScrollEvent($event)">
     <nav>
       <div class="left-menu-block">
-        <img class="logo" src="https://www.themoviedb.org/assets/1/v4/logos/primary-green-d70eebe18a5eb5b166d5c1ef0796715b8d1a2cbc698f96d311d62f894ae87085.svg"
-          alt="">
+        <a routerLink="/main"><img class="logo" src="https://www.themoviedb.org/assets/1/v4/logos/primary-green-d70eebe18a5eb5b166d5c1ef0796715b8d1a2cbc698f96d311d62f894ae87085.svg"
+            alt=""></a>
         <ul class="top-menu" *ngIf="isShow">
           <li><a routerLink="/main" routerLinkActive="active">Главная</a></li>
           <li><a routerLink="/movie/popular" routerLinkActive="active">Фильмы</a>
@@ -27,9 +27,17 @@
           {{userName}}
         </button>
         <mat-menu #menu="matMenu">
+          <!--       <button mat-menu-item>
+            <mat-icon>favorite</mat-icon>
+            <a routerLink="/movie/favorites">Любимые</a>
+          </button>
           <button mat-menu-item>
             <mat-icon>list</mat-icon>
-            <a routerLink="/movie/my-list/favorite">Мои фильмы</a>
+            <a routerLink="/movie/watchlist">К просмотру</a>
+          </button> -->
+          <button mat-menu-item>
+            <mat-icon>list</mat-icon>
+            <a routerLink="/movie/my-films/favorites">Мои фильмы</a>
           </button>
           <button mat-menu-item>
             <mat-icon>power_settings_new</mat-icon>
@@ -48,15 +56,15 @@
 </div>
 
 <main>
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
+
+  <router-outlet></router-outlet>
+
 </main>
 
 <footer>
-  <div class="row">
-    <div></div>
-    <div></div>
-    <div></div>
+  <div class="container">
+    <div class="row">
+      <div>The movie db: 2018</div>
+    </div>
   </div>
 </footer>

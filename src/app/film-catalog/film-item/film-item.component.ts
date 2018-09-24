@@ -49,6 +49,7 @@ export class FilmItemComponent implements OnInit {
     config.message = isChecked ? config.remove : config.add;
   }
 
+
   ngOnInit() {
     this.setTooltip(this.favoriteConf, this.film.isFavorite);
     this.setTooltip(this.watchListConf, this.film.isWatchList);

@@ -9,6 +9,8 @@ import { DetailsService } from './shared/services/details.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
+
 export class AppComponent {
 
   constructor(
@@ -39,6 +41,10 @@ export class AppComponent {
     let sessionId = localStorage.getItem('session_id');
     this.detailsService.loadAccount(sessionId)
       .subscribe((data: string) => this.userName = data);
+  }
+
+  onScrollEvent(event) {
+    console.log(1)
   }
 
 

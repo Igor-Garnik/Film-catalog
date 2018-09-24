@@ -12,8 +12,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { FilmIdComponent } from './film-id/film-id.component';
 import { ActorIdComponent } from './actor-id/actor-id.component';
 import { AppRoutingModule } from '../app-routing.module';
-import { MyListComponent } from '../my-list/my-list.component';
-
+import { MyFilmsComponent } from './my-films/my-films.component';
+import { Ng2CarouselamosModule } from 'ng2-carouselamos';
 
 
 @NgModule({
@@ -21,7 +21,8 @@ import { MyListComponent } from '../my-list/my-list.component';
     CommonModule,
     SharedModule,
     MaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    Ng2CarouselamosModule
 
   ],
   declarations: [
@@ -34,7 +35,7 @@ import { MyListComponent } from '../my-list/my-list.component';
     NotFoundComponent,
     FilmIdComponent,
     ActorIdComponent,
-    MyListComponent
+    MyFilmsComponent,
   ]
 })
 export class FilmCatalogModule { }

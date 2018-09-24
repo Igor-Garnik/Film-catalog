@@ -14,7 +14,6 @@
     <div class="header" *ngIf="kindOfFilmsList === 'now_playing'">
       <h3>Сейчас в кинотеатрах</h3>
     </div>
-
     <div>
 
       <div class="card-wrapper" *ngIf="!query; else queryBlock">
@@ -42,8 +41,9 @@
       </ng-template>
     </div>
 
-    <div class="wrapper-btn" *ngIf="!query">
-      <button mat-button class="add-item" (click)="addPage()">Добавить еще</button>
-    </div>
+    <!--     <div class="wrapper-poginator" *ngIf="!query">
+      <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
+      </mat-paginator>
+    </div> -->
   </div>
 </div>

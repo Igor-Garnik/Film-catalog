@@ -17,9 +17,9 @@ nav, .left-menu-block, .right-menu-block, footer .row {
 header {
     font-family: 'Source Sans Pro', Arial, sans-serif;
     background-color: #18243f;
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: -webkit-sticky;
+    position: sticky;
+    top:0;
     width: 100%;
     z-index: 10;
 }
@@ -107,28 +107,31 @@ button a {
     visibility: visible;
 }
 
+/*********************main*****************/
+
 .search-block {
-    margin-bottom: 80px;
     border-bottom: 1px solid #dedede;
     background-color: #fff;
+    position: -webkit-sticky;
+    position: sticky;
+    top:92px;
+    z-index:10;
 }
-
-/*********************main*****************/
 
 main {
     background-color: #f4f4f4;
-
 }
 
 /*********************footer***************/
 
 footer{
     background-color: #424242;
+    margin-top: 50px;
 }
 
 .row div {
     width: 33.3333333333%;
-    padding: 6px 12px;
+    padding: 17px 0;
 }
 
 

@@ -1,64 +1,110 @@
-<div class="main-wrapper" *ngIf="firstPopularFilm">
+<div class="main-wrapper">
     <div class="wrapper">
         <mat-spinner *ngIf="isLoading"></mat-spinner>
+        <div class="title">
+            <a routerLink="/movie/now_playing"><h3>Сейчас в кинотеатрах</h3></a>
+        </div>
 
-        <section class="movies">
-            <div class="popular">
-                <div class="title">
-                    <a routerLink="/movie/popular"><h3>Популярные фильмы</h3></a>
+        <section class="carousel-gag" *ngIf="isLoading">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </section>
+
+        <section class="carousel-container">
+            <div ng2-carouselamos class="slides-wrapper" [items]="filmsList" [width]="1000" [$prev]="prev" [$next]="next" [$item]="item">
+            </div>
+            <ng-template #prev>
+                <img class="arrow" src="../../../assets/img/left-arrow.png" id="left-arrow">
+            </ng-template>
+            <ng-template #next>
+                <img class="arrow" src="../../../assets/img/right-arrow.png" id="right-arrow">
+            </ng-template>
+            <ng-template #item let-item>
+                <div class="carousel-films">
+                    <a [routerLink]="['/movie/' + item.id + '/view']"><img class="carousel-img" [src]="item.posterPath | transformPath: 185"
+                            alt="item.title"></a>
                 </div>
+            </ng-template>
+        </section>
+
+        <div class="row">
+            <div class="list-title">
+                <a routerLink="/movie/popular"><h3>Популярные фильмы</h3></a>
+            </div>
+            <div class="list-title">
+                <a routerLink="/movie/top_rated"><h3>Фильмы с высшим рейтингом</h3></a>
+            </div>
+        </div>
+
+        <div class="gag" *ngIf="isLoading">
+            <div class="block">
+                <div class="row">
+                    <div class="item"></div>
+                </div>
+                <div class="row">
+                    <div class="items"></div>
+                    <div class="items"></div>
+                </div>
+            </div>
+            <div class="block">
+                <div class="row">
+                    <div class="items"></div>
+                    <div class="items"></div>
+                </div>
+                <div class="row">
+                    <div class="item"></div>
+                </div>
+            </div>
+        </div>
+
+        <section class="movies" *ngIf="firstBlockFirst">
+            <div class="popular">
                 <div class="content">
                     <div class="first-line poster">
-                        <a routerLink="popular"> <img [src]="firstPopularFilm.backdropPath | transformPath: 500" alt="{{firstPopularFilm.title}}"></a>
-                        <div class="title">{{firstPopularFilm.title}}</div>
+                        <a [routerLink]="['/movie/' + firstBlockFirst.id + '/view']"><img [src]="firstBlockFirst.backdropPath | transformPath: 500"
+                                alt="{{firstBlockFirst.title}}"></a>
+                        <div class="title">{{firstBlockFirst.title}}</div>
                     </div>
                     <div class="second-line">
                         <div class="poster">
-                            <img [src]="secondPopularFilm.backdropPath | transformPath: 300" alt="{{secondPopularFilm.title}}">
-                            <div class="title">{{secondPopularFilm.title}}</div>
+                            <a [routerLink]="['/movie/' + firstBlockSecond.id + '/view']"><img [src]="firstBlockSecond.backdropPath | transformPath: 300"
+                                    alt="{{firstBlockSecond.title}}"></a>
+                            <div class="title">{{firstBlockSecond.title}}</div>
                         </div>
                         <div class="poster">
-                            <img [src]="thirdPopularFilm.backdropPath | transformPath: 300" alt="{{thirdPopularFilm.title}}">
-                            <div class="title">{{thirdPopularFilm.title}}</div>
+                            <a [routerLink]="['/movie/' + firstBlockThird.id + '/view']"><img [src]="firstBlockThird.backdropPath | transformPath: 300"
+                                    alt="{{firstBlockThird.title}}"></a>
+                            <div class="title">{{firstBlockThird.title}}</div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="upcoming">
-                <div class="title">
-                    <a routerLink="/movie/upcoming"><h3>Предстоящие фильмы</h3></a>
-                </div>
+
+
                 <div class="content">
                     <div class="second-line">
                         <div>
-                            <img [src]="secondNowFilm.backdropPath | transformPath: 300" alt="{{secondNowFilm.title}}">
-                            <div class="title">{{secondNowFilm.title}}</div>
+                            <img [src]="secondBlockFirst.backdropPath | transformPath: 300" alt="{{secondBlockFirst.title}}">
+                            <div class="title">{{secondBlockFirst.title}}</div>
                         </div>
                         <div>
-                            <img [src]="thirdNowFilm.backdropPath | transformPath: 300" alt="{{thirdNowFilm.title}}">
-                            <div class="title">{{thirdNowFilm.title}}</div>
+                            <img [src]="secondBlockThird.backdropPath | transformPath: 300" alt="{{secondBlockThird.title}}">
+                            <div class="title">{{secondBlockThird.title}}</div>
                         </div>
                     </div>
                     <div class="first-line">
-                        <img [src]="firstNowFilm.backdropPath | transformPath: 500" alt="{{firstNowFilm.title}}">
-                        <div class="title">{{firstNowFilm.title}}</div>
+                        <img [src]="secondBlockFirst.backdropPath | transformPath: 500" alt="{{secondBlockFirst.title}}">
+                        <div class="title">{{secondBlockFirst.title}}</div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- <section class="actors">
-            <div class="title">
-                <a mat-button routerLink="/actors"><h3>Актеры</h3></a>
-            </div>
-            <div class="content">
-                <div class="actor" *ngFor="let actor of actorList">
-                    <div class="actor-img">
-                        <a [routerLink]="[actor.id + '/view']"> <img [src]="actor.posterPath | transformPath: 300" alt="actor.title"></a>
-                    </div>
-                    <div class="actor-name">{{actor.title}}</div>
-                </div>
-            </div>
-        </section> -->
+
+
     </div>
 
 </div>

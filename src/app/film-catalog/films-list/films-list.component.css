@@ -22,9 +22,8 @@
 }
 
 .header{ 
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 h3 {
@@ -37,9 +36,9 @@ h3 {
 }
 
 
-.wrapper-btn {
+.wrapper-paginator {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   padding: 3% 0;
 }
 

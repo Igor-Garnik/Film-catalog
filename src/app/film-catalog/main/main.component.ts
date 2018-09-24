@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FilmService } from '../../shared/services/film.service';
-import { ActorService } from '../../shared/services/actor.service';
 import { SearchService } from '../../shared/services/search.service';
 import { Film } from './../../shared/models/film';
-import { Actor } from './../../shared/models/actor';
-import { Router } from '@angular/router';
-import { Subscriber, Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription, forkJoin } from 'rxjs';
+import { take, pluck } from 'rxjs/operators';
+
 
 
 @Component({
@@ -19,42 +18,23 @@ export class MainComponent implements OnInit, OnDestroy {
   constructor(
     private filmService: FilmService,
     private searchService: SearchService,
-    private actorService: ActorService,
     private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
-  firstPopularFilm: Film;
-  secondPopularFilm: Film;
-  thirdPopularFilm: Film;
-  firstNowFilm: Film;
-  secondNowFilm: Film;
-  thirdNowFilm: Film;
-  actorList: Actor[];
+  firstBlockFirst: Film;
+  firstBlockSecond: Film;
+  firstBlockThird: Film;
+  secondBlockFirst: Film;
+  secondBlockSecond: Film;
+  secondBlockThird: Film;
   isLoading: boolean = true;
   state: string = 'main';
   subscription: Subscription;
   page: number = 1;
-
-  loadPopularFilms(): void {
-    this.filmService.loadFilms(this.page, 'popular')
-      .subscribe(films => {
-        this.isLoading = false;
-        [this.firstPopularFilm, this.secondPopularFilm, this.thirdPopularFilm] = films;
-      })
-  }
-
-  loadNowPlayingFilms(): void {
-    this.filmService.loadFilms(this.page, 'upcoming')
-      .subscribe(films => {
-        this.isLoading = false;
-        [this.firstNowFilm, this.secondNowFilm, this.thirdNowFilm] = films;
-      })
-  }
-
-  getActors(): void {
-    this.actorService.loadDashboardActors()
-      .subscribe(actors => this.actorList = [...actors].splice(0, 10));
-  }
+  listIds: Array<number> = [1, 3945, 932, 1131];
+  filmsList: Array<Film> = [];
+  res: Array<string> = [];
 
   redirect() {
     this.subscription = this.searchService.getQuery().subscribe(() => {
@@ -62,11 +42,27 @@ export class MainComponent implements OnInit, OnDestroy {
     })
   }
 
-  ngOnInit() {
+  loadLists() {
     this.filmService.getLocalStorage();
-    this.loadNowPlayingFilms();
-    this.loadPopularFilms();
-    this.getActors();
+    return forkJoin(
+      this.filmService.loadFilms(this.page, 'now_playing'),
+      this.filmService.loadFilms(this.page, 'popular'),
+      this.filmService.loadFilms(this.page, 'top_rated')
+    )
+      .subscribe((data: Array<Array<Film>>) => {
+        this.isLoading = false;
+        this.saveData(data)
+      });
+  }
+
+  saveData(data: Array<Array<Film>>): void {
+    this.filmsList = data[0];
+    [this.firstBlockFirst, this.firstBlockSecond, this.firstBlockThird] = data[1].splice(0, 3);
+    [this.secondBlockFirst, this.secondBlockSecond, this.secondBlockThird] = data[2].splice(0, 3);
+  }
+
+  ngOnInit() {
+    this.loadLists();
     this.searchService.setState(this.state);
     this.redirect();
   }

@@ -2,7 +2,7 @@
   <div class="example-container">
     <mat-form-field class="search-input">
       <mat-icon matPrefix><span>search</span></mat-icon>
-      <input matInput [(ngModel)]="query" placeholder="Поиск по {{url}}... " #input utocomplete="off" [class.app-input-no-underline]="!showUnderline">
+      <input matInput [(ngModel)]="query" placeholder="Поиск по {{url}}... " #input autocomplete="off" [class.app-input-no-underline]="!showUnderline">
       <button mat-button *ngIf="query" matSuffix mat-icon-button aria-label="Clear" (click)="query=''" (click)="clearQuery(query)"
         #inp>
         <mat-icon>close</mat-icon>

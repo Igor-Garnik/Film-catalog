@@ -8,7 +8,6 @@ import { ListConfig } from '../../shared/models/listConfig'
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { map, switchMap, tap } from 'rxjs/operators';
 
-
 @Component({
   selector: 'app-films-list',
   templateUrl: './films-list.component.html',
@@ -32,7 +31,11 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     favorite: 'favorite',
     watchlist: 'watchlist'
   }
+  filmListState: string = "favorites"
   urlParam: string;
+  pagesQuantity = 0;
+  pageSize = 20;
+  pageSizeOptions: number[] = [5, 10, 20];
 
   constructor(
     private filmService: FilmService,
@@ -51,11 +54,19 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     })
   }
 
+  updateFilmList(): void {
+    if (this.filmListState !== this.kindOfFilmsList) {
+      this.filmListState = this.kindOfFilmsList;
+      this.filmList = [];
+    }
+  }
+
   checkParam(param: string): void {
     if (param !== null) this.kindOfFilmsList = param;
   }
 
   toggleFilmList(): void {
+    this.updateFilmList();
     switch (this.kindOfFilmsList) {
       case 'similar': this.viewSimilarFilms();
         break;
@@ -63,7 +74,7 @@ export class FilmsListComponent implements OnInit, OnDestroy {
         break;
       case 'favorites': this.viewFavoritesFilms();
         break;
-      case 'watchList': this.viewMovieCreditsFilms();
+      case 'watchlist': this.getWatchLIstFilms();
         break;
       case 'upcoming': this.viewDifferentFilmsList(this.kindOfFilmsList); //передача параметра запроса
         break;
@@ -106,7 +117,7 @@ export class FilmsListComponent implements OnInit, OnDestroy {
 
   copyFilmList(films: Film[]): void {
     this.isLoading = false;
-    this.filmList = [...films];
+    this.filmList = [...this.filmList, ...films];
   }
 
   //Получить список фильмов согласно поиска
