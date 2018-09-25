@@ -6,8 +6,16 @@
 
 .main {
     max-width: 1000px;
-    margin: auto;
-    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+h2 {
+    padding-top: 10px;
+    padding-bottom: 15px;
+}
+
+h4 {
+    margin-bottom: 5px;
 }
 
 .poster-container {
@@ -48,8 +56,9 @@
     margin-bottom: 0;
 }
 
-.block, .info-wrapper span {
+.actor-info span {
     display: block;
+    padding-bottom: 10px;
 }
 
 .actor-details-poster {
@@ -72,6 +81,10 @@
     transform: scale(1.06,1.06);
     transition-timing-function: ease-out;
     transition-duration: 550ms;
+}
+
+.margin {
+    margin-bottom: 500px;
 }
 
 

@@ -29,7 +29,15 @@ export class ActorsListComponent implements OnInit, OnDestroy {
   isErrorMessage: boolean = false;
   subscription: Subscription;
   state: string = 'actors';
-  team
+  gagList: Array<string> = [];
+
+
+  fillGag(): void {
+    let space: string = '';
+    for (let i = 0; i < 15; i++) {
+      this.gagList.push(space);
+    }
+  }
 
   toggleActorView() {
     this.filmId == undefined
@@ -71,6 +79,7 @@ export class ActorsListComponent implements OnInit, OnDestroy {
     this.toggleActorView();
     this.searchService.setState(this.state);
     this.viewQuery();
+    this.fillGag();
   }
 
   ngOnDestroy() {

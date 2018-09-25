@@ -4,9 +4,6 @@ import { SearchService } from '../../shared/services/search.service';
 import { Film } from './../../shared/models/film';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription, forkJoin } from 'rxjs';
-import { take, pluck } from 'rxjs/operators';
-
-
 
 @Component({
   selector: 'main',

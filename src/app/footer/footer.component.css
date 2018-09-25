@@ -1,0 +1,19 @@
+footer{
+    background-color: #424242;
+}
+
+.container {
+    max-width: 1024px;
+    width: 100%;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+
+.row div {
+    width: 33.3333333333%;
+    padding: 17px 0;
+}
+
+.margin {
+    margin-top: 2000px;
+}

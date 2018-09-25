@@ -2,7 +2,7 @@
   <div class="wrapper">
     <mat-spinner *ngIf="isUploaded"></mat-spinner>
 
-    <h1 *ngIf="filmId == undefined">Popular people</h1>
+    <h3 *ngIf="filmId == undefined">Popular people</h3>
 
     <div class="card-wraper" *ngIf="!query; else queryBlock">
       <div class="nested-card-wraper" *ngFor="let actor of actorList">
@@ -28,8 +28,10 @@
 
     </ng-template>
 
-    <div class="wraper-btn" *ngIf="!query">
-      <button mat-button class="add-item" (click)="addPage()">Добавить еще</button>
+    <div class="gag-wrapper" *ngIf="isUploaded">
+      <div class="gag" *ngFor="let gag of gagList">
+        <div>{{gag}}</div>
+      </div>
     </div>
   </div>
 </div>

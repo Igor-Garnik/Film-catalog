@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ActorService } from '../../shared/services/actor.service';
 import { Actor } from '../../shared/models/actor';
+import { FooterService } from '../../shared/services/footer.service';
 
 @Component({
   selector: 'app-actor-id',
@@ -12,18 +13,23 @@ export class ActorIdComponent implements OnInit {
 
   constructor(
     private actorService: ActorService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private footerService: FooterService
   ) { }
 
   actor: Actor;
   actorId: number;
   images: {}[];
+  isUploaded: boolean = true;
 
   showActor() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.actorId = +params.get("id");
       this.actorService.loadActorById(this.actorId)
-        .subscribe((actor: Actor) => this.actor = actor);
+        .subscribe((actor: Actor) => {
+          this.footerService.setUploaded(this.isUploaded = false)
+          this.actor = actor
+        });
     })
   }
 
@@ -36,6 +42,7 @@ export class ActorIdComponent implements OnInit {
   ngOnInit() {
     this.showActor();
     this.getPosters();
+    this.footerService.setUploaded(this.isUploaded);
   }
 
 }

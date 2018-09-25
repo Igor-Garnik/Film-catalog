@@ -24,7 +24,7 @@
         <p><b>Рейтинг</b></p>
         <span>{{actor.voteAverage | transformRating}}</span>
         <p><b>Известен также как</b></p>
-        <div *ngFor="let name of actor.alsoKnownAs; index as i">
+        <div *ngFor="let name of actor.alsoKnownAs">
           <span>{{name}}</span>
         </div>
 
