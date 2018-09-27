@@ -14,6 +14,7 @@ import { ModalComponent } from './modal/modal.component';
 import { Ng2CarouselamosModule } from 'ng2-carouselamos';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { FooterComponent } from './footer/footer.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 registerLocaleData(lcoaleRuUA);
 
@@ -23,7 +24,8 @@ registerLocaleData(lcoaleRuUA);
     SearchComponent,
     ModalComponent,
     PaginatorComponent,
-    FooterComponent
+    FooterComponent,
+    SpinnerComponent
 
   ],
   imports: [

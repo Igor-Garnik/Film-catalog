@@ -6,14 +6,15 @@ import { SearchService } from '../../shared/services/search.service';
 import { UtilsService } from '../../shared/services/utils.service';
 import { ListConfig } from '../../shared/models/listConfig'
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { PageEvent } from '@angular/material';
+import { ListenerDownloadsService } from '../../shared/services/listenerDownloads.service';
+
 
 @Component({
   selector: 'app-films-list',
   templateUrl: './films-list.component.html',
   styleUrls: ['./films-list.component.css']
-  /* changeDetection: ChangeDetectionStrategy.OnPush */
 })
 export class FilmsListComponent implements OnInit, OnDestroy {
 
@@ -24,7 +25,7 @@ export class FilmsListComponent implements OnInit, OnDestroy {
   query: string;
   page: number = 1;
   filmList: Film[] = [];
-  isLoading: boolean = true;
+  isUploaded: boolean = true;
   queryResponse: Film[] = [];
   subscription: Subscription;
   filmsResults: Subscription;
@@ -47,7 +48,8 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     private filmService: FilmService,
     private searchService: SearchService,
     private utilsService: UtilsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private listenerDownloadsService: ListenerDownloadsService
   ) { }
 
   getPage(event) {
@@ -55,7 +57,7 @@ export class FilmsListComponent implements OnInit, OnDestroy {
   }
 
   getParam() {
-    this.isLoading = true;
+    this.listenerDownloadsService.setIsUploaded(this.isUploaded = true);
     this.route.paramMap.pipe(
       tap((params: ParamMap) =>
         this.urlParam = params.get('list-type'))
@@ -69,7 +71,7 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     if (this.filmListState !== this.kindOfFilmsList) {
       this.filmListState = this.kindOfFilmsList;
       this.filmList = [];
-      this.isLoading = true;
+      this.listenerDownloadsService.setIsUploaded(this.isUploaded = true);
     }
   }
 
@@ -128,7 +130,7 @@ export class FilmsListComponent implements OnInit, OnDestroy {
   }
 
   copyFilmList(films: Film[]): void {
-    this.isLoading = false;
+    this.listenerDownloadsService.setIsUploaded(this.isUploaded = false);
     this.filmList = [...this.filmList, ...films];
   }
 
@@ -136,7 +138,7 @@ export class FilmsListComponent implements OnInit, OnDestroy {
   viewQuery(query): void {
     this.filmService.getQueryFilm(query)
       .subscribe((films: Film[]) => {
-        this.isLoading = false;
+        this.listenerDownloadsService.setIsUploaded(this.isUploaded = false);
         this.queryResponse = [...films];
         this.isErrorMessage = this.utilsService.checkErrroMessage(this.queryResponse);
       })
@@ -192,6 +194,7 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     this.getQuery();
     this.getParam();
     this.getFilmsTotalPages();
+    this.listenerDownloadsService.setIsUploaded(this.isUploaded);
   }
 
   ngOnDestroy() {

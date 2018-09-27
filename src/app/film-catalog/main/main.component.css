@@ -117,26 +117,6 @@ h2 {
   height: auto;
 }
 
-.carousel-gag {
-  width: 996px;
-  height: 278px;
-  display: flex;
-}
-
-.carousel-gag div {
-  width: 20%;
-  height: 100%;
-  border: 1px solid #f4f4f4;
-  box-sizing: border-box;
-  background-color: rgb(23, 23, 61, 0.2);
-}
-
-.gag {
-  display: flex;
-  width: 100%;
-  
-}
-
 .item {
   height: 281px;
   width: 100%;
@@ -152,12 +132,6 @@ h2 {
   background-color: rgb(23, 23, 61, 0.2);
 }
 
-
-mat-spinner {
-  position: absolute;
-  top: 30%;
-  left: 47%;
-}
 
 
   

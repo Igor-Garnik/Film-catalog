@@ -27,14 +27,6 @@
           {{userName}}
         </button>
         <mat-menu #menu="matMenu">
-          <!--       <button mat-menu-item>
-            <mat-icon>favorite</mat-icon>
-            <a routerLink="/movie/favorites">Любимые</a>
-          </button>
-          <button mat-menu-item>
-            <mat-icon>list</mat-icon>
-            <a routerLink="/movie/watchlist">К просмотру</a>
-          </button> -->
           <button mat-menu-item>
             <mat-icon>list</mat-icon>
             <a routerLink="/movie/my-films/favorites">Мои фильмы</a>
@@ -56,9 +48,8 @@
 </div>
 
 <main>
-
+  <app-spinner class="spinner"></app-spinner>
   <router-outlet></router-outlet>
-
 </main>
 
 <app-footer></app-footer>

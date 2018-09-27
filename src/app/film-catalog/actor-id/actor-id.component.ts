@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ActorService } from '../../shared/services/actor.service';
 import { Actor } from '../../shared/models/actor';
-import { FooterService } from '../../shared/services/footer.service';
+import { ListenerDownloadsService } from '../../shared/services/listenerDownloads.service';
 
 @Component({
   selector: 'app-actor-id',
@@ -14,7 +14,7 @@ export class ActorIdComponent implements OnInit {
   constructor(
     private actorService: ActorService,
     private route: ActivatedRoute,
-    private footerService: FooterService
+    private listenerDownloadsService: ListenerDownloadsService
   ) { }
 
   actor: Actor;
@@ -27,7 +27,7 @@ export class ActorIdComponent implements OnInit {
       this.actorId = +params.get("id");
       this.actorService.loadActorById(this.actorId)
         .subscribe((actor: Actor) => {
-          this.footerService.setUploaded(this.isUploaded = false)
+          this.listenerDownloadsService.setIsUploaded(this.isUploaded = false)
           this.actor = actor
         });
     })
@@ -38,11 +38,10 @@ export class ActorIdComponent implements OnInit {
       .subscribe(data => this.images = [...data]);
   }
 
-
   ngOnInit() {
     this.showActor();
     this.getPosters();
-    this.footerService.setUploaded(this.isUploaded);
+    this.listenerDownloadsService.setIsUploaded(this.isUploaded);
   }
 
 }

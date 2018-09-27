@@ -2,8 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FilmService } from '../../shared/services/film.service';
 import { SearchService } from '../../shared/services/search.service';
 import { Film } from './../../shared/models/film';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription, forkJoin } from 'rxjs';
+import { ListenerDownloadsService } from '../../shared/services/listenerDownloads.service';
 
 @Component({
   selector: 'main',
@@ -16,7 +17,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private filmService: FilmService,
     private searchService: SearchService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private listenerDownloadsService: ListenerDownloadsService
   ) { }
 
   firstBlockFirst: Film;
@@ -25,7 +26,7 @@ export class MainComponent implements OnInit, OnDestroy {
   secondBlockFirst: Film;
   secondBlockSecond: Film;
   secondBlockThird: Film;
-  isLoading: boolean = true;
+  isUploaded: boolean = true;
   state: string = 'main';
   subscription: Subscription;
   page: number = 1;
@@ -47,7 +48,7 @@ export class MainComponent implements OnInit, OnDestroy {
       this.filmService.loadFilms(this.page, 'top_rated')
     )
       .subscribe((data: Array<Array<Film>>) => {
-        this.isLoading = false;
+        this.listenerDownloadsService.setIsUploaded(this.isUploaded = false);
         this.saveData(data)
       });
   }
@@ -62,6 +63,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loadLists();
     this.searchService.setState(this.state);
     this.redirect();
+    this.listenerDownloadsService.setIsUploaded(this.isUploaded);
   }
 
   ngOnDestroy() {

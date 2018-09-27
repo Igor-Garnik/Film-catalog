@@ -1,17 +1,8 @@
 <div class="main-wrapper">
-    <div class="wrapper">
-        <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <div class="wrapper" *ngIf="!isUploaded">
         <div class="title">
             <a routerLink="/movie/now_playing"><h3>Сейчас в кинотеатрах</h3></a>
         </div>
-
-        <section class="carousel-gag" *ngIf="isLoading">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </section>
 
         <section class="carousel-container">
             <div ng2-carouselamos class="slides-wrapper" [items]="filmsList" [width]="1000" [$prev]="prev" [$next]="next" [$item]="item">
@@ -36,27 +27,6 @@
             </div>
             <div class="list-title">
                 <a routerLink="/movie/top_rated"><h3>Фильмы с высшим рейтингом</h3></a>
-            </div>
-        </div>
-
-        <div class="gag" *ngIf="isLoading">
-            <div class="block">
-                <div class="row">
-                    <div class="item"></div>
-                </div>
-                <div class="row">
-                    <div class="items"></div>
-                    <div class="items"></div>
-                </div>
-            </div>
-            <div class="block">
-                <div class="row">
-                    <div class="items"></div>
-                    <div class="items"></div>
-                </div>
-                <div class="row">
-                    <div class="item"></div>
-                </div>
             </div>
         </div>
 
@@ -103,7 +73,6 @@
                 </div>
             </div>
         </section>
-
 
     </div>
 

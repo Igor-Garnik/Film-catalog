@@ -4,17 +4,17 @@ import { Subject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class FooterService {
+export class ListenerDownloadsService {
 
   constructor() { }
 
   isUploaded$ = new Subject<boolean>();
 
-  setUploaded(isUploaded): void {
+  setIsUploaded(isUploaded): void {
     this.isUploaded$.next(isUploaded)
   }
 
-  getUploaded(): Observable<boolean> {
+  getIsUploaded(): Observable<boolean> {
     return this.isUploaded$.asObservable();
   }
 }

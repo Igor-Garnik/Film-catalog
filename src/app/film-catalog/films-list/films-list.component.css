@@ -48,20 +48,6 @@ mat-spinner {
 }
 
 
-/*Заглушка*/
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.row div {
-  height: 291px;
-  width: 49%;
-  margin-bottom: 2%;
-  background-color: rgb(23, 23, 61, 0.2);
-}
 
 
 

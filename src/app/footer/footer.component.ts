@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FooterService } from '../shared/services/footer.service';
+import { ListenerDownloadsService } from '../shared/services/listenerDownloads.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -12,10 +12,10 @@ export class FooterComponent implements OnInit {
   isUploaded: boolean;
   uploaded: Subscription;
 
-  constructor(private footerService: FooterService) { }
+  constructor(private listenerDownloadsService: ListenerDownloadsService) { }
 
   ngOnInit() {
-    this.uploaded = this.footerService.getUploaded()
+    this.uploaded = this.listenerDownloadsService.getIsUploaded()
       .subscribe((data: boolean) => {
         this.isUploaded = data
         console.log(data)

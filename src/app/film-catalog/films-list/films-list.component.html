@@ -1,6 +1,5 @@
 <div class="main-wrapper">
-  <div class="wrapper">
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <div class="wrapper" *ngIf="isUploaded">
 
     <div class="header" *ngIf="kindOfFilmsList === 'popular'">
       <h3>Популяные фильмы</h3>
@@ -42,15 +41,6 @@
 
       </ng-template>
     </div>
-
-    <!-- Заглушка -->
-    <div class="row" *ngIf="isLoading">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-    <!-- Заглушка -->
 
     <div class="wrapper-poginator">
 
