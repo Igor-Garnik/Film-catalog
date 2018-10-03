@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { map, mergeMap, pluck } from 'rxjs/operators';
 import { API_CONFIG } from '../configs/api.config';
 import { Config } from '../models/config';
-import { UtilsService } from './utils.service';
 import { Film } from '../models/film'
 import { Subject, Observable, forkJoin } from 'rxjs';
 import { LocalStorageCong } from '../models/localStorageConf'
@@ -15,7 +14,6 @@ export class FilmService {
 
   constructor(
     private http: HttpClient,
-    private utilsService: UtilsService,
     @Inject(API_CONFIG) public apiConfig: Config
   ) { }
 
@@ -26,6 +24,7 @@ export class FilmService {
     userId: '',
     sessionId: ''
   }
+  results: number = 0;
 
   //Получение списка списка фильмов "favorites", перезаписание значения свойств избранные и список согласно даных пользователя
   loadFilms(page: number, param: string = 'popular'): Observable<Film[]> {
@@ -35,21 +34,12 @@ export class FilmService {
       this.http.get(`${this.apiConfig.authUrl}/account/${this.config.userId}/watchlist/movies?${this.apiConfig.apiKey}&language=en-US&session_id=${this.config.sessionId}&sort_by=created_at.asc&page=1`)
     ).pipe(
       map((res: Array<any>) => {
-        this.setTotalFilmsResults(res[0].total_pages)
         let [films, favorites, watchList] = [res[0].results, res[1].results, res[2].results];
         let favoriteIds = this.getIds(favorites);
         let watchListIds = this.getIds(watchList);
         return this.setFilmsProperty(films, favoriteIds, watchListIds);
       })
     )
-  }
-
-  setTotalFilmsResults(results): void {
-    this.filmsResults$.next(results);
-  }
-
-  getTotalFilmsResults(): Observable<number> {
-    return this.filmsResults$.asObservable();
   }
 
   getQueryFilm(query: string): Observable<Film[]> {
@@ -60,7 +50,7 @@ export class FilmService {
     ).pipe(
       map((res: Array<any>) => {
         let [films, favorites, watchList] = [res[0].results, res[1].results, res[2].results];
-        let filmsList = this.utilsService.findExactOccurrence(films, query, 'title');
+        let filmsList = this.findExactOccurrence(films, query, 'title');
         let favoriteIds = this.getIds(favorites);
         let watchListIds = this.getIds(watchList);
         return this.setFilmsProperty(filmsList, favoriteIds, watchListIds);
@@ -218,5 +208,12 @@ export class FilmService {
     this.config.userId = localStorage.getItem('user_id');
     this.config.sessionId = localStorage.getItem('session_id');
   }
+
+  findExactOccurrence(list, query: string, title): any {
+    return list.filter(item => {
+      return item[title].toLowerCase().substring(0, query.length).includes(query.toLowerCase().trim())
+    })
+  }
+
 
 }

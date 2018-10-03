@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { map, pluck } from "rxjs/operators"
 import { API_CONFIG } from '../configs/api.config';
 import { Config } from '../models/config';
-import { UtilsService } from './../services/utils.service';
 import { Actor } from '../models/actor';
 
 
@@ -15,7 +14,6 @@ export class ActorService {
 
   constructor(
     private http: HttpClient,
-    private utilsService: UtilsService,
     @Inject(API_CONFIG) public apiConfig: Config
   ) { }
 
@@ -33,7 +31,7 @@ export class ActorService {
   loadQueryActor(query): Observable<Actor[]> {
     return this.http.get(`${this.apiConfig.searchUrl}/person?${this.apiConfig.params}&query=${query}&page=1&include_adult=false`)
       .pipe(map(data => {
-        let actors = this.utilsService.findExactOccurrence(data['results'], query, 'name');
+        let actors = this.findExactOccurrence(data['results'], query, 'name');
         return this.setActors(actors);
       }))
   }
@@ -125,6 +123,12 @@ export class ActorService {
         role: person[job],
         posterPath: person.profile_path
       }
+    })
+  }
+
+  findExactOccurrence(list, query: string, title): any {
+    return list.filter(item => {
+      return item[title].toLowerCase().substring(0, query.length).includes(query.toLowerCase().trim())
     })
   }
 
