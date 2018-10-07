@@ -1,0 +1,11 @@
+<div class="wrapper" *ngIf="isLoggedIn">
+  <div class="example-container">
+    <mat-form-field class="search-input">
+      <mat-icon matPrefix><span>search</span></mat-icon>
+      <input #input matInput [(ngModel)]="query" name="query" placeholder="Поиск по {{queryType}}... " autocomplete="off" [class.app-input-no-underline]="!showUnderline">
+      <button mat-button *ngIf="query" matSuffix mat-icon-button aria-label (click)="reset($event)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</div>

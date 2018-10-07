@@ -1,0 +1,90 @@
+<div class="main-wrapper" *ngIf="!isUploaded">
+  <div>
+    <div class="poster-wrapper">
+      <div class="poster"><img [src]="film.backdropPath | transformPath: 1280" alt=""></div>
+      <div class="blue-layout"></div>
+    </div>
+    <div class="content-wrapper">
+      <div class="wrapper">
+        <div class="image">
+          <img [src]="film.posterPath | transformPath: 300" [alt]=film.title>
+        </div>
+        <div class="content">
+          <header>
+            <h1>{{film.title}}</h1>
+            <span>Релиз: {{film.releaseDate | date: 'd MMMM y'}}</span>
+            <span>Рейтинг: {{film.voteAverage}}</span>
+            <div class="button-group">
+              <button mat-button (click)="addToWatchList()">
+                <mat-icon>{{film.isWatchList ? 'view_list' : 'list'}}</mat-icon>
+              </button>
+              <button mat-button (click)="addToFavorites()">
+                <mat-icon>{{film.isFavorite ? 'favorite' : 'favorite_border'}}</mat-icon>
+              </button>
+              <button mat-button (click)="openModal()">
+                <mat-icon>play_circle_outline</mat-icon>
+                play trailer
+              </button>
+            </div>
+          </header>
+          <section class="discription">
+            <h3>Описание</h3>
+            {{film.overview}}
+          </section>
+          <footer>
+            <h3>Создатели</h3>
+            <div class="credites-job">
+              <div *ngFor="let person of crew">
+                <a [routerLink]="[person.id + '/view']">
+                  <p><b>{{person.name}}</b></p>
+                </a>
+                <span>{{person.role}}</span>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="addition-wrapper">
+    <mat-tab-group>
+
+      <mat-tab label="Актеры">
+        <app-actors-list [filmId]="filmId"></app-actors-list>
+      </mat-tab>
+
+      <mat-tab label="Постеры">
+        <div class="poster-container">
+          <div class="poster-view" *ngFor="let poster of posters">
+            <a [attr.href]='poster.posterPath | transformPath: 1280' target="_blank"><img [src]="poster.posterPath | transformPath: 300"></a>
+            <span><b>Размер: </b>{{poster.width}}*{{poster.height}}</span>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Похожие фильмы">
+        <app-films-list [filmId]="filmId" [cardView]="'backdrop'" [kindOfFilmsList]="'similar'"></app-films-list>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="info-group">
+      <span class="header">Дополнительная информация</span>
+      <p><b>Дата релиза</b></p>
+      <span>{{filmDetails.release | date: 'd MMMM y'}}</span>
+      <p><b>Cтрана</b></p>
+      <span>{{filmDetails.country}}</span>
+      <p><b>Студия</b></p>
+      <span>{{filmDetails.company}}</span>
+      <p><b>Оригинальное название</b></p>
+      <span>{{filmDetails.title}}</span>
+      <p><b>Оригинальый язык</b></p>
+      <span>{{filmDetails.language}}</span>
+      <p><b>Бютжет</b></p>
+      <span>{{filmDetails.butget}}$</span>
+      <p><b>Время</b></p>
+      <span>{{filmDetails.runtime}} минут</span>
+      <p><b>Жанр</b></p>
+      <span>{{filmDetails.genres}}</span>
+    </div>
+
+  </div>
+</div>

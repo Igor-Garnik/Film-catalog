@@ -1,0 +1,37 @@
+.main-wrapper {
+    background-color: #f4f4f4;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+}
+.wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+  
+.card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-between;
+}
+  
+.card {
+    width: 24%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+}
+
+.card span {
+    display: block;
+    padding: 1%;
+}
+
+.wrapper-poginator {
+    display: flex;
+    justify-content: flex-end;
+    
+}

@@ -1,0 +1,26 @@
+<!-- <div class="main-wrapper">
+  <div class="wrapper">
+    <div class="div" *ngIf="queryResponse; then queryBlock else errorBlock"></div>
+    <ng-template #queryBlock>
+      <div class="card-wrapper">
+        <div class="card" *ngFor="let film of queryResponse">
+          <div class="img">
+            <img [src]="film.posterPath | transformPath: 300" [alt]=film.title>
+          </div>
+          <span>{{film.title}}</span>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template>
+      <div class="message" *ngIf="!queryResponse">
+        <h2>По запросу
+          <span>"{{query}}" </span> ничего не найдено... Извините :( </h2>
+        <h3>Пожалуйста, попробуйте снова ;)</h3>
+        <img src="../assets/img/404 page.png" alt="">
+      </div>
+    </ng-template>
+  </div>
+</div> -->
+<div class="card" *ngFor="let film of queryResponse | async">
+  {{film.title}}
+</div>

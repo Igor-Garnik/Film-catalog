@@ -1,0 +1,15 @@
+<div class="main-wrapper" *ngIf="!isUploaded">
+  <div class="wrapper">
+    <div class="header" *ngIf="kindOfFilmsList">
+      <h3>{{defineListTitle()}}</h3>
+    </div>
+    <div class="card-wrapper">
+      <div class="card" *ngFor="let film of filmsList">
+        <film-item [film]="film" [cardView]="cardView" (favorite)="addToFavorite($event)" (list)="addToWatchlist($event)"></film-item>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper-poginator">
+    <app-paginator [totalFilmsResults]="totalFilmsResults" (pagination)="togglePage($event)"></app-paginator>
+  </div>
+</div>

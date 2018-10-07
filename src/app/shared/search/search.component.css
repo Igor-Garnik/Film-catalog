@@ -1,0 +1,37 @@
+.wrapper {
+  height: 50px;
+}
+
+.search-input {
+  width: 250px;
+  font-size: 0.9em;
+}
+
+.search-input span {
+  color: #969090
+}
+
+mat-icon {
+  font-size: 100%;
+  display: inline-block;
+}
+
+::ng-deep .mat-input-underline {
+  display: none;
+}
+
+input {
+  display: inline-block;
+  height: 16px;
+}
+
+form {
+  display: flex;
+  height: 16px;
+}
+
+
+
+
+
+

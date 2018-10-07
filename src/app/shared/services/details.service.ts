@@ -4,7 +4,6 @@ import { API_CONFIG } from '../configs/api.config';
 import { Config } from '../models/config';
 import { Observable } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
-import { Actor } from '../models/actor';
 import { Video } from '../models/video';
 
 @Injectable({

@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MainComponent } from './film-catalog/main/main.component';
-import { FilmsListComponent } from './film-catalog/films-list/films-list.component';
-import { ActorsListComponent } from './film-catalog/actors-list/actors-list.component';
-import { LoginComponent } from './film-catalog/login/login.component';
+import { MainComponent } from './shared/main/main.component';
+import { FilmsListComponent } from './catalogs/films-catalog/films-list/films-list.component';
+import { ActorsListComponent } from './catalogs/actors-catalog/actors-list/actors-list.component';
+import { LoginComponent } from './shared/login/login.component';
 import { AuthGuard } from './shared/guards/auth-guard.service';
-import { NotFoundComponent } from './film-catalog/not-found/not-found.component'
-import { FilmIdComponent } from './film-catalog/film-id/film-id.component';
-import { ActorIdComponent } from './film-catalog/actor-id/actor-id.component';
-import { MyFilmsComponent } from './film-catalog/my-films/my-films.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component'
+import { FilmIdComponent } from './catalogs/films-catalog/film-id/film-id.component';
+import { ActorIdComponent } from './catalogs/actors-catalog/actor-id/actor-id.component';
+import { MyListsComponent } from './catalogs/films-catalog/my-lists/my-lists.component'
+import { ViewQueryComponent } from './shared/view-query/view-query.component';
 
 const routes: Routes = [
   { path: "", pathMatch: "full", redirectTo: "login" },
@@ -16,9 +17,10 @@ const routes: Routes = [
   { path: "main", component: MainComponent, canActivate: [AuthGuard] },
   { path: "movie/:list-type", component: FilmsListComponent, canActivate: [AuthGuard] },
   { path: "movie/:id/view", component: FilmIdComponent, canActivate: [AuthGuard] },
-  { path: "movie/my-films/:list-type", component: MyFilmsComponent, canActivate: [AuthGuard] },
+  { path: "movie/my-films/:list-type", component: MyListsComponent, canActivate: [AuthGuard] },
   { path: "actors", component: ActorsListComponent, canActivate: [AuthGuard] },
   { path: "actors/:id/view", component: ActorIdComponent, canActivate: [AuthGuard] },
+  { path: "search/:type/:name", component: ViewQueryComponent, canActivate: [AuthGuard] },
   { path: "**", component: NotFoundComponent }
 ];
 

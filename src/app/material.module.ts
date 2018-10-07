@@ -19,6 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { YoutubePlayerModule } from 'ng2-youtube-player';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { Ng2CarouselamosModule } from 'ng2-carouselamos';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatDialogModule,
     MatMenuModule,
     YoutubePlayerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    Ng2CarouselamosModule
   ],
   exports: [
     FormsModule,
@@ -63,7 +65,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatDialogModule,
     MatMenuModule,
     YoutubePlayerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    Ng2CarouselamosModule
   ],
   declarations: []
 })

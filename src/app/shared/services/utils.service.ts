@@ -1,25 +1,17 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Observable } from 'rxjs';
-import { FilmsListComponent } from '../../film-catalog/films-list/films-list.component';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private filmsListComponent: FilmsListComponent
-  ) { }
+  constructor() { }
 
   page$ = new Subject<number>();
   isUploaded$ = new Subject<boolean>();
-
-  checkErrroMessage(message) {
-    return message.length == 0 ? true : false;
-  }
+  query$ = new Subject<any>();
+  state$ = new Subject<any>();
 
   scrorollToTop(): void {
     window.scrollTo(0, 0);
@@ -41,34 +33,31 @@ export class UtilsService {
     return this.isUploaded$.asObservable();
   }
 
+  setState(state: string): void {
+    this.state$.next(state);
+  }
+
+  getState(): Observable<any> {
+    return this.state$.asObservable();
+  }
+
+  setQuery(query: string): void {
+    this.query$.next(query);
+  }
+
+  getQuery(): Observable<any> {
+    return this.query$.asObservable();
+  }
+
   checkParam(param: string, kindOfFilmsList: string): string {
     return param !== null ? param : kindOfFilmsList;
   }
 
-  toggleFilmList(kindOfFilmsList: string): void {
-    switch (kindOfFilmsList) {
-      case 'similar': this.filmsListComponent.viewSimilarFilms();
-        break;
-      case 'credits': this.filmsListComponent.viewMovieCreditsFilms();
-        break;
-      case 'favorites': this.filmsListComponent.viewFavoritesFilms();
-        break;
-      case 'watchlist': this.filmsListComponent.getWatchLIstFilms();
-        break;
-      case 'upcoming': this.filmsListComponent.viewDifferentFilmsList(kindOfFilmsList); //передача параметра запроса
-        break;
-      case 'top_rated': this.filmsListComponent.viewDifferentFilmsList(kindOfFilmsList);
-        break;
-      case 'now_playing': this.filmsListComponent.viewDifferentFilmsList(kindOfFilmsList);
-        break;
-      default:
-        this.filmsListComponent.viewDifferentFilmsList(); //параметр запросы по умолчанию
-    }
+  findExactOccurrence(list, query: string, title): any {
+    return list.filter(item => {
+      return item[title].toLowerCase().substring(0, query.length).includes(query.toLowerCase().trim())
+    })
   }
-
-
-
-
 
 }
 

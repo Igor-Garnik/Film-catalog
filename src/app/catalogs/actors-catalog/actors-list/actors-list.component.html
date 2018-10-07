@@ -1,0 +1,31 @@
+<div class="main-wrapper" *ngIf="!isUploaded">
+  <div class="wrapper">
+
+    <h3 *ngIf="filmId == undefined">Popular people</h3>
+
+    <div class="card-wraper" *ngIf="!query; else queryBlock">
+      <div class="nested-card-wraper" *ngFor="let actor of actorList">
+        <app-actor-item [actor]="actor"></app-actor-item>
+      </div>
+    </div>
+
+    <ng-template #queryBlock>
+      <div class="card-wraper" *ngIf="isErrorMessage == false; else errorBlock">
+        <div class="nested-card-wraper" *ngFor="let actor of queryResponse">
+          <app-actor-item [actor]="actor"></app-actor-item>
+        </div>
+      </div>
+
+      <ng-template #errorBlock>
+        <div class="message">
+          <h2>По запросу
+            <span>"{{query}}" </span> ничего не найдено... Извините :( </h2>
+          <h3>Пожалуйста, попробуйте снова ;)</h3>
+          <img src="../assets/img/404 page.png" alt="">
+        </div>
+      </ng-template>
+
+    </ng-template>
+
+  </div>
+</div>
