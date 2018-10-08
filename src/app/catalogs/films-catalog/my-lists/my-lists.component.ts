@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UtilsService } from '../../../shared/services/utils.service';
 
 @Component({
   selector: 'app-my-lists',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyListsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private utilsService: UtilsService) { }
+
+  isUploaded: boolean = true;
+
+  click() {
+    this.utilsService.setIsUploaded(this.isUploaded);
+  }
 
   ngOnInit() {
+    this.click();
   }
 
 }

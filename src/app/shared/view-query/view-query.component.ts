@@ -25,7 +25,10 @@ export class ViewQueryComponent implements OnInit, OnDestroy {
 
   //Получить список фильмов согласно поиска
   viewQuery(query): void {
-    this.queryResponse = this.filmApiService.getQueryFilm(query)
+    this.filmApiService.getQueryFilm(query)
+      .subscribe(data => {
+        console.log(data)
+      })
   }
 
   getQuery(): void {

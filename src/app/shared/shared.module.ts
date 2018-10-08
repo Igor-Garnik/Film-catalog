@@ -46,7 +46,6 @@ import { ViewQueryComponent } from './view-query/view-query.component';
         FooterComponent,
         LoginComponent,
         PaginatorComponent, SpinnerComponent,
-        ViewQueryComponent,
         ModalComponent
     ],
     entryComponents: [ModalComponent]

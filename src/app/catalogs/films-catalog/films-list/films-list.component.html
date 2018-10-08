@@ -1,7 +1,7 @@
 <div class="main-wrapper" *ngIf="!isUploaded">
   <div class="wrapper">
-    <div class="header" *ngIf="kindOfFilmsList">
-      <h3>{{defineListTitle()}}</h3>
+    <div class="header" *ngIf="!isHide">
+      <h3 class="header">{{defineListTitle()}}</h3>
     </div>
     <div class="card-wrapper">
       <div class="card" *ngFor="let film of filmsList">

@@ -1,13 +1,21 @@
-<mat-tab-group>
-  <mat-tab label="Любимые фильмы">
-    <a routerLink="/favorites"></a>
-    <app-films-list></app-films-list>
-  </mat-tab>
-  <mat-tab label="Фильмы к просмотру">
-    <a routerLink="/watchlist">
-      <app-films-list></app-films-list>
-    </a>
-
-  </mat-tab>
-
-</mat-tab-group>
+<div class="main-wrapper">
+  <div class="wrapper">
+    <!-- <mat-tab-group>
+      <mat-tab label="Любимые фильмы" (click)="setUrl($event)">
+        <app-films-list [isHide]='true'></app-films-list>
+      </mat-tab>
+      <mat-tab label="Фильмы к просмотру" (click)="setUrl(favorites) ">
+        <app-films-list [isHide]='true'></app-films-list>
+      </mat-tab>
+    </mat-tab-group> -->
+    <ul class="menu">
+      <li>
+        <a routerLink="/movie/my-lists/favorites" routerLinkActive="active-link" (click)="click()">Любимые фильмы</a>
+      </li>
+      <li>
+        <a routerLink="/movie/my-lists/watchlist" routerLinkActive="active-link" (click)="click()">Фильмы к просмотру</a>
+      </li>
+    </ul>
+    <app-films-list [isHide]='true'></app-films-list>
+  </div>
+</div>

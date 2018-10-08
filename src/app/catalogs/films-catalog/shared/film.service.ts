@@ -26,30 +26,30 @@ export class FilmService {
   }
 
   toggleFilmList(page: number, filmId: number, kindOfFilmsList: string): Observable<any> {
-    if (kindOfFilmsList == 'similar') return this.viewSimilarFilms(page, filmId);
-    if (kindOfFilmsList == 'credits') return this.viewMovieCreditsFilms(filmId);
-    if (kindOfFilmsList == 'favorites') return this.viewFavoritesFilms();
+    if (kindOfFilmsList == 'similar') return this.getSimilarFilms(page, filmId);
+    if (kindOfFilmsList == 'credits') return this.getMovieCreditsFilms(filmId);
+    if (kindOfFilmsList == 'favorites') return this.getFavoritesFilms();
     if (kindOfFilmsList == 'watchlist') return this.getWatchLIstFilms();
-    if (kindOfFilmsList == 'upcoming') return this.viewDifferentFilmsList(page, kindOfFilmsList);
-    if (kindOfFilmsList == 'top_rated') return this.viewDifferentFilmsList(page, kindOfFilmsList);
-    if (kindOfFilmsList == 'now_playing') return this.viewDifferentFilmsList(page, kindOfFilmsList);
-    if (kindOfFilmsList == 'popular') return this.viewDifferentFilmsList(page);
+    if (kindOfFilmsList == 'upcoming') return this.getDifferentFilmsList(page, kindOfFilmsList);
+    if (kindOfFilmsList == 'top_rated') return this.getDifferentFilmsList(page, kindOfFilmsList);
+    if (kindOfFilmsList == 'now_playing') return this.getDifferentFilmsList(page, kindOfFilmsList);
+    if (kindOfFilmsList == 'popular') return this.getDifferentFilmsList(page);
   }
 
   //Получить списк похожих фильмов
-  viewSimilarFilms(page: number, filmId: number): Observable<any> {
+  getSimilarFilms(page: number, filmId: number): Observable<any> {
     this.utilsService.setIsUploaded(false);
     return this.filmApiService.loadSimilarFilms(filmId, page)
   }
 
   //Получить список фильмов с учатием определенного актера
-  viewMovieCreditsFilms(filmId: number): Observable<any> {
+  getMovieCreditsFilms(filmId: number): Observable<any> {
     this.utilsService.setIsUploaded(false);
     return this.filmApiService.loadMovieCredits(filmId)
   }
 
   //Получить списк любимых фильмов
-  viewFavoritesFilms(): Observable<any> {
+  getFavoritesFilms(): Observable<any> {
     this.utilsService.setIsUploaded(false);
     return this.filmApiService.loadFavoritesFilms()
   }
@@ -61,7 +61,7 @@ export class FilmService {
   }
 
   //Получить список фильмов
-  viewDifferentFilmsList(page: number, param?): any {
+  getDifferentFilmsList(page: number, param?): any {
     return this.filmApiService.loadFilms(page, param);
   }
 

@@ -63,28 +63,31 @@ h4 {
 
 .actor-details-poster {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-.actor-details-poster .image {
+.card {
     width: 24.25%;
     box-sizing: border-box;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 1%;
+    padding-bottom: 1%;
 }
 
-
-.actor-details-poster .img {
+.actor-details-poster, img {
     width: 100%;
     height: auto;
 }
 
-.actor-details-poster img:hover {
-    transform: scale(1.06,1.06);
-    transition-timing-function: ease-out;
-    transition-duration: 550ms;
-}
-
 .margin {
     margin-bottom: 500px;
+}
+
+.actor-details span {
+    display: block;
+    font-size: 80%;
+    margin-left: 5%;
 }
 
 

@@ -17,6 +17,7 @@ export class FilmsListComponent implements OnInit, OnDestroy {
   @Input() filmId;
   @Input() cardView;
   @Input() kindOfFilmsList;
+  @Input() isHide
 
   query: string;
   page: number = 1;
@@ -57,10 +58,22 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     this.list = this.filmService.toggleFilmList(this.page, this.filmId, this.kindOfFilmsList)
       .subscribe((data: Array<any>) => {
         this.utilsService.setIsUploaded(this.isUploaded = false);
-        this.totalFilmsResults = data[0];
-        this.filmsList = data[1];
-        console.log(data);
+        this.toogleSetter(data);
       });
+  }
+
+  setData(data: Array<Film>): void {
+    this.filmsList = data;
+  }
+
+  setExtendData(data: Array<any>) {
+    this.totalFilmsResults = data[0];
+    this.filmsList = data[1];
+  }
+
+  //список фильмов может прийти, с данными о количнстве доступных фильмов и без
+  toogleSetter(data: Array<any>): void {
+    typeof data[0] === 'number' ? this.setExtendData(data) : this.setData(data);
   }
 
   //Обнудение списка фильмов при изменении отображаемого списка
@@ -99,7 +112,6 @@ export class FilmsListComponent implements OnInit, OnDestroy {
     this.utilsService.setState(this.state);
     this.getFilmsList();
     this.utilsService.scrorollToTop();
-    console.log('init')
   }
 
   ngOnDestroy() {

@@ -32,18 +32,14 @@
       <div class="actor-details">
         <mat-tab-group>
           <mat-tab label="Другие фильмы">
-            <app-films-list [filmId]="actorId" [cardView]="'backdrop'" [kindOfFilmsList]="'credits'"></app-films-list>
+            <app-films-list [filmId]="actorId" [cardView]="'backdrop'" [kindOfFilmsList]="'credits'" [isHide]='true'></app-films-list>
           </mat-tab>
           <mat-tab label="Постеры">
-            <div class="actor-details-poster" *ngFor="let image of images">
-              <div class="image">
-                <div class="image-wrapper">
-                  <a [href]='image.path| transformPath: 1280' target="_blank"><img [src]="image.path | transformPath: 300"></a>
-                  <div class="info-wrapper">
-                    <span><b>width: </b>{{image.width}}</span>
-                    <span><b>height: </b>{{image.height}}</span>
-                  </div>
-                </div>
+            <div class="actor-details-poster">
+              <div class="card" *ngFor="let image of images">
+                <a [href]='image.path| transformPath: 1280' target="_blank"><img [src]="image.path | transformPath: 300"></a>
+                <span><b>width: </b>{{image.width}}</span>
+                <span><b>height: </b>{{image.height}}</span>
               </div>
             </div>
           </mat-tab>

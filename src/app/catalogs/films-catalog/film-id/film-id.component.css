@@ -213,12 +213,6 @@ mat-spiner {
     color: #f4f4f4;
 }
 
-.poster-view img:hover {
-    transform: scale(1.06,1.06);
-    transition-timing-function: ease-out;
-    transition-duration: 550ms;
-}
-
 .gag :first-child {
     margin-top: 48px;
     width: 100%;

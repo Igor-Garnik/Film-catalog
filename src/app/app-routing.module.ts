@@ -17,7 +17,8 @@ const routes: Routes = [
   { path: "main", component: MainComponent, canActivate: [AuthGuard] },
   { path: "movie/:list-type", component: FilmsListComponent, canActivate: [AuthGuard] },
   { path: "movie/:id/view", component: FilmIdComponent, canActivate: [AuthGuard] },
-  { path: "movie/my-films/:list-type", component: MyListsComponent, canActivate: [AuthGuard] },
+  { path: "movie/my-lists/:list-type", component: MyListsComponent, canActivate: [AuthGuard] },
+
   { path: "actors", component: ActorsListComponent, canActivate: [AuthGuard] },
   { path: "actors/:id/view", component: ActorIdComponent, canActivate: [AuthGuard] },
   { path: "search/:type/:name", component: ViewQueryComponent, canActivate: [AuthGuard] },
