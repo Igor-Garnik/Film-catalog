@@ -7,7 +7,7 @@
     </div>
     <div class="content">
         <header>
-            <a [routerLink]="[film.id + '/view']">
+            <a [routerLink]="['/movie/' + film.id + '/view']">
                 <strong>{{film.title}}</strong>
             </a>
             <span><b>Релиз: </b>{{film.releaseDate | date: 'd MMMM y'}}</span>
@@ -18,7 +18,7 @@
         </section>
         <footer>
             <div class="link">
-                <a [routerLink]="[film.id + '/view']">
+                <a [routerLink]="['/movie/' + film.id + '/view']">
                     Больше информации
                 </a>
             </div>

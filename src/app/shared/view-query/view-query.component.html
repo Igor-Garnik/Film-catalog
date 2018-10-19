@@ -1,4 +1,4 @@
-<!-- <div class="main-wrapper">
+<div class="main-wrapper">
   <div class="wrapper">
     <div class="div" *ngIf="queryResponse; then queryBlock else errorBlock"></div>
     <ng-template #queryBlock>
@@ -11,7 +11,7 @@
         </div>
       </div>
     </ng-template>
-    <ng-template>
+    <ng-template #elseBlock>
       <div class="message" *ngIf="!queryResponse">
         <h2>По запросу
           <span>"{{query}}" </span> ничего не найдено... Извините :( </h2>
@@ -20,7 +20,4 @@
       </div>
     </ng-template>
   </div>
-</div> -->
-<div class="card" *ngFor="let film of queryResponse">
-  {{film.title}} lblnbkn
 </div>
